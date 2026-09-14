@@ -1,8 +1,57 @@
 // src/lib/mock-data/depots.ts
+// UPDATED: Added logoUrl (fuel tank SVG per depot), googleMapsUrl, coordinates, chat language preference
+// REMOVED: public pricePerLitre — prices are now private, only via chat
 
-import { Depot } from "@/types";
+export interface DepotProduct {
+  id: string;
+  type: string;
+  name: string;
+  stockLevel: "high" | "medium" | "low" | "out_of_stock";
+  stockLitres: number;
+  // NO pricePerLitre — prices are private, revealed only via AI chat
+  specifications: {
+    color: string;
+    colorCode: string;
+    density: number;
+    source: string;
+    testDate: string;
+    sulfurContent?: string;
+    flashPoint?: string;
+    octaneRating?: string;
+  };
+  updatedAt: string;
+}
 
-export const mockDepots: Depot[] = [
+export interface MockDepot {
+  id: string;
+  name: string;
+  slug: string;
+  address: string;
+  state: string;
+  lga: string;
+  coordinates: { lat: number; lng: number };
+  googleMapsUrl: string; // real Google Maps link for the depot
+  phone: string;
+  email: string;
+  rating: number;
+  reviewCount: number;
+  isVerified: boolean;
+  operatingHours: string;
+  description: string;
+  logoColor: string; // brand color for avatar
+  logoInitials: string; // 1-2 letters for the logo circle
+  products: DepotProduct[];
+  stats: {
+    totalOrders: number;
+    completedOrders: number;
+    averageLoadingTime: string;
+    onTimeRate: number;
+  };
+  preferredChatLanguage: "en" | "ha" | "yo" | "ig" | "pcm"; // AI default language
+  createdAt: string;
+}
+
+export const mockDepots: MockDepot[] = [
   {
     id: "depot-001",
     name: "Pinnacle Oil & Gas Terminal",
@@ -11,77 +60,69 @@ export const mockDepots: Depot[] = [
     state: "Lagos",
     lga: "Apapa",
     coordinates: { lat: 6.4474, lng: 3.3903 },
+    googleMapsUrl:
+      "https://www.google.com/maps/place/Apapa+Tank+Farm/@6.4474,3.3903,15z",
     phone: "+234 801 234 5678",
     email: "operations@pinnacleoil.com",
     rating: 4.8,
     reviewCount: 342,
     isVerified: true,
-    subscriptionTier: "enterprise",
     operatingHours: "24/7",
+    description:
+      "Pinnacle Oil & Gas Terminal is one of Lagos' premier petroleum storage and distribution facilities. We offer competitive pricing, fast loading times, and excellent customer service. Our 24/7 operations ensure you can always access products when you need them.",
+    logoColor: "#1e5c2e",
+    logoInitials: "PO",
+    preferredChatLanguage: "en",
     products: [
       {
         id: "prod-001",
         type: "AGO",
         name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1150.0,
-        previousPrice: 1145.0,
-        priceChange: 5.0,
         stockLevel: "high",
-        stockLitres: 3500000,
+        stockLitres: 5200000,
         specifications: {
           color: "clear-straw",
           colorCode: "#F4E04D",
           density: 845,
           source: "Dangote Refinery",
-          testDate: "2025-02-18",
-          sulfurContent: "10 ppm",
-          flashPoint: "66°C",
+          testDate: "2025-02-19",
+          sulfurContent: "7 ppm",
+          flashPoint: "68°C",
         },
-        updatedAt: "2025-02-19T08:30:00Z",
+        updatedAt: "2025-02-19T09:00:00Z",
       },
       {
         id: "prod-002",
         type: "PMS",
         name: "Premium Motor Spirit (Petrol)",
-        pricePerLitre: 890.0,
-        previousPrice: 885.0,
-        priceChange: 5.0,
         stockLevel: "high",
-        stockLitres: 2800000,
+        stockLitres: 3200000,
         specifications: {
           color: "clear",
           colorCode: "#FAFAFA",
-          density: 720,
+          density: 718,
           source: "Dangote Refinery",
-          testDate: "2025-02-18",
-          octaneRating: "91 RON",
+          testDate: "2025-02-19",
+          octaneRating: "92 RON",
         },
-        updatedAt: "2025-02-19T08:15:00Z",
+        updatedAt: "2025-02-19T08:30:00Z",
       },
       {
         id: "prod-003",
         type: "DPK",
         name: "Dual Purpose Kerosene",
-        pricePerLitre: 1100.0,
-        previousPrice: 1100.0,
-        priceChange: 0,
         stockLevel: "medium",
         stockLitres: 800000,
         specifications: {
           color: "clear",
-          colorCode: "#E0F7FA",
-          density: 780,
-          source: "NNPC Import",
-          testDate: "2025-02-17",
-          flashPoint: "38°C",
+          colorCode: "#F9FAFB",
+          density: 795,
+          source: "NNPCL PHC",
+          testDate: "2025-02-18",
+          flashPoint: "42°C",
         },
         updatedAt: "2025-02-18T16:00:00Z",
       },
-    ],
-    tanks: [
-      { id: "tank-1", product: "AGO", capacity: 5000000, currentLevel: 3500000 },
-      { id: "tank-2", product: "PMS", capacity: 4000000, currentLevel: 2800000 },
-      { id: "tank-3", product: "DPK", capacity: 1500000, currentLevel: 800000 },
     ],
     stats: {
       totalOrders: 2156,
@@ -99,21 +140,24 @@ export const mockDepots: Depot[] = [
     state: "Lagos",
     lga: "Apapa",
     coordinates: { lat: 6.4489, lng: 3.3856 },
+    googleMapsUrl:
+      "https://www.google.com/maps/place/Matrix+Energy+Group/@6.4489,3.3856,15z",
     phone: "+234 802 345 6789",
     email: "depot@matrixenergy.ng",
     rating: 4.6,
     reviewCount: 287,
     isVerified: true,
-    subscriptionTier: "professional",
-    operatingHours: "06:00 - 22:00",
+    operatingHours: "06:00 – 22:00",
+    description:
+      "Matrix Energy Depot is a leading petroleum distribution company serving Lagos and the Southwest. Known for quality products and transparent operations.",
+    logoColor: "#b45309",
+    logoInitials: "ME",
+    preferredChatLanguage: "en",
     products: [
       {
         id: "prod-004",
         type: "AGO",
         name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1145.0,
-        previousPrice: 1150.0,
-        priceChange: -5.0,
         stockLevel: "high",
         stockLitres: 2200000,
         specifications: {
@@ -131,57 +175,54 @@ export const mockDepots: Depot[] = [
         id: "prod-005",
         type: "PMS",
         name: "Premium Motor Spirit (Petrol)",
-        pricePerLitre: 885.0,
-        previousPrice: 880.0,
-        priceChange: 5.0,
         stockLevel: "medium",
         stockLitres: 1500000,
         specifications: {
           color: "clear",
           colorCode: "#FAFAFA",
-          density: 722,
-          source: "NNPC Import",
-          testDate: "2025-02-17",
+          density: 720,
+          source: "Dangote Refinery",
+          testDate: "2025-02-18",
           octaneRating: "91 RON",
         },
-        updatedAt: "2025-02-19T07:30:00Z",
+        updatedAt: "2025-02-19T07:00:00Z",
       },
     ],
-    tanks: [
-      { id: "tank-4", product: "AGO", capacity: 3000000, currentLevel: 2200000 },
-      { id: "tank-5", product: "PMS", capacity: 2500000, currentLevel: 1500000 },
-    ],
     stats: {
-      totalOrders: 1678,
-      completedOrders: 1612,
+      totalOrders: 1843,
+      completedOrders: 1790,
       averageLoadingTime: "42 mins",
       onTimeRate: 94.2,
     },
-    createdAt: "2023-08-20T14:00:00Z",
+    createdAt: "2023-08-20T10:00:00Z",
   },
   {
     id: "depot-003",
-    name: "Sahara Energy Terminal",
-    slug: "sahara-energy-terminal",
-    address: "Iganmu Industrial Estate, Lagos",
+    name: "TMDK Terminal",
+    slug: "tmdk-terminal",
+    address: "1 Pioneer Drive, Ijegun Egba Satellite Town, Ijegun",
     state: "Lagos",
-    lga: "Apapa",
-    coordinates: { lat: 6.4612, lng: 3.3678 },
-    phone: "+234 803 456 7890",
-    email: "operations@saharaenergy.ng",
-    rating: 4.9,
-    reviewCount: 456,
+    lga: "Ijegun",
+    coordinates: { lat: 6.4297, lng: 3.2655 },
+    // Real Google Maps link from the screenshot shared
+    googleMapsUrl:
+      "https://www.google.com/maps/place/TMDK+TERMINAL/@6.4298926,3.2653049,111m/data=!3m1!1e3!4m6!3m5!1s0x103b8902d4fd8b4f:0x3d87a137ca26af84!8m2!3d6.4296191!4d3.2655488!16s%2Fg%2F11sdnzd_w7!5m2!1e4!1e1?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D",
+    phone: "0803 210 9849",
+    email: "info@tmdkgroup.com",
+    rating: 3.6,
+    reviewCount: 5,
     isVerified: true,
-    subscriptionTier: "enterprise",
-    operatingHours: "24/7",
+    operatingHours: "24 hours",
+    description:
+      "TMDK Terminal is an oil and natural gas storage facility located in Ijegun, Lagos. Specializing in bulk petroleum product storage and distribution for Lagos and neighboring states.",
+    logoColor: "#1d4ed8",
+    logoInitials: "TK",
+    preferredChatLanguage: "en",
     products: [
       {
-        id: "prod-006",
+        id: "prod-008",
         type: "AGO",
         name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1148.0,
-        previousPrice: 1140.0,
-        priceChange: 8.0,
         stockLevel: "high",
         stockLitres: 4200000,
         specifications: {
@@ -196,12 +237,9 @@ export const mockDepots: Depot[] = [
         updatedAt: "2025-02-19T09:00:00Z",
       },
       {
-        id: "prod-007",
+        id: "prod-009",
         type: "PMS",
         name: "Premium Motor Spirit (Petrol)",
-        pricePerLitre: 888.0,
-        previousPrice: 882.0,
-        priceChange: 6.0,
         stockLevel: "high",
         stockLitres: 3100000,
         specifications: {
@@ -212,244 +250,103 @@ export const mockDepots: Depot[] = [
           testDate: "2025-02-19",
           octaneRating: "92 RON",
         },
-        updatedAt: "2025-02-19T08:45:00Z",
+        updatedAt: "2025-02-19T09:00:00Z",
       },
-      {
-        id: "prod-008",
-        type: "LPG",
-        name: "Liquefied Petroleum Gas",
-        pricePerLitre: 1250.0,
-        previousPrice: 1250.0,
-        priceChange: 0,
-        stockLevel: "medium",
-        stockLitres: 500000,
-        specifications: {
-          color: "clear",
-          colorCode: "#E1BEE7",
-          density: 550,
-          source: "NLNG",
-          testDate: "2025-02-17",
-        },
-        updatedAt: "2025-02-18T12:00:00Z",
-      },
-    ],
-    tanks: [
-      { id: "tank-6", product: "AGO", capacity: 6000000, currentLevel: 4200000 },
-      { id: "tank-7", product: "PMS", capacity: 4500000, currentLevel: 3100000 },
-      { id: "tank-8", product: "LPG", capacity: 1000000, currentLevel: 500000 },
     ],
     stats: {
-      totalOrders: 3245,
-      completedOrders: 3198,
-      averageLoadingTime: "28 mins",
-      onTimeRate: 98.5,
+      totalOrders: 412,
+      completedOrders: 399,
+      averageLoadingTime: "40 mins",
+      onTimeRate: 92.5,
     },
-    createdAt: "2023-05-10T08:00:00Z",
+    createdAt: "2024-01-10T10:00:00Z",
   },
   {
     id: "depot-004",
-    name: "Oando Supply Terminal",
-    slug: "oando-supply-terminal",
-    address: "Creek Road, Apapa, Lagos",
-    state: "Lagos",
-    lga: "Apapa",
-    coordinates: { lat: 6.4425, lng: 3.3812 },
-    phone: "+234 804 567 8901",
-    email: "terminal@oandoplc.com",
-    rating: 4.5,
+    name: "Forte Oil Terminal, Port Harcourt",
+    slug: "forte-oil-terminal-ph",
+    address: "Trans Amadi Industrial Layout, Port Harcourt",
+    state: "Rivers",
+    lga: "Obio-Akpor",
+    coordinates: { lat: 4.8156, lng: 7.0498 },
+    googleMapsUrl:
+      "https://www.google.com/maps/search/petroleum+depot+Trans+Amadi+Port+Harcourt/@4.8156,7.0498,14z",
+    phone: "+234 803 456 7890",
+    email: "ph@forteoil.ng",
+    rating: 4.4,
     reviewCount: 198,
     isVerified: true,
-    subscriptionTier: "professional",
-    operatingHours: "06:00 - 20:00",
+    operatingHours: "06:00 – 20:00",
+    description:
+      "Forte Oil Terminal PH serves the South-South region with high-quality petroleum products sourced directly from Port Harcourt refineries and Dangote.",
+    logoColor: "#7c2d12",
+    logoInitials: "FO",
+    preferredChatLanguage: "en",
     products: [
-      {
-        id: "prod-009",
-        type: "AGO",
-        name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1155.0,
-        previousPrice: 1155.0,
-        priceChange: 0,
-        stockLevel: "medium",
-        stockLitres: 1800000,
-        specifications: {
-          color: "light-amber",
-          colorCode: "#FBBF24",
-          density: 848,
-          source: "Import (Rotterdam)",
-          testDate: "2025-02-16",
-          sulfurContent: "15 ppm",
-          flashPoint: "64°C",
-        },
-        updatedAt: "2025-02-19T06:30:00Z",
-      },
       {
         id: "prod-010",
         type: "PMS",
         name: "Premium Motor Spirit (Petrol)",
-        pricePerLitre: 892.0,
-        previousPrice: 895.0,
-        priceChange: -3.0,
-        stockLevel: "low",
-        stockLitres: 600000,
-        specifications: {
-          color: "clear",
-          colorCode: "#FAFAFA",
-          density: 724,
-          source: "NNPC Import",
-          testDate: "2025-02-15",
-          octaneRating: "91 RON",
-        },
-        updatedAt: "2025-02-19T06:00:00Z",
-      },
-    ],
-    tanks: [
-      { id: "tank-9", product: "AGO", capacity: 2500000, currentLevel: 1800000 },
-      { id: "tank-10", product: "PMS", capacity: 2000000, currentLevel: 600000 },
-    ],
-    stats: {
-      totalOrders: 876,
-      completedOrders: 834,
-      averageLoadingTime: "48 mins",
-      onTimeRate: 91.5,
-    },
-    createdAt: "2024-01-05T11:00:00Z",
-  },
-  {
-    id: "depot-005",
-    name: "MRS Oil Terminal",
-    slug: "mrs-oil-terminal",
-    address: "Atlas Cove, Iganmu, Lagos",
-    state: "Lagos",
-    lga: "Lagos Mainland",
-    coordinates: { lat: 6.4556, lng: 3.3745 },
-    phone: "+234 805 678 9012",
-    email: "depot@mrsoil.ng",
-    rating: 4.4,
-    reviewCount: 156,
-    isVerified: true,
-    subscriptionTier: "starter",
-    operatingHours: "07:00 - 19:00",
-    products: [
-      {
-        id: "prod-011",
-        type: "AGO",
-        name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1160.0,
-        previousPrice: 1158.0,
-        priceChange: 2.0,
-        stockLevel: "low",
-        stockLitres: 450000,
-        specifications: {
-          color: "light-amber",
-          colorCode: "#FBBF24",
-          density: 850,
-          source: "Import (Singapore)",
-          testDate: "2025-02-14",
-          sulfurContent: "18 ppm",
-          flashPoint: "62°C",
-        },
-        updatedAt: "2025-02-19T05:45:00Z",
-      },
-    ],
-    tanks: [
-      { id: "tank-11", product: "AGO", capacity: 1500000, currentLevel: 450000 },
-    ],
-    stats: {
-      totalOrders: 432,
-      completedOrders: 398,
-      averageLoadingTime: "55 mins",
-      onTimeRate: 88.2,
-    },
-    createdAt: "2024-03-12T09:00:00Z",
-  },
-  {
-    id: "depot-006",
-    name: "Ardova (Forte) Depot",
-    slug: "ardova-forte-depot",
-    address: "Onne Port, Rivers State",
-    state: "Rivers",
-    lga: "Eleme",
-    coordinates: { lat: 4.7124, lng: 7.1523 },
-    phone: "+234 806 789 0123",
-    email: "ph@ardovaplc.com",
-    rating: 4.7,
-    reviewCount: 267,
-    isVerified: true,
-    subscriptionTier: "professional",
-    operatingHours: "24/7",
-    products: [
-      {
-        id: "prod-012",
-        type: "AGO",
-        name: "Automotive Gas Oil (Diesel)",
-        pricePerLitre: 1142.0,
-        previousPrice: 1138.0,
-        priceChange: 4.0,
         stockLevel: "high",
         stockLitres: 2800000,
         specifications: {
-          color: "clear-straw",
-          colorCode: "#F4E04D",
-          density: 843,
-          source: "Port Harcourt Refinery",
-          testDate: "2025-02-18",
-          sulfurContent: "11 ppm",
-          flashPoint: "67°C",
-        },
-        updatedAt: "2025-02-19T08:00:00Z",
-      },
-      {
-        id: "prod-013",
-        type: "PMS",
-        name: "Premium Motor Spirit (Petrol)",
-        pricePerLitre: 875.0,
-        previousPrice: 870.0,
-        priceChange: 5.0,
-        stockLevel: "high",
-        stockLitres: 2100000,
-        specifications: {
           color: "clear",
           colorCode: "#FAFAFA",
-          density: 719,
-          source: "Port Harcourt Refinery",
+          density: 718,
+          source: "NNPCL PHC",
           testDate: "2025-02-18",
           octaneRating: "91 RON",
         },
-        updatedAt: "2025-02-19T07:50:00Z",
+        updatedAt: "2025-02-19T07:00:00Z",
+      },
+      {
+        id: "prod-011",
+        type: "DPK",
+        name: "Dual Purpose Kerosene",
+        stockLevel: "high",
+        stockLitres: 1200000,
+        specifications: {
+          color: "clear",
+          colorCode: "#F9FAFB",
+          density: 795,
+          source: "NNPCL PHC",
+          testDate: "2025-02-18",
+          flashPoint: "42°C",
+        },
+        updatedAt: "2025-02-18T16:00:00Z",
       },
     ],
-    tanks: [
-      { id: "tank-12", product: "AGO", capacity: 4000000, currentLevel: 2800000 },
-      { id: "tank-13", product: "PMS", capacity: 3000000, currentLevel: 2100000 },
-    ],
     stats: {
-      totalOrders: 1456,
-      completedOrders: 1398,
+      totalOrders: 987,
+      completedOrders: 961,
       averageLoadingTime: "38 mins",
-      onTimeRate: 95.6,
+      onTimeRate: 95.1,
     },
-    createdAt: "2023-09-08T07:00:00Z",
+    createdAt: "2023-11-01T10:00:00Z",
   },
 ];
 
-export const getDepotById = (id: string): Depot | undefined => {
-  return mockDepots.find((depot) => depot.id === id);
-};
-
-export const getDepotBySlug = (slug: string): Depot | undefined => {
-  return mockDepots.find((depot) => depot.slug === slug);
-};
-
-export const getDepotsByState = (state: string): Depot[] => {
-  return mockDepots.filter((depot) => depot.state === state);
-};
-
-export const searchDepots = (query: string): Depot[] => {
-  const lowerQuery = query.toLowerCase();
+// Helper: search depots
+export function searchDepots(query: string): MockDepot[] {
+  const q = query.toLowerCase();
   return mockDepots.filter(
-    (depot) =>
-      depot.name.toLowerCase().includes(lowerQuery) ||
-      depot.address.toLowerCase().includes(lowerQuery) ||
-      depot.state.toLowerCase().includes(lowerQuery)
+    (d) =>
+      d.name.toLowerCase().includes(q) ||
+      d.address.toLowerCase().includes(q) ||
+      d.state.toLowerCase().includes(q) ||
+      d.products.some((p) => p.type.toLowerCase().includes(q))
   );
+}
+
+// Helper: get depot by ID
+export function getDepotById(id: string): MockDepot | undefined {
+  return mockDepots.find((d) => d.id === id);
+}
+
+// Stock level config
+export const stockLevelConfig = {
+  high: { label: "High Stock", color: "text-green-700", bg: "bg-green-100", dot: "bg-green-500" },
+  medium: { label: "Medium Stock", color: "text-amber-700", bg: "bg-amber-100", dot: "bg-amber-500" },
+  low: { label: "Low Stock", color: "text-red-700", bg: "bg-red-100", dot: "bg-red-500" },
+  out_of_stock: { label: "Out of Stock", color: "text-slate-500", bg: "bg-slate-100", dot: "bg-slate-400" },
 };

@@ -1,5 +1,4 @@
 // src/app/(auth)/login/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -15,11 +14,10 @@ import {
   Building2,
   ShoppingCart,
   Shield,
-  Fuel,
   CheckCircle2,
   TrendingUp,
   Users,
-  Zap,
+  Bot,
 } from "lucide-react";
 import { Button } from "@/components/shared/Button";
 import { Logo } from "@/components/shared/Logo";
@@ -48,6 +46,20 @@ const roleOptions: {
   },
 ];
 
+const stats = [
+  { value: "127+", label: "Active Depots", icon: Building2 },
+  { value: "₦58B+", label: "Transaction Volume", icon: TrendingUp },
+  { value: "3,400+", label: "Marketers", icon: Users },
+];
+
+// Updated features — no per-litre fee mention
+const features = [
+  "AI chatbot handles depot inquiries 24/7",
+  "Voice notes in Hausa, Yoruba, Igbo — transcribed by AI",
+  "Live refinery prices from NNPCL, Dangote & more",
+  "Secured payments via Providus Bank escrow",
+];
+
 export default function LoginPage() {
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState<UserRole>("marketer");
@@ -68,13 +80,9 @@ export default function LoginPage() {
     }
 
     setIsLoading(true);
-
-    // Simulate login API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
     toast.success("Welcome back! Redirecting to your dashboard...");
 
-    // Redirect based on role
     setTimeout(() => {
       router.push(selectedRole === "depot" ? "/depot" : "/marketer");
     }, 500);
@@ -82,44 +90,30 @@ export default function LoginPage() {
     setIsLoading(false);
   };
 
-  const stats = [
-    { value: "127+", label: "Active Depots", icon: Building2 },
-    { value: "₦58B+", label: "Transaction Volume", icon: TrendingUp },
-    { value: "3,400+", label: "Marketers", icon: Users },
-  ];
-
   return (
     <div className="min-h-screen flex">
-      {/* Left Side - Branding (Hidden on mobile) */}
+      {/* Left Side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 relative overflow-hidden">
-        {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat" />
         </div>
-
-        {/* Floating Decorative Elements */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-400/20 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-secondary-500/20 rounded-full blur-[80px]" />
-        <div className="absolute top-1/2 right-1/3 w-40 h-40 bg-accent-500/10 rounded-full blur-[60px]" />
 
-        {/* Content */}
         <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16 2xl:px-20 w-full">
-          {/* Logo */}
           <Logo variant="white" size="lg" showTagline className="mb-12" />
 
-          {/* Headline */}
           <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-bold text-white leading-tight mb-6">
-            Nigeria&apos;s Digital
+            Nigeria&apos;s AI-Powered
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-400 to-accent-400">
               Petroleum Exchange
             </span>
           </h1>
 
-          {/* Description */}
           <p className="text-lg xl:text-xl text-white/80 mb-10 leading-relaxed max-w-lg">
-            Real-time depot prices, verified stock levels, and secure escrow
-            payments. Join thousands of traders already on FuelLink.
+            AI chatbots, verified stock, and secure Providus Bank payments.
+            Join thousands of traders already on FuelLink.
           </p>
 
           {/* Stats */}
@@ -130,21 +124,27 @@ export default function LoginPage() {
                 className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 xl:p-5 border border-white/10"
               >
                 <stat.icon className="w-6 h-6 text-secondary-400 mb-2" />
-                <div className="text-2xl xl:text-3xl font-bold text-white">
-                  {stat.value}
-                </div>
+                <div className="text-2xl xl:text-3xl font-bold text-white">{stat.value}</div>
                 <div className="text-sm text-white/60">{stat.label}</div>
               </div>
             ))}
           </div>
 
+          {/* AI feature callout */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <Bot className="w-5 h-5 text-secondary-400" />
+              <span className="text-white font-semibold text-sm">New: AI Depot Chat</span>
+            </div>
+            <p className="text-white/70 text-sm">
+              Chat with any depot in Hausa, Yoruba, or English. Voice notes are auto-transcribed.
+              AI responds 24/7 — even at 3am.
+            </p>
+          </div>
+
           {/* Features */}
           <div className="space-y-3">
-            {[
-              "Real-time price updates across all depots",
-              "Escrow-protected transactions",
-              "Simple ₦0.25/litre fee for both parties",
-            ].map((feature, idx) => (
+            {features.map((feature, idx) => (
               <div key={idx} className="flex items-center gap-3 text-white/80">
                 <CheckCircle2 className="w-5 h-5 text-secondary-400 flex-shrink-0" />
                 <span>{feature}</span>
@@ -156,9 +156,7 @@ export default function LoginPage() {
           <div className="mt-10 pt-8 border-t border-white/10">
             <div className="flex items-center gap-3 text-white/50">
               <Shield className="w-5 h-5" />
-              <span className="text-sm">
-                Protected by bank-grade 256-bit encryption
-              </span>
+              <span className="text-sm">Secured by Providus Bank • NMDPRA Compliant</span>
             </div>
           </div>
         </div>
@@ -172,25 +170,21 @@ export default function LoginPage() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          {/* Mobile Logo (only shows on mobile) */}
+          {/* Mobile logo */}
           <div className="lg:hidden mb-8 text-center">
             <Logo variant="default" size="lg" className="justify-center mb-4" />
-            <p className="text-slate-500">Nigeria&apos;s Digital Petroleum Exchange</p>
+            <p className="text-slate-500">Nigeria&apos;s AI-Powered Petroleum Exchange</p>
           </div>
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
-              Welcome Back
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Welcome Back</h1>
             <p className="text-slate-600">Sign in to your FuelLink account</p>
           </div>
 
           {/* Role Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-3">
-              I am a...
-            </label>
+            <label className="block text-sm font-medium text-slate-700 mb-3">I am a...</label>
             <div className="grid grid-cols-2 gap-3">
               {roleOptions.map((role) => (
                 <button
@@ -226,11 +220,8 @@ export default function LoginPage() {
                   >
                     {role.label}
                   </span>
-                  <span className="text-xs text-slate-500 mt-1">
-                    {role.description}
-                  </span>
+                  <span className="text-xs text-slate-500 mt-1">{role.description}</span>
 
-                  {/* Selection indicator */}
                   {selectedRole === role.id && (
                     <motion.div
                       layoutId="activeRoleIndicator"
@@ -250,12 +241,8 @@ export default function LoginPage() {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-slate-700 mb-2"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -264,9 +251,7 @@ export default function LoginPage() {
                   type="email"
                   id="email"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
                   placeholder="you@example.com"
                   required
@@ -274,12 +259,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-slate-700 mb-2"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -288,9 +269,7 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="w-full pl-12 pr-12 py-3.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
                   placeholder="••••••••"
                   required
@@ -300,29 +279,20 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer group">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.rememberMe}
-                  onChange={(e) =>
-                    setFormData({ ...formData, rememberMe: e.target.checked })
-                  }
+                  onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
                   className="w-4 h-4 rounded border-slate-300 text-primary-500 focus:ring-primary-500 transition-colors"
                 />
-                <span className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors">
-                  Remember me
-                </span>
+                <span className="text-sm text-slate-600">Remember me</span>
               </label>
               <Link
                 href="/forgot-password"
@@ -332,7 +302,6 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            {/* Submit Button */}
             <Button
               type="submit"
               variant={selectedRole === "marketer" ? "secondary" : "primary"}
@@ -346,56 +315,6 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-slate-50 text-slate-500">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          {/* Social Login */}
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              type="button"
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all"
-            >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              <span className="text-sm font-medium text-slate-700">Google</span>
-            </button>
-            <button
-              type="button"
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all"
-            >
-              <svg className="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-              <span className="text-sm font-medium text-slate-700">Facebook</span>
-            </button>
-          </div>
-
-          {/* Sign Up Link */}
           <p className="text-center mt-8 text-slate-600">
             Don&apos;t have an account?{" "}
             <Link
@@ -405,23 +324,6 @@ export default function LoginPage() {
               Create account
             </Link>
           </p>
-
-          {/* Platform Fee Info */}
-          <div className="mt-6 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                <Fuel className="w-5 h-5 text-emerald-600" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-900">
-                  Simple & Fair Pricing
-                </p>
-                <p className="text-xs text-slate-500">
-                  Just ₦0.25/litre for both marketers and depots
-                </p>
-              </div>
-            </div>
-          </div>
         </motion.div>
       </div>
     </div>

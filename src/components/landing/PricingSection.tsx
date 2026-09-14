@@ -1,5 +1,4 @@
 // src/components/landing/PricingSection.tsx
-
 "use client";
 
 import { useRef, useState } from "react";
@@ -8,305 +7,333 @@ import { useInView } from "framer-motion";
 import {
   Check,
   Sparkles,
-  Calculator,
-  HelpCircle,
-  Fuel,
   Shield,
-  Zap,
   Building2,
   ShoppingCart,
   ArrowRight,
+  Zap,
+  MessageSquare,
+  TrendingUp,
+  Megaphone,
+  Newspaper,
+  Bot,
 } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { Button } from "@/components/shared/Button";
 import { Badge } from "@/components/shared/Badge";
 import { cn, formatCurrency } from "@/lib/utils";
 
-// Fee calculator component
-function FeeCalculator() {
-  const [volume, setVolume] = useState(33000);
-  const FEE_PER_LITRE = 0.50; // Total fee (25k marketer + 25k depot)
-  const FEE_PER_PARTY = 0.25;
-  
-  const totalFee = volume * FEE_PER_LITRE;
-  const feePerParty = volume * FEE_PER_PARTY;
+// Transaction fee calculator
+function TransactionFeeCalculator() {
+  const [orderValue, setOrderValue] = useState(5_000_000); // ₦5M default
+  const FEE_RATE = 0.005; // 0.5%
 
-  const presets = [
-    { label: "33,000L", value: 33000 },
-    { label: "45,000L", value: 45000 },
-    { label: "100,000L", value: 100000 },
-  ];
+  const fee = Math.round(orderValue * FEE_RATE);
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xl border border-slate-100">
+    <div className="bg-white rounded-2xl border border-slate-200 p-6">
       <div className="flex items-center gap-2 mb-4">
-        <Calculator className="w-5 h-5 text-primary-600" />
-        <h4 className="font-semibold text-slate-900">Fee Calculator</h4>
+        <Zap className="w-5 h-5 text-primary-600" />
+        <h3 className="font-bold text-slate-900">Transaction Fee Calculator</h3>
       </div>
 
-      {/* Preset Buttons */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {presets.map((preset) => (
-          <button
-            key={preset.value}
-            onClick={() => setVolume(preset.value)}
-            className={cn(
-              "px-4 py-2 rounded-xl text-sm font-medium transition-all",
-              volume === preset.value
-                ? "bg-primary-500 text-white shadow-lg"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-            )}
-          >
-            {preset.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Custom Input */}
-      <div className="mb-5">
-        <label className="block text-sm text-slate-600 mb-2">
-          Custom volume (litres)
+      <div className="mb-4">
+        <label className="text-sm text-slate-600 mb-2 block">
+          Order Value: <span className="font-bold text-slate-900">{formatCurrency(orderValue)}</span>
         </label>
         <input
-          type="number"
-          value={volume}
-          onChange={(e) => setVolume(Math.max(0, parseInt(e.target.value) || 0))}
-          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all text-lg font-semibold"
-          placeholder="Enter volume"
+          type="range"
+          min={500_000}
+          max={500_000_000}
+          step={500_000}
+          value={orderValue}
+          onChange={(e) => setOrderValue(Number(e.target.value))}
+          className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-primary-600"
         />
-      </div>
-
-      {/* Result */}
-      <div className="bg-gradient-to-br from-primary-50 to-emerald-50 rounded-xl p-5 border border-primary-100">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between pb-3 border-b border-primary-200/50">
-            <span className="text-slate-600">Volume</span>
-            <span className="font-bold text-slate-900">{volume.toLocaleString()} L</span>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="w-4 h-4 text-secondary-500" />
-              <span className="text-slate-600">Marketer pays</span>
-            </div>
-            <span className="font-semibold text-slate-900">{formatCurrency(feePerParty)}</span>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-primary-500" />
-              <span className="text-slate-600">Depot pays</span>
-            </div>
-            <span className="font-semibold text-slate-900">{formatCurrency(feePerParty)}</span>
-          </div>
-          
-          <div className="flex items-center justify-between pt-3 border-t border-primary-200/50">
-            <span className="font-semibold text-slate-900">Platform Total</span>
-            <span className="text-xl font-bold text-primary-600">{formatCurrency(totalFee)}</span>
-          </div>
+        <div className="flex justify-between text-xs text-slate-400 mt-1">
+          <span>₦500K</span>
+          <span>₦500M</span>
         </div>
       </div>
 
-      <p className="text-xs text-slate-500 mt-4 flex items-start gap-1.5">
-        <HelpCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-        Fee is automatically calculated and deducted when transactions complete.
+      <div className="bg-primary-50 rounded-xl p-4 border border-primary-100">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm text-slate-600">Platform fee (0.5%)</span>
+          <span className="font-bold text-primary-700">{formatCurrency(fee)}</span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-slate-600">You pay / receive</span>
+          <span className="font-bold text-slate-900">{formatCurrency(orderValue - fee)}</span>
+        </div>
+      </div>
+
+      <p className="text-xs text-slate-400 mt-3">
+        * Fee is split equally. No per-litre charges. No hidden costs.
+        Payment via Providus Bank — near-zero transfer cost.
       </p>
     </div>
   );
 }
 
+const depotFeatures = [
+  "List depot & products for free",
+  "AI chatbot answers marketer questions 24/7",
+  "Voice note support (Hausa, Yoruba, Igbo + more)",
+  "Private price-setting — only shared via chat",
+  "Advertise products to thousands of marketers",
+  "Analytics dashboard",
+  "NMDPRA compliance dashboard",
+  "Direct Providus Bank payouts",
+];
+
+const marketerPlans = [
+  {
+    id: "monthly",
+    label: "Monthly",
+    price: 15_000,
+    period: "/month",
+    badge: null,
+    features: [
+      "Unlimited depot chat access",
+      "AI price predictor",
+      "Live refinery price board",
+      "Order management",
+      "Dispute resolution",
+      "Email + in-app alerts",
+    ],
+  },
+  {
+    id: "quarterly",
+    label: "Quarterly",
+    price: 39_000,
+    period: "/quarter",
+    badge: "Save 13%",
+    features: [
+      "Everything in Monthly",
+      "Priority AI chat responses",
+      "Advanced price analytics",
+      "Export reports",
+      "Dedicated support",
+    ],
+  },
+  {
+    id: "annual",
+    label: "Annual",
+    price: 120_000,
+    period: "/year",
+    badge: "Best Value",
+    features: [
+      "Everything in Quarterly",
+      "First access to new features",
+      "Custom alerts & notifications",
+      "API access (coming soon)",
+      "Branded invoices",
+    ],
+  },
+];
+
 export function PricingSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const benefits = {
-    marketer: [
-      "Access all depot prices in real-time",
-      "Escrow protection on every transaction",
-      "QR code verification for pickups",
-      "In-app messaging with depots",
-      "Order tracking & history",
-      "Price alerts & notifications",
-      "Dispute resolution support",
-    ],
-    depot: [
-      "Broadcast prices to all marketers instantly",
-      "Receive orders with guaranteed payment",
-      "QR verification system for loading",
-      "In-app messaging with buyers",
-      "Analytics & insights dashboard",
-      "Inventory tracking tools",
-      "Customer ratings & reviews",
-    ],
-  };
+  const [activeTab, setActiveTab] = useState<"marketer" | "depot">("marketer");
 
   return (
-    <section ref={ref} id="pricing" className="py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
-      <Container size="wide">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <Badge variant="primary" className="mb-4">
-              <Sparkles className="w-4 h-4 mr-1" />
-              Simple Pricing
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-              One Simple Fee.{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
-                Fair for Everyone.
-              </span>
-            </h2>
-            <p className="text-lg text-slate-600">
-              No subscriptions. No hidden charges. No monthly fees.<br />
-              Just <span className="font-bold text-primary-600">₦0.25 per litre</span> from each party when a transaction completes.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Main Pricing Display */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-16"
-        >
-          <div className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary-500/10 rounded-full blur-3xl" />
-            
-            <div className="relative z-10 grid lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
-                  <Fuel className="w-5 h-5 text-secondary-400" />
-                  <span className="text-white/90 font-medium">Transaction-Based Pricing</span>
-                </div>
-                
-                <h3 className="text-4xl md:text-5xl font-bold mb-2">
-                  ₦0.25<span className="text-2xl font-normal text-white/70">/litre</span>
-                </h3>
-                <p className="text-xl text-white/80 mb-6">
-                  per party, per transaction
-                </p>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-full bg-secondary-500 flex items-center justify-center">
-                      <ShoppingCart className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">Marketers pay ₦0.25/L</p>
-                      <p className="text-sm text-white/70">Added to order total</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                      <Building2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">Depots pay ₦0.25/L</p>
-                      <p className="text-sm text-white/70">Deducted from settlement</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 text-white/80">
-                  <Shield className="w-5 h-5" />
-                  <span>Only charged when transactions complete successfully</span>
-                </div>
-              </div>
-              
-              <FeeCalculator />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* What You Get - Two Columns */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="grid md:grid-cols-2 gap-8"
-        >
-          {/* For Marketers */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-secondary-100 flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-secondary-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">For Marketers</h3>
-                <p className="text-slate-500">Everything you need to buy</p>
-              </div>
-            </div>
-            
-            <ul className="space-y-3 mb-6">
-              {benefits.marketer.map((benefit) => (
-                <li key={benefit} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-secondary-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Button variant="secondary" size="lg" fullWidth rightIcon={<ArrowRight className="w-5 h-5" />}>
-              Start as Marketer
-            </Button>
-          </div>
-
-          {/* For Depot Owners */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-primary-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">For Depot Owners</h3>
-                <p className="text-slate-500">Everything you need to sell</p>
-              </div>
-            </div>
-            
-            <ul className="space-y-3 mb-6">
-              {benefits.depot.map((benefit) => (
-                <li key={benefit} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-slate-700">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Button variant="primary" size="lg" fullWidth rightIcon={<ArrowRight className="w-5 h-5" />}>
-              Start as Depot
-            </Button>
-          </div>
-        </motion.div>
-
-        {/* FAQ Teaser */}
+    <section id="pricing" ref={ref} className="py-24 bg-slate-50">
+      <Container>
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
         >
-          <div className="bg-slate-100 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h4 className="text-lg font-semibold text-slate-900 mb-2">
-              Why 25 kobo from each party?
-            </h4>
-            <p className="text-slate-600 mb-4">
-              We believe in fair value exchange. Both marketers and depots benefit from FuelLink - 
-              marketers get price transparency and security, depots get exposure and guaranteed payments. 
-              Splitting the fee means both parties invest equally in the platform that serves them both.
-            </p>
-            <Button variant="ghost" size="md">
-              Read FAQs
-            </Button>
-          </div>
+          <Badge variant="primary" className="mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            Simple, Fair Pricing
+          </Badge>
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+            One model. No surprises.
+          </h2>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Depots join free. Marketers subscribe for full access.
+            We earn a small transaction fee — only when a deal closes.
+          </p>
         </motion.div>
+
+        {/* Tab switcher */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-white rounded-2xl p-1.5 border border-slate-200 shadow-sm inline-flex">
+            {[
+              { id: "marketer" as const, label: "Marketer Plans", icon: ShoppingCart },
+              { id: "depot" as const, label: "For Depot Owners", icon: Building2 },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  "flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
+                  activeTab === tab.id
+                    ? "bg-primary-600 text-white shadow-md"
+                    : "text-slate-600 hover:text-slate-900"
+                )}
+              >
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* MARKETER PLANS */}
+        {activeTab === "marketer" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              {marketerPlans.map((plan, i) => (
+                <motion.div
+                  key={plan.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className={cn(
+                    "bg-white rounded-2xl border p-6 relative",
+                    plan.id === "quarterly"
+                      ? "border-primary-200 shadow-xl shadow-primary-500/10 ring-2 ring-primary-500/20"
+                      : "border-slate-200 shadow-md"
+                  )}
+                >
+                  {plan.badge && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <Badge variant={plan.id === "annual" ? "success" : "primary"} className="text-xs">
+                        {plan.badge}
+                      </Badge>
+                    </div>
+                  )}
+
+                  <div className="mb-6">
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">{plan.label}</h3>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl font-bold text-slate-900">
+                        {formatCurrency(plan.price)}
+                      </span>
+                      <span className="text-slate-500 text-sm">{plan.period}</span>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-slate-700">
+                        <Check className="w-4 h-4 text-primary-500 flex-shrink-0 mt-0.5" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    variant={plan.id === "quarterly" ? "primary" : "outline"}
+                    fullWidth
+                    rightIcon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Get Started
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Transaction fee explainer */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <TransactionFeeCalculator />
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-md">
+                <div className="flex items-center gap-2 mb-4">
+                  <Shield className="w-5 h-5 text-success-600" />
+                  <h3 className="font-bold text-slate-900">Why Transaction Fees?</h3>
+                </div>
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                  We charge a small <strong>0.5% fee</strong> on every completed order — not per litre.
+                  This aligns us with your success. No deal, no fee.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    "Providus Bank handles payments at near-zero bank charges",
+                    "Suitable for transactions up to ₦500M+ per order",
+                    "Funds held in escrow until delivery confirmed",
+                    "Instant settlement after QR code scan at depot",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2.5 text-sm text-slate-700">
+                      <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* DEPOT PLAN */}
+        {activeTab === "depot" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 gap-8 items-start"
+          >
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8">
+              <Badge variant="success" className="mb-4">Free to Join</Badge>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Depot Account</h3>
+              <div className="flex items-baseline gap-1 mb-6">
+                <span className="text-4xl font-bold text-slate-900">₦0</span>
+                <span className="text-slate-500">to list your depot</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                {depotFeatures.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-slate-700">
+                    <Check className="w-4 h-4 text-success-500 flex-shrink-0 mt-0.5" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Button variant="primary" fullWidth rightIcon={<ArrowRight className="w-4 h-4" />}>
+                Register Your Depot
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl p-6 text-white">
+                <Megaphone className="w-8 h-8 text-secondary-400 mb-3" />
+                <h4 className="font-bold text-lg mb-2">Advertise Your Products</h4>
+                <p className="text-white/75 text-sm mb-4">
+                  Boost your depot visibility. Reach active marketers via email blasts
+                  and homepage banners. Pay only for results.
+                </p>
+                <div className="bg-white/10 rounded-xl p-3 text-sm">
+                  Starting from <strong>₦25,000</strong> per campaign
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-6">
+                <Bot className="w-6 h-6 text-primary-600 mb-3" />
+                <h4 className="font-bold text-slate-900 mb-2">AI Handles Your Inquiries</h4>
+                <p className="text-sm text-slate-600">
+                  Your depot gets its own AI assistant trained on your products,
+                  pricing range, and availability. Marketers ask — AI answers. You close deals.
+                </p>
+              </div>
+
+              <div className="bg-slate-900 rounded-2xl p-6 text-white">
+                <TrendingUp className="w-6 h-6 text-secondary-400 mb-3" />
+                <h4 className="font-bold mb-2">How We Both Win</h4>
+                <p className="text-sm text-white/70">
+                  We earn 0.5% per closed transaction. That's it.
+                  No monthly fees for depots. We grow when you grow.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </Container>
     </section>
   );

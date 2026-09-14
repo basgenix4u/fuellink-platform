@@ -1,7 +1,9 @@
 // src/types/index.ts
+// UPDATED: Removed driver role. Added subscription, chat, AI price predictor, media, ads types.
 
-// User Types
-export type UserRole = "depot" | "marketer" | "driver" | "admin";
+// ─── User Types ──────────────────────────────────────────────────────────────
+
+export type UserRole = "depot" | "marketer" | "admin";
 
 export interface User {
   id: string;
@@ -9,13 +11,29 @@ export interface User {
   phone: string;
   role: UserRole;
   createdAt: string;
+  subscriptionStatus?: SubscriptionStatus; // marketers only
 }
 
-// Product Types
+// ─── Subscription (Marketers Only) ───────────────────────────────────────────
+
+export type SubscriptionStatus = "active" | "expired" | "trial" | "none";
+export type SubscriptionPlan = "monthly" | "quarterly" | "annual";
+
+export interface Subscription {
+  id: string;
+  marketerId: string;
+  plan: SubscriptionPlan;
+  status: SubscriptionStatus;
+  startDate: string;
+  endDate: string;
+  amount: number;
+  autoRenew: boolean;
+}
+
+// ─── Product Types ────────────────────────────────────────────────────────────
+
 export type ProductType = "PMS" | "AGO" | "DPK" | "LPG" | "JET_A1";
-
 export type ProductColor = "clear" | "clear-straw" | "light-amber" | "amber" | "dark";
-
 export type StockLevel = "high" | "medium" | "low" | "out_of_stock";
 
 export interface ProductSpecification {
@@ -29,392 +47,304 @@ export interface ProductSpecification {
   octaneRating?: string;
 }
 
-export interface Product {
+// ─── Depot Types ──────────────────────────────────────────────────────────────
+
+export interface TankConfig {
   id: string;
-  type: ProductType;
   name: string;
-  pricePerLitre: number;
-  previousPrice: number;
-  priceChange: number;
-  stockLevel: StockLevel;
-  stockLitres: number;
-  specifications: ProductSpecification;
-  updatedAt: string;
-}
-
-// Depot Types
-export type SubscriptionTier = "free" | "starter" | "professional" | "enterprise";
-
-export interface Tank {
-  id: string;
   product: ProductType;
-  capacity: number;
-  currentLevel: number;
-}
-
-export interface DepotStats {
-  totalOrders: number;
-  completedOrders: number;
-  averageLoadingTime: string;
-  onTimeRate: number;
+  capacity: number; // litres
+  currentLevel: number; // litres
 }
 
 export interface Depot {
   id: string;
   name: string;
-  slug: string;
   address: string;
   state: string;
-  lga: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  phone: string;
-  email: string;
-  rating: number;
-  reviewCount: number;
+  licenseNumber: string; // NMDPRA license
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  tanks: TankConfig[];
   isVerified: boolean;
-  subscriptionTier: SubscriptionTier;
-  operatingHours: string;
-  products: Product[];
-  tanks: Tank[];
-  stats: DepotStats;
+  rating: number;
+  totalOrders: number;
+  // Private price — NOT shown to marketers publicly, only via AI chat
+  privatePrices: Record<ProductType, number>;
+  createdAt: string;
+  subscriptionActive: boolean;
+  hasActiveAd?: boolean;
+}
+
+// ─── Marketer Types ───────────────────────────────────────────────────────────
+
+export interface Marketer {
+  id: string;
+  fullName: string;
+  businessName: string;
+  businessAddress: string;
+  state: string;
+  rcNumber?: string; // Optional CAC registration
+  email: string;
+  phone: string;
+  subscription: Subscription | null;
+  walletBalance: number;
   createdAt: string;
 }
 
-// Refinery Types
-export type RefineryStatus = "active" | "limited" | "inactive" | "coming-soon";
+// ─── Order Types ──────────────────────────────────────────────────────────────
 
-export interface RefineryProduct {
-  type: ProductType;
-  exWorksPrice: number;
-  previousPrice: number;
-  lastUpdated: string;
-  availability: "available" | "limited" | "unavailable";
+export type OrderStatus =
+  | "pending"
+  | "confirmed"
+  | "loading"
+  | "loaded"
+  | "in_transit"
+  | "completed"
+  | "cancelled"
+  | "disputed";
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  depotId: string;
+  depotName: string;
+  marketerId: string;
+  marketerName: string;
+  product: ProductType;
+  quantity: number; // litres
+  agreedPricePerLitre: number; // negotiated via chat
+  totalAmount: number;
+  transactionFee: number; // platform fee (flat % of transaction)
+  status: OrderStatus;
+  createdAt: string;
+  updatedAt: string;
+  qrCode?: string;
+  paymentReference?: string;
+  paymentMethod: "providus_transfer" | "wallet";
 }
+
+// ─── Chat / Messaging ────────────────────────────────────────────────────────
+
+export type MessageType = "text" | "voice" | "file" | "image" | "ai_response";
+
+export interface ChatMessage {
+  id: string;
+  chatId: string;
+  senderId: string;
+  senderRole: "depot" | "marketer" | "ai";
+  senderName: string;
+  type: MessageType;
+  content: string; // text or transcription of voice
+  voiceUrl?: string; // URL to voice note audio
+  fileUrl?: string;
+  fileName?: string;
+  language?: string; // e.g., "ha" for Hausa, "en" for English
+  transcription?: string; // AI transcription of voice notes
+  createdAt: string;
+  isRead: boolean;
+}
+
+export interface Chat {
+  id: string;
+  depotId: string;
+  depotName: string;
+  marketerId: string;
+  marketerName: string;
+  lastMessage?: ChatMessage;
+  unreadCount: number;
+  createdAt: string;
+  // AI chatbot handles initial messages and price inquiries
+  aiEnabled: boolean;
+}
+
+// ─── AI Price Predictor ───────────────────────────────────────────────────────
+
+export type PriceTrend = "up" | "down" | "stable";
+
+export interface PricePrediction {
+  id: string;
+  product: ProductType;
+  predictedPriceRange: { min: number; max: number };
+  currentAvgPrice: number;
+  trend: PriceTrend;
+  confidence: number; // 0-100
+  factors: PriceFactor[];
+  generatedAt: string;
+  validUntil: string;
+}
+
+export interface PriceFactor {
+  title: string;
+  impact: "positive" | "negative" | "neutral";
+  weight: number; // 0-100
+  source?: string;
+}
+
+// ─── Refinery Types ───────────────────────────────────────────────────────────
 
 export interface Refinery {
   id: string;
   name: string;
   location: string;
-  status: RefineryStatus;
-  capacity: string;
-  logo: string;
-  products: RefineryProduct[];
-  expectedLaunch?: string;
+  state: string;
+  operator: string;
+  capacity: number; // barrels per day
+  status: "operational" | "partial" | "shutdown" | "maintenance";
+  prices: Partial<Record<ProductType, number>>;
+  lastUpdated: string;
+  isOfficial: boolean; // NNPC / Dangote = true; others may vary
 }
 
-// Marketer Types
-export interface Marketer {
+// ─── Advertisement ────────────────────────────────────────────────────────────
+
+export type AdPlacement = "homepage_banner" | "marketer_feed" | "email_blast" | "depot_listing_boost";
+
+export interface Advertisement {
   id: string;
-  userId: string;
-  businessName: string;
-  phone: string;
-  email: string;
-  walletBalance: number;
-  totalOrders: number;
-  totalVolume: number;
-  createdAt: string;
-}
-
-// Driver Types
-export interface Driver {
-  id: string;
-  userId: string;
-  marketerId: string;
-  name: string;
-  phone: string;
-  licenseNumber: string;
-  createdAt: string;
-}
-
-// Truck Types
-export interface Truck {
-  id: string;
-  marketerId: string;
-  plateNumber: string;
-  capacity: number;
-  createdAt: string;
-}
-
-// Order Types
-export type OrderStatus =
-  | "pending"
-  | "confirmed"
-  | "in-transit"
-  | "at-depot"
-  | "loading"
-  | "loaded"
-  | "completed"
-  | "cancelled"
-  | "disputed";
-
-export interface OrderTimeline {
-  status: OrderStatus;
-  timestamp: string;
-  note: string;
-}
-
-export interface OrderEscrow {
-  status: "locked" | "released" | "refunded" | "disputed";
-  amount: number;
-  lockedAt: string;
-  releasedAt?: string;
-}
-
-export interface Order {
-  id: string;
-  orderNumber: string;
-  status: OrderStatus;
-  marketer: {
-    id: string;
-    businessName: string;
-    phone: string;
-  };
-  depot: {
-    id: string;
-    name: string;
-    address: string;
-  };
-  product: {
-    type: ProductType;
-    quantity: number;
-    pricePerLitre: number;
-    totalAmount: number;
-    platformFee: number;
-    specifications: ProductSpecification;
-  };
-  truck: {
-    id: string;
-    plateNumber: string;
-    capacity: number;
-  };
-  driver: {
-    id: string;
-    name: string;
-    phone: string;
-  };
-  qrCode: string;
-  timeline: OrderTimeline[];
-  escrow: OrderEscrow;
-  pickupDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Rating Types
-export interface Rating {
-  id: string;
-  orderId: string;
   depotId: string;
-  marketerId: string;
-  rating: number;
-  review: string;
-  createdAt: string;
+  depotName: string;
+  title: string;
+  body: string;
+  product: ProductType;
+  callToAction: string;
+  placement: AdPlacement[];
+  budget: number;
+  impressions: number;
+  clicks: number;
+  startDate: string;
+  endDate: string;
+  status: "active" | "paused" | "ended" | "pending_review";
 }
 
-// Transaction Types
-export type TransactionType = "credit" | "debit" | "escrow_lock" | "escrow_release" | "refund" | "fee";
+// ─── Media Hub ────────────────────────────────────────────────────────────────
 
-export interface Transaction {
+export type MediaCategory =
+  | "news"
+  | "market_analysis"
+  | "regulation"
+  | "industry"
+  | "prices"
+  | "technology";
+
+export interface MediaArticle {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  category: MediaCategory;
+  imageUrl?: string;
+  source: string;
+  sourceUrl?: string;
+  publishedAt: string;
+  readTimeMinutes: number;
+  tags: string[];
+  featured: boolean;
+}
+
+// ─── Wallet / Payments ────────────────────────────────────────────────────────
+
+export type TransactionType =
+  | "deposit"
+  | "withdrawal"
+  | "payment"
+  | "refund"
+  | "subscription_fee"
+  | "transaction_fee"
+  | "ad_spend";
+
+export type TransactionStatus = "pending" | "success" | "failed" | "reversed";
+
+export interface WalletTransaction {
   id: string;
   userId: string;
   type: TransactionType;
   amount: number;
+  status: TransactionStatus;
   description: string;
   reference: string;
-  orderId?: string;
+  orderNumber?: string;
+  providusRef?: string; // Providus Bank API reference
   createdAt: string;
 }
 
-// Alert Types
-export interface PriceAlert {
-  id: string;
-  marketerId: string;
-  productType: ProductType;
-  targetPrice: number;
-  isActive: boolean;
-  createdAt: string;
+// ─── NMDPRA Compliance ────────────────────────────────────────────────────────
+
+export interface NMDPRAReport {
+  totalLicensedDepots: number;
+  activeDepots: number;
+  totalTransactionVolume: number; // litres
+  transactionValueNGN: number;
+  reportPeriod: string;
+  stateBreakdown: Array<{
+    state: string;
+    depotCount: number;
+    volumeLitres: number;
+  }>;
+  complianceIssues: number;
 }
 
-// Notification Types
-export type NotificationType = "order" | "price" | "payment" | "system" | "alert";
+// ─── Dispute Types ────────────────────────────────────────────────────────────
 
-export interface Notification {
-  id: string;
-  userId: string;
-  type: NotificationType;
-  title: string;
-  body: string;
-  isRead: boolean;
-  createdAt: string;
-}
-
-// Analytics Types
-export interface AnalyticsDataPoint {
-  date: string;
-  value: number;
-}
-
-export interface DepotAnalytics {
-  revenue: AnalyticsDataPoint[];
-  orders: AnalyticsDataPoint[];
-  volume: AnalyticsDataPoint[];
-  topProducts: { product: ProductType; volume: number; revenue: number }[];
-  topCustomers: { name: string; orders: number; volume: number }[];
-}
-
-export interface PlatformAnalytics {
-  totalUsers: number;
-  totalDepots: number;
-  totalMarketers: number;
-  totalDrivers: number;
-  totalTransactions: number;
-  totalVolume: number;
-  gmv: number;
-  dailyActiveUsers: number;
-  transactionTrends: AnalyticsDataPoint[];
-  userGrowth: AnalyticsDataPoint[];
-}
-
-// Order with Multiple Trucks
-export interface TruckOrder {
-  id: string;
-  plateNumber: string;
-  capacity: number;
-  quantity: number;
-  driverName?: string;
-  driverPhone?: string;
-  nupengTicket?: string;
-  qrCode: string;
-  qrVerified: boolean;
-  qrVerifiedAt?: string;
-  status: "pending" | "verified" | "loading" | "loaded" | "completed";
-}
-
-export interface Order {
-  id: string;
-  orderNumber: string;
-  status: "pending" | "confirmed" | "in-progress" | "completed" | "cancelled" | "disputed";
-  
-  marketer: {
-    id: string;
-    businessName: string;
-    phone: string;
-  };
-  
-  depot: {
-    id: string;
-    name: string;
-    address: string;
-    phone: string;
-  };
-  
-  product: {
-    type: ProductType;
-    name: string;
-    pricePerLitre: number;
-  };
-  
-  // Multiple trucks
-  trucks: TruckOrder[];
-  
-  // Totals
-  totalQuantity: number;
-  productCost: number;
-  marketerFee: number; // quantity × 0.25
-  depotFee: number; // quantity × 0.25 (deducted from settlement)
-  totalAmount: number; // productCost + marketerFee
-  
-  // Escrow
-  escrow: {
-    status: "pending" | "locked" | "partial_release" | "released" | "refunded" | "disputed";
-    lockedAt?: string;
-    releasedAt?: string;
-  };
-  
-  // Dates
-  pickupDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Chat/Messages
-export interface ChatMessage {
-  id: string;
-  conversationId: string;
-  senderId: string;
-  senderType: "marketer" | "depot";
-  content: string;
-  attachments?: {
-    type: "image" | "document";
-    url: string;
-    name: string;
-  }[];
-  status: "sent" | "delivered" | "read";
-  createdAt: string;
-}
-
-export interface Conversation {
-  id: string;
-  marketerId: string;
-  depotId: string;
-  orderId?: string;
-  lastMessage: string;
-  lastMessageAt: string;
-  unreadCount: {
-    marketer: number;
-    depot: number;
-  };
-  createdAt: string;
-}
-
-// Disputes
-export type DisputeType = 
-  | "short_loading"
+export type DisputeStatus = "open" | "under_review" | "resolved" | "escalated";
+export type DisputeReason =
+  | "quantity_short"
   | "quality_issue"
+  | "price_dispute"
+  | "delivery_delay"
   | "payment_issue"
-  | "delay"
-  | "unauthorized_charges"
-  | "fraud"
   | "other";
-
-export type DisputeStatus = 
-  | "pending"
-  | "under_review"
-  | "resolved"
-  | "escalated"
-  | "closed";
 
 export interface Dispute {
   id: string;
+  orderNumber: string;
   orderId: string;
-  reportedBy: "marketer" | "depot";
-  reporterId: string;
-  againstId: string;
-  type: DisputeType;
+  raisedBy: "marketer" | "depot";
+  raisedById: string;
+  reason: DisputeReason;
   description: string;
-  expectedResolution?: string;
-  evidence: {
-    type: "image" | "document";
-    url: string;
-    name: string;
-  }[];
+  evidence?: string[];
   status: DisputeStatus;
-  nmdpraRef?: string;
-  nmdpraResponse?: string;
   resolution?: string;
-  resolvedAt?: string;
   createdAt: string;
-  updatedAt: string;
+  resolvedAt?: string;
 }
 
-// Brent Crude
-export interface BrentCrudeData {
-  price: number; // USD per barrel
-  change: number;
-  changePercent: number;
-  exchangeRate: number; // USD to NGN
-  lastUpdated: string;
+// ─── Utility Functions ────────────────────────────────────────────────────────
+
+export function getStatusColor(status: OrderStatus): string {
+  switch (status) {
+    case "pending": return "text-amber-600 bg-amber-100";
+    case "confirmed": return "text-blue-600 bg-blue-100";
+    case "loading": return "text-accent-600 bg-accent-100";
+    case "loaded": return "text-primary-600 bg-primary-100";
+    case "in_transit": return "text-purple-600 bg-purple-100";
+    case "completed": return "text-success-600 bg-success-100";
+    case "cancelled": return "text-danger-600 bg-danger-100";
+    case "disputed": return "text-orange-600 bg-orange-100";
+    default: return "text-slate-600 bg-slate-100";
+  }
+}
+
+export function generateOrderNumber(): string {
+  const year = new Date().getFullYear();
+  const random = Math.floor(100000 + Math.random() * 900000);
+  return `ORD-${year}-${random}`;
+}
+
+export function generateQRCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "FL-";
+  for (let i = 0; i < 12; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+// Platform fee: flat % of transaction value (not per-litre)
+export const PLATFORM_FEE_RATE = 0.005; // 0.5% of transaction
+
+export function calculateTransactionFee(totalAmount: number): number {
+  return Math.round(totalAmount * PLATFORM_FEE_RATE);
 }

@@ -1,5 +1,4 @@
 // src/components/landing/HowItWorksSection.tsx
-
 "use client";
 
 import { useState, useRef } from "react";
@@ -9,17 +8,16 @@ import {
   Building2,
   ShoppingCart,
   Search,
-  FileCheck,
+  MessageSquare,
   CreditCard,
-  QrCode,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
+  Bot,
   TrendingUp,
-  Package,
+  BarChart3,
   Shield,
-  Send,
-  Truck,
+  Mic,
+  Newspaper,
 } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { Button } from "@/components/shared/Button";
@@ -27,295 +25,295 @@ import { cn } from "@/lib/utils";
 
 type UserType = "marketer" | "depot";
 
-const userTabs: { id: UserType; label: string; description: string; icon: React.ElementType }[] = [
-  { 
-    id: "marketer", 
-    label: "For Marketers", 
-    description: "Buy petroleum products securely",
-    icon: ShoppingCart 
+const userTabs: { id: UserType; label: string; icon: React.ElementType }[] = [
+  { id: "marketer", label: "For Marketers", icon: ShoppingCart },
+  { id: "depot", label: "For Depots", icon: Building2 },
+];
+
+const marketerSteps = [
+  {
+    icon: Search,
+    title: "Subscribe & Explore",
+    description:
+      "Pick a subscription plan and instantly access Nigeria's largest verified depot network. Browse by state, product, and availability.",
+    visual: "🔍 Browse 127+ verified depots",
   },
-  { 
-    id: "depot", 
-    label: "For Depot Owners", 
-    description: "Sell and manage inventory",
-    icon: Building2 
+  {
+    icon: TrendingUp,
+    title: "Check AI Price Predictions",
+    description:
+      "Our AI scans global oil news, NNPCL bulletins, and Dangote updates every minute to predict today's price range before you negotiate.",
+    visual: "📈 PMS: ₦893–₦910 today (87% confidence)",
+  },
+  {
+    icon: Bot,
+    title: "Chat With Depot AI",
+    description:
+      "Ask the depot's AI assistant anything — available stock, price, delivery, minimum order. Send voice notes in Hausa or any language.",
+    visual: "🎙 Voice note → Transcribed → Replied instantly",
+  },
+  {
+    icon: MessageSquare,
+    title: "Negotiate & Confirm",
+    description:
+      "Once the AI gives you the depot's price, escalate to the human depot manager for final negotiation — all inside FuelLink.",
+    visual: "💬 Price agreed: ₦905/L for 33,000L",
+  },
+  {
+    icon: CreditCard,
+    title: "Pay Securely via Providus",
+    description:
+      "Pay through our Providus Bank integration. Funds go into escrow. Released to depot only after you confirm delivery.",
+    visual: "🏦 Providus transfer • Escrow protected",
+  },
+  {
+    icon: CheckCircle2,
+    title: "Collect & Done",
+    description:
+      "Show your QR code at the depot gate. Loading is confirmed. Escrow releases. Transaction complete.",
+    visual: "✅ QR scanned • Payment released",
   },
 ];
 
-const steps: Record<UserType, { icon: React.ElementType; title: string; description: string; highlight?: string }[]> = {
-  marketer: [
-    {
-      icon: Search,
-      title: "Browse Live Prices",
-      description: "See real-time prices from all participating depots. Compare by product type, location, stock level, and rating.",
-      highlight: "Real-time updates every 30 seconds",
-    },
-    {
-      icon: TrendingUp,
-      title: "Compare & Analyze",
-      description: "View detailed depot profiles with product specifications, current stock levels (%), and verified customer reviews.",
-      highlight: "Stock levels shown as percentages",
-    },
-    {
-      icon: CreditCard,
-      title: "Place Secure Order",
-      description: "Select volume, enter truck details, and pay securely. Your payment is held in escrow until loading is confirmed.",
-      highlight: "Only ₦0.25/litre platform fee",
-    },
-    {
-      icon: QrCode,
-      title: "Get Your QR Code",
-      description: "Receive a unique QR code for each order. Give this to your driver for depot verification and loading authorization.",
-      highlight: "One QR code per truck/order",
-    },
-    {
-      icon: CheckCircle2,
-      title: "Confirm & Complete",
-      description: "Once loading is verified at the depot, confirm receipt to release payment. Rate your experience to help other traders.",
-      highlight: "Escrow releases automatically",
-    },
-  ],
-  depot: [
-    {
-      icon: TrendingUp,
-      title: "Update Your Prices",
-      description: "Set and update prices instantly from your dashboard. Broadcast to all marketers across Nigeria in real-time.",
-      highlight: "One-click price broadcasting",
-    },
-    {
-      icon: Package,
-      title: "Manage Inventory",
-      description: "Track tank capacity as percentages, set low-stock alerts, and manage capacity across all your products.",
-      highlight: "Visual tank level indicators",
-    },
-    {
-      icon: Shield,
-      title: "Receive Secured Orders",
-      description: "Get instant notifications for new orders. Payment is already secured in escrow before you accept—no payment risk.",
-      highlight: "100% payment guaranteed",
-    },
-    {
-      icon: QrCode,
-      title: "Verify & Load",
-      description: "Scan the driver's QR code to verify authorization instantly. System confirms order details, volume, and payment status.",
-      highlight: "Tamper-proof verification",
-    },
-    {
-      icon: Send,
-      title: "Confirm & Get Paid",
-      description: "Confirm loading completion to trigger instant payment release to your FuelLink wallet. Withdraw anytime.",
-      highlight: "Instant settlement",
-    },
-  ],
-};
+const depotSteps = [
+  {
+    icon: Building2,
+    title: "Register Your Depot Free",
+    description:
+      "List your depot with your NMDPRA license, tank configurations, and products. Verification takes 24–48 hours.",
+    visual: "📋 NMDPRA License verified in 24hrs",
+  },
+  {
+    icon: Bot,
+    title: "Your AI Is Ready",
+    description:
+      "FuelLink sets up an AI chatbot for your depot automatically. It knows your products, availability, and price range. It answers marketers 24/7 — even when you sleep.",
+    visual: "🤖 AI active • 24/7 marketer support",
+  },
+  {
+    icon: BarChart3,
+    title: "Set Private Prices",
+    description:
+      "Set your price per product. These are NOT publicly shown to marketers — only revealed by your AI during chat. This creates room for negotiation and keeps you in control.",
+    visual: "🔒 Price is private until chat begins",
+  },
+  {
+    icon: MessageSquare,
+    title: "Close Deals in Chat",
+    description:
+      "When a marketer wants to negotiate, you join the conversation. Agree a price, confirm the order — all within FuelLink.",
+    visual: "✅ Order confirmed: 33,000L AGO",
+  },
+  {
+    icon: Shield,
+    title: "Get Paid Instantly",
+    description:
+      "Marketer pays via Providus Bank. Funds are escrowed. When the QR code is scanned at your gate, money hits your wallet immediately.",
+    visual: "💰 ₦37.6M settled to your wallet",
+  },
+  {
+    icon: Newspaper,
+    title: "Optionally Advertise",
+    description:
+      "Run targeted ads to reach more marketers. Email blasts, homepage banners, or boosted depot listings. Pay per campaign, not monthly.",
+    visual: "📢 Reach 3,400+ active marketers",
+  },
+];
 
 export function HowItWorksSection() {
-  const [activeTab, setActiveTab] = useState<UserType>("marketer");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeTab, setActiveTab] = useState<UserType>("marketer");
+  const [activeStep, setActiveStep] = useState(0);
+
+  const steps = activeTab === "marketer" ? marketerSteps : depotSteps;
 
   return (
-    <section ref={ref} className="py-24 bg-slate-50 overflow-hidden" id="how-it-works">
-      <Container size="wide">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm uppercase tracking-wider mb-4">
-              <Sparkles className="w-4 h-4" />
-              How It Works
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-              Simple Steps to{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
-                Smarter Trading
-              </span>
-            </h2>
-            <p className="text-lg text-slate-600">
-              Whether you&apos;re buying or selling, FuelLink makes petroleum trading 
-              effortless, secure, and transparent.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* User Type Tabs */}
+    <section id="how-it-works" ref={ref} className="py-24 bg-white">
+      <Container>
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
         >
-          <div className="inline-flex bg-white rounded-2xl p-2 shadow-xl border border-slate-100 gap-2">
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+            How FuelLink Works
+          </h2>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            From discovery to delivery — a streamlined AI-powered flow
+            for both marketers and depots.
+          </p>
+        </motion.div>
+
+        {/* Tab switcher */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-slate-100 rounded-2xl p-1.5 inline-flex">
             {userTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => { setActiveTab(tab.id); setActiveStep(0); }}
                 className={cn(
-                  "flex items-center gap-3 px-6 py-4 rounded-xl font-semibold transition-all duration-300",
+                  "flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
                   activeTab === tab.id
-                    ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    ? "bg-white text-primary-700 shadow-md"
+                    : "text-slate-500 hover:text-slate-900"
                 )}
               >
-                <tab.icon className="w-5 h-5" />
-                <div className="text-left">
-                  <div>{tab.label}</div>
-                  <div className={cn(
-                    "text-xs font-normal",
-                    activeTab === tab.id ? "text-white/70" : "text-slate-400"
-                  )}>
-                    {tab.description}
-                  </div>
-                </div>
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
               </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Steps Content */}
+        {/* Steps */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="relative"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="grid lg:grid-cols-5 gap-8"
           >
-            {/* Desktop: Horizontal Steps */}
-            <div className="hidden lg:block">
-              <div className="grid grid-cols-5 gap-4 relative">
-                {/* Connecting Line */}
-                <div className="absolute top-20 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-primary-200 via-primary-400 to-primary-200" />
-
-                {steps[activeTab].map((step, index) => (
-                  <motion.div
-                    key={step.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="relative group"
+            {/* Step list */}
+            <div className="lg:col-span-2 space-y-2">
+              {steps.map((step, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveStep(i)}
+                  className={cn(
+                    "w-full flex items-start gap-4 p-4 rounded-2xl text-left transition-all duration-200",
+                    activeStep === i
+                      ? "bg-primary-50 border-2 border-primary-200"
+                      : "bg-white border-2 border-transparent hover:border-slate-100 hover:bg-slate-50"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
+                      activeStep === i
+                        ? "bg-primary-600 text-white"
+                        : "bg-slate-100 text-slate-400"
+                    )}
                   >
-                    {/* Step Circle */}
-                    <div className="flex justify-center mb-8">
-                      <div className="relative">
-                        <div className="w-20 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center z-10 relative border-2 border-primary-100 group-hover:border-primary-300 group-hover:shadow-2xl transition-all duration-300">
-                          <step.icon className="w-8 h-8 text-primary-500" />
-                        </div>
-                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
-                          {index + 1}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Content Card */}
-                    <div className="bg-white rounded-2xl p-5 shadow-lg border border-slate-100 group-hover:shadow-xl group-hover:border-primary-100 transition-all duration-300 h-full">
-                      <h3 className="text-base font-bold text-slate-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-slate-600 text-sm leading-relaxed mb-3">
+                    <step.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p
+                      className={cn(
+                        "font-semibold text-sm",
+                        activeStep === i ? "text-primary-700" : "text-slate-700"
+                      )}
+                    >
+                      {i + 1}. {step.title}
+                    </p>
+                    {activeStep === i && (
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
                         {step.description}
                       </p>
-                      {step.highlight && (
-                        <div className="inline-flex items-center gap-1.5 text-xs font-medium text-primary-600 bg-primary-50 rounded-full px-3 py-1">
-                          <CheckCircle2 className="w-3 h-3" />
-                          {step.highlight}
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile: Vertical Steps */}
-            <div className="lg:hidden space-y-4">
-              {steps[activeTab].map((step, index) => (
-                <motion.div
-                  key={step.title}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex gap-4"
-                >
-                  {/* Left: Icon & Line */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative flex-shrink-0">
-                      <div className="w-14 h-14 bg-white rounded-xl shadow-lg flex items-center justify-center border-2 border-primary-100">
-                        <step.icon className="w-6 h-6 text-primary-500" />
-                      </div>
-                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-md">
-                        {index + 1}
-                      </div>
-                    </div>
-                    {index < steps[activeTab].length - 1 && (
-                      <div className="w-0.5 flex-1 bg-gradient-to-b from-primary-300 to-primary-100 mt-4 rounded-full" />
                     )}
                   </div>
+                </button>
+              ))}
+            </div>
 
-                  {/* Right: Content */}
-                  <div className="flex-1 pb-8">
-                    <div className="bg-white rounded-xl p-4 shadow-lg border border-slate-100">
-                      <h3 className="text-base font-bold text-slate-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-slate-600 text-sm leading-relaxed mb-3">
-                        {step.description}
-                      </p>
-                      {step.highlight && (
-                        <div className="inline-flex items-center gap-1.5 text-xs font-medium text-primary-600 bg-primary-50 rounded-full px-3 py-1">
-                          <CheckCircle2 className="w-3 h-3" />
-                          {step.highlight}
-                        </div>
-                      )}
+            {/* Step detail */}
+            <div className="lg:col-span-3">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-gradient-to-br from-primary-900 to-primary-700 rounded-3xl p-8 h-full min-h-[360px] flex flex-col justify-between text-white relative overflow-hidden"
+                >
+                  {/* Background glow */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-500/15 rounded-full blur-[80px]" />
+
+                  <div className="relative">
+                    <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+                      {(() => {
+                        const Icon = steps[activeStep].icon;
+                        return <Icon className="w-7 h-7 text-secondary-300" />;
+                      })()}
                     </div>
+
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold uppercase tracking-widest text-white/40">
+                        Step {activeStep + 1} of {steps.length}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-4">
+                      {steps[activeStep].title}
+                    </h3>
+
+                    <p className="text-white/75 leading-relaxed text-sm">
+                      {steps[activeStep].description}
+                    </p>
+                  </div>
+
+                  {/* Visual callout */}
+                  <div className="relative mt-8 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-4 border border-white/10">
+                    <p className="text-sm font-medium text-white">
+                      {steps[activeStep].visual}
+                    </p>
+                  </div>
+
+                  {/* Step navigation */}
+                  <div className="relative flex items-center justify-between mt-6">
+                    <div className="flex gap-2">
+                      {steps.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveStep(i)}
+                          className={cn(
+                            "rounded-full transition-all duration-200",
+                            i === activeStep
+                              ? "w-8 h-2 bg-secondary-400"
+                              : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                          )}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setActiveStep((s) => Math.min(s + 1, steps.length - 1))}
+                      disabled={activeStep === steps.length - 1}
+                      className="flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white disabled:opacity-30 transition-colors"
+                    >
+                      Next <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </motion.div>
-              ))}
+              </AnimatePresence>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Bottom CTA */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6 }}
-          className="mt-20 text-center"
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-16 text-center"
         >
-          <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 max-w-2xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 border-3 border-white flex items-center justify-center text-white text-sm font-bold shadow-lg"
-                  >
-                    {String.fromCharCode(64 + i)}
-                  </div>
-                ))}
-              </div>
-              <div className="text-center sm:text-left">
-                <p className="font-bold text-slate-900 text-lg">
-                  Join 3,000+ traders already on FuelLink
-                </p>
-                <p className="text-slate-500">
-                  Start trading in less than 5 minutes
-                </p>
-              </div>
-              <Button 
-                variant="primary" 
-                size="lg" 
-                rightIcon={<ArrowRight className="w-5 h-5" />}
-                className="whitespace-nowrap"
-              >
-                Get Started
-              </Button>
-            </div>
-          </div>
+          <Button
+            variant="primary"
+            size="lg"
+            rightIcon={<ArrowRight className="w-5 h-5" />}
+            onClick={() =>
+              (window.location.href =
+                activeTab === "marketer"
+                  ? "/register/marketer"
+                  : "/register/depot")
+            }
+          >
+            {activeTab === "marketer" ? "Start as Marketer" : "Register Your Depot"}
+          </Button>
         </motion.div>
       </Container>
     </section>

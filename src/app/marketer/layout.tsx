@@ -1,5 +1,4 @@
 // src/app/marketer/layout.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -8,13 +7,10 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
-  TrendingUp,
   Building2,
   ShoppingCart,
   Wallet,
   Bell as BellIcon,
-  Calculator,
-  Truck,
   Settings,
   HelpCircle,
   Menu,
@@ -23,296 +19,274 @@ import {
   ChevronDown,
   LogOut,
   User,
-  Factory,
+  MessageSquare,
+  TrendingUp,
+  Newspaper,
+  Bot,
+  AlertCircle,
 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { Badge } from "@/components/shared/Badge";
-import { LivePriceTicker } from "@/components/marketer/LivePriceTicker";
-import { FloatingCalculator } from "@/components/marketer/FloatingCalculator";
-import { CalculatorToggle } from "@/components/marketer/CalculatorToggle";
 import { cn } from "@/lib/utils";
 
-const sidebarLinks = [
-  { label: "Dashboard", href: "/marketer", icon: LayoutDashboard },
-  { label: "Live Prices", href: "/marketer/prices", icon: TrendingUp },
-  { label: "Refineries", href: "/marketer/refineries", icon: Factory },
-  { label: "Depots", href: "/marketer/depots", icon: Building2 },
-  { label: "My Orders", href: "/marketer/orders", icon: ShoppingCart, badge: "3" },
-  { label: "Wallet", href: "/marketer/wallet", icon: Wallet },
-  { label: "Price Alerts", href: "/marketer/alerts", icon: BellIcon },
-  { label: "My Fleet", href: "/marketer/fleet", icon: Truck },
-  { label: "Settings", href: "/marketer/settings", icon: Settings },
+// Nav links — driver removed, prices removed, fleet removed
+// Added: chat, AI predictor, media
+const navLinks = [
+  {
+    href: "/marketer",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    badge: null,
+    exact: true,
+  },
+  {
+    href: "/marketer/depots",
+    label: "Find Depots",
+    icon: Building2,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/chat",
+    label: "Depot Chat",
+    icon: MessageSquare,
+    badge: "3", // unread conversations
+    exact: false,
+    requiresSubscription: true,
+  },
+  {
+    href: "/marketer/orders",
+    label: "My Orders",
+    icon: ShoppingCart,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/predictor",
+    label: "AI Price Predictor",
+    icon: TrendingUp,
+    badge: "AI",
+    exact: false,
+    requiresSubscription: true,
+  },
+  {
+    href: "/marketer/refineries",
+    label: "Refinery Prices",
+    icon: Bot,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/media",
+    label: "Media Hub",
+    icon: Newspaper,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/alerts",
+    label: "Alerts",
+    icon: BellIcon,
+    badge: "2",
+    exact: false,
+  },
+  {
+    href: "/marketer/wallet",
+    label: "Wallet",
+    icon: Wallet,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/disputes",
+    label: "Disputes",
+    icon: HelpCircle,
+    badge: null,
+    exact: false,
+  },
+  {
+    href: "/marketer/settings",
+    label: "Settings",
+    icon: Settings,
+    badge: null,
+    exact: false,
+  },
 ];
+
+// Mock subscription status — replace with real state management
+const MOCK_SUBSCRIPTION_STATUS = "active"; // "active" | "expired" | "none"
 
 export default function MarketerLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-
-  const user = {
-    name: "Sahara Energy Resources",
-    email: "orders@saharaenergy.ng",
-    avatar: "S",
-  };
+  const isSubscribed = MOCK_SUBSCRIPTION_STATUS === "active";
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Live Price Ticker - Always on Top */}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <LivePriceTicker />
-      </div>
+    <div className="min-h-screen bg-slate-50 flex">
 
-      {/* Sidebar - Desktop */}
-      <aside className="fixed top-[40px] left-0 bottom-0 z-40 w-64 bg-white border-r border-slate-200 hidden lg:block">
-        <div className="flex flex-col h-full">
-          <div className="flex items-center h-16 px-6 border-b border-slate-100">
-            <Logo variant="default" size="md" />
-          </div>
+      {/* ── Sidebar ── */}
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-100 flex flex-col transition-transform duration-300",
+          "lg:translate-x-0",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {/* Logo */}
+        <div className="p-5 border-b border-slate-100">
+          <Logo variant="default" size="md" />
+        </div>
 
-          <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-            {sidebarLinks.map((link) => {
-              const isActive =
-                pathname === link.href ||
-                (link.href !== "/marketer" && pathname.startsWith(link.href));
-
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200",
-                    isActive
-                      ? "bg-secondary-50 text-secondary-600"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  )}
-                >
-                  <link.icon
-                    className={cn(
-                      "w-5 h-5",
-                      isActive ? "text-secondary-500" : "text-slate-400"
-                    )}
-                  />
-                  <span className="flex-1">{link.label}</span>
-                  {link.badge && (
-                    <Badge variant="secondary" size="sm">
-                      {link.badge}
-                    </Badge>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Calculator Quick Access */}
-          <div className="p-4 border-t border-slate-100">
-            <button
-              onClick={() => setIsCalculatorOpen(true)}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-secondary-500 to-secondary-600 text-white font-medium hover:shadow-lg transition-shadow"
-            >
-              <Calculator className="w-5 h-5" />
-              <span>Profit Calculator</span>
-            </button>
-          </div>
-
-          <div className="p-4 border-t border-slate-100">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50">
-              <div className="w-10 h-10 rounded-full bg-secondary-500 flex items-center justify-center text-white font-bold">
-                {user.avatar}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-slate-900 truncate">
-                  {user.name}
-                </p>
-                <p className="text-xs text-slate-500">Marketer</p>
-              </div>
+        {/* Subscription badge */}
+        {!isSubscribed && (
+          <div className="mx-3 mt-3 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-semibold text-amber-800">No active subscription</p>
+              <Link href="/marketer/subscribe" className="text-xs text-amber-600 underline">
+                Subscribe to unlock chat & AI
+              </Link>
             </div>
+          </div>
+        )}
+
+        {/* Nav links */}
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+          {navLinks.map((link) => {
+            const isActive =
+              link.exact
+                ? pathname === link.href
+                : pathname.startsWith(link.href);
+
+            const isLocked = link.requiresSubscription && !isSubscribed;
+
+            return (
+              <Link
+                key={link.href}
+                href={isLocked ? "/marketer/subscribe" : link.href}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all duration-200 group",
+                  isActive
+                    ? "bg-secondary-50 text-secondary-700"
+                    : isLocked
+                    ? "text-slate-400 hover:bg-slate-50 cursor-pointer"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                )}
+              >
+                <link.icon
+                  className={cn(
+                    "w-5 h-5 flex-shrink-0",
+                    isActive ? "text-secondary-500" : isLocked ? "text-slate-300" : "text-slate-400"
+                  )}
+                />
+                <span className="flex-1 text-sm">{link.label}</span>
+
+                {/* Badge */}
+                {link.badge && !isLocked && (
+                  <span
+                    className={cn(
+                      "text-xs px-1.5 py-0.5 rounded-full font-bold",
+                      link.badge === "AI"
+                        ? "bg-primary-100 text-primary-700"
+                        : "bg-red-100 text-red-600"
+                    )}
+                  >
+                    {link.badge}
+                  </span>
+                )}
+
+                {/* Lock icon for subscription-gated links */}
+                {isLocked && (
+                  <span className="text-[10px] bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-full font-medium">
+                    Pro
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User section */}
+        <div className="p-4 border-t border-slate-100">
+          <div className="flex items-center gap-3 px-2 py-2.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-secondary-100 flex items-center justify-center flex-shrink-0">
+              <User className="w-5 h-5 text-secondary-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-slate-900 truncate">Adamu Petroleum</p>
+              <p className="text-xs text-slate-500 truncate">
+                {isSubscribed ? (
+                  <span className="text-green-600">● Subscribed</span>
+                ) : (
+                  <span className="text-amber-500">● No subscription</span>
+                )}
+              </p>
+            </div>
+            <LogOut className="w-4 h-4 text-slate-400 flex-shrink-0" />
           </div>
         </div>
       </aside>
 
-      {/* Mobile Sidebar */}
+      {/* ── Mobile overlay ── */}
       <AnimatePresence>
         {isSidebarOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm lg:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-            />
-            <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl lg:hidden"
-            >
-              <div className="flex flex-col h-full pt-[40px]">
-                <div className="flex items-center justify-between h-16 px-4 border-b border-slate-100">
-                  <Logo variant="default" size="md" />
-                  <button
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="p-2 rounded-lg text-slate-500 hover:bg-slate-100"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-                <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-                  {sidebarLinks.map((link) => {
-                    const isActive =
-                      pathname === link.href ||
-                      (link.href !== "/marketer" && pathname.startsWith(link.href));
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setIsSidebarOpen(false)}
-                        className={cn(
-                          "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all",
-                          isActive
-                            ? "bg-secondary-50 text-secondary-600"
-                            : "text-slate-600 hover:bg-slate-50"
-                        )}
-                      >
-                        <link.icon
-                          className={cn(
-                            "w-5 h-5",
-                            isActive ? "text-secondary-500" : "text-slate-400"
-                          )}
-                        />
-                        <span className="flex-1">{link.label}</span>
-                        {link.badge && (
-                          <Badge variant="secondary" size="sm">
-                            {link.badge}
-                          </Badge>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </nav>
-              </div>
-            </motion.aside>
-          </>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
-      <div className="lg:pl-64 pt-[40px]">
-        {/* Header */}
-        <header className="sticky top-[40px] z-30 h-16 bg-white border-b border-slate-200">
-          <div className="flex items-center justify-between h-full px-4 sm:px-6">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 lg:hidden"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-              <div className="hidden sm:block relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search depots, products..."
-                  className="w-64 pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-secondary-500"
-                />
-              </div>
+      {/* ── Main content ── */}
+      <div className="flex-1 lg:ml-64 flex flex-col">
+        {/* Top bar */}
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-lg border-b border-slate-100 px-4 sm:px-6 py-3 flex items-center gap-3">
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+
+          {/* Search */}
+          <div className="flex-1 max-w-md">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="search"
+                placeholder="Search depots, orders..."
+                className="w-full pl-9 pr-4 py-2 bg-slate-100 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:bg-white transition-all"
+              />
             </div>
+          </div>
 
-            <div className="flex items-center gap-3">
-              {/* Quick Calculator Button */}
-              <button
-                onClick={() => setIsCalculatorOpen(true)}
-                className="hidden sm:flex items-center gap-2 px-3 py-2 bg-secondary-50 text-secondary-600 rounded-xl hover:bg-secondary-100 transition-colors"
-              >
-                <Calculator className="w-4 h-4" />
-                <span className="text-sm font-medium">Calculator</span>
-              </button>
+          <div className="flex items-center gap-2 ml-auto">
+            {/* Notification bell */}
+            <button className="relative p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
+              <BellIcon className="w-5 h-5" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
+            </button>
 
-              <button className="relative p-2 rounded-xl text-slate-500 hover:bg-slate-100">
-                <BellIcon className="w-6 h-6" />
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-danger-500 rounded-full border-2 border-white" />
-              </button>
-
-              <div className="relative">
-                <button
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-100"
-                >
-                  <div className="w-8 h-8 rounded-full bg-secondary-500 flex items-center justify-center text-white font-bold text-sm">
-                    {user.avatar}
-                  </div>
-                  <ChevronDown className={cn("w-4 h-4 text-slate-500 hidden sm:block", isProfileOpen && "rotate-180")} />
+            {/* Subscribe CTA if not subscribed */}
+            {!isSubscribed && (
+              <Link href="/marketer/subscribe">
+                <button className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-secondary-500 text-white text-xs font-semibold rounded-xl hover:bg-secondary-600 transition-colors">
+                  ⚡ Subscribe
                 </button>
-
-                <AnimatePresence>
-                  {isProfileOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
-                    >
-                      <div className="p-4 border-b border-slate-100">
-                        <p className="font-semibold text-slate-900">{user.name}</p>
-                        <p className="text-sm text-slate-500">{user.email}</p>
-                      </div>
-                      <div className="p-2">
-                        <Link
-                          href="/marketer/settings"
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50"
-                          onClick={() => setIsProfileOpen(false)}
-                        >
-                          <User className="w-4 h-4" />
-                          <span>My Profile</span>
-                        </Link>
-                        <Link
-                          href="/marketer/settings"
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50"
-                          onClick={() => setIsProfileOpen(false)}
-                        >
-                          <Settings className="w-4 h-4" />
-                          <span>Settings</span>
-                        </Link>
-                      </div>
-                      <div className="p-2 border-t border-slate-100">
-                        <Link
-                          href="/login"
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg text-danger-600 hover:bg-danger-50"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          <span>Sign Out</span>
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+              </Link>
+            )}
           </div>
         </header>
 
-        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto">
+          {children}
+        </main>
       </div>
-
-      {/* Floating Calculator */}
-      <FloatingCalculator
-        isOpen={isCalculatorOpen}
-        onClose={() => setIsCalculatorOpen(false)}
-      />
-
-      {/* Calculator Toggle Button (Mobile) */}
-      <CalculatorToggle
-        onClick={() => setIsCalculatorOpen(true)}
-        isOpen={isCalculatorOpen}
-      />
-
-      {isProfileOpen && (
-        <div className="fixed inset-0 z-20" onClick={() => setIsProfileOpen(false)} />
-      )}
     </div>
   );
 }
-
-
