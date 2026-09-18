@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/depot/layout,_N_T_/depot/private-prices/layout,_N_T_/depot/private-prices/page,_N_T_/depot/private-prices"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/depot/private-prices/__PAGE__",
+    "/depot/private-prices",
+    "/depot",
+    "/_index",
+    "/_head"
+  ]
+}

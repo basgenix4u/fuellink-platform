@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/marketer/layout,_N_T_/marketer/orders/layout,_N_T_/marketer/orders/new/layout,_N_T_/marketer/orders/new/page,_N_T_/marketer/orders/new"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/marketer/orders/new/__PAGE__",
+    "/marketer/orders/new",
+    "/marketer/orders",
+    "/marketer",
+    "/_index",
+    "/_head"
+  ]
+}

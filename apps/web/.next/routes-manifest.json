@@ -1,0 +1,307 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/admin/depots/[id]",
+      "regex": "^/admin/depots/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/depots/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/disputes/[id]",
+      "regex": "^/admin/disputes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/disputes/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/depot/orders/[id]",
+      "regex": "^/depot/orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/depot/orders/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/marketer/depots/[id]",
+      "regex": "^/marketer/depots/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/marketer/depots/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/marketer/orders/[id]",
+      "regex": "^/marketer/orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/marketer/orders/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/admin/depots",
+      "regex": "^/admin/depots(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/depots(?:/)?$"
+    },
+    {
+      "page": "/admin/disputes",
+      "regex": "^/admin/disputes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/disputes(?:/)?$"
+    },
+    {
+      "page": "/admin/marketers",
+      "regex": "^/admin/marketers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/marketers(?:/)?$"
+    },
+    {
+      "page": "/depot",
+      "regex": "^/depot(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot(?:/)?$"
+    },
+    {
+      "page": "/depot/ai-settings",
+      "regex": "^/depot/ai\\-settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/ai\\-settings(?:/)?$"
+    },
+    {
+      "page": "/depot/analytics",
+      "regex": "^/depot/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/analytics(?:/)?$"
+    },
+    {
+      "page": "/depot/chat",
+      "regex": "^/depot/chat(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/chat(?:/)?$"
+    },
+    {
+      "page": "/depot/inventory",
+      "regex": "^/depot/inventory(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/inventory(?:/)?$"
+    },
+    {
+      "page": "/depot/orders",
+      "regex": "^/depot/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/orders(?:/)?$"
+    },
+    {
+      "page": "/depot/private-prices",
+      "regex": "^/depot/private\\-prices(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/private\\-prices(?:/)?$"
+    },
+    {
+      "page": "/depot/ratings",
+      "regex": "^/depot/ratings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/ratings(?:/)?$"
+    },
+    {
+      "page": "/depot/settings",
+      "regex": "^/depot/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/settings(?:/)?$"
+    },
+    {
+      "page": "/depot/settings/subscription",
+      "regex": "^/depot/settings/subscription(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/settings/subscription(?:/)?$"
+    },
+    {
+      "page": "/depot/verification",
+      "regex": "^/depot/verification(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/verification(?:/)?$"
+    },
+    {
+      "page": "/depot/wallet",
+      "regex": "^/depot/wallet(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/depot/wallet(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/marketer",
+      "regex": "^/marketer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer(?:/)?$"
+    },
+    {
+      "page": "/marketer/alerts",
+      "regex": "^/marketer/alerts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/alerts(?:/)?$"
+    },
+    {
+      "page": "/marketer/chat",
+      "regex": "^/marketer/chat(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/chat(?:/)?$"
+    },
+    {
+      "page": "/marketer/depots",
+      "regex": "^/marketer/depots(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/depots(?:/)?$"
+    },
+    {
+      "page": "/marketer/disputes",
+      "regex": "^/marketer/disputes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/disputes(?:/)?$"
+    },
+    {
+      "page": "/marketer/disputes/new",
+      "regex": "^/marketer/disputes/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/disputes/new(?:/)?$"
+    },
+    {
+      "page": "/marketer/messages",
+      "regex": "^/marketer/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/messages(?:/)?$"
+    },
+    {
+      "page": "/marketer/orders",
+      "regex": "^/marketer/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/orders(?:/)?$"
+    },
+    {
+      "page": "/marketer/orders/new",
+      "regex": "^/marketer/orders/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/orders/new(?:/)?$"
+    },
+    {
+      "page": "/marketer/predictor",
+      "regex": "^/marketer/predictor(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/predictor(?:/)?$"
+    },
+    {
+      "page": "/marketer/refineries",
+      "regex": "^/marketer/refineries(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/refineries(?:/)?$"
+    },
+    {
+      "page": "/marketer/settings",
+      "regex": "^/marketer/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/settings(?:/)?$"
+    },
+    {
+      "page": "/marketer/subscribe",
+      "regex": "^/marketer/subscribe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/subscribe(?:/)?$"
+    },
+    {
+      "page": "/marketer/wallet",
+      "regex": "^/marketer/wallet(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/marketer/wallet(?:/)?$"
+    },
+    {
+      "page": "/register/depot",
+      "regex": "^/register/depot(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register/depot(?:/)?$"
+    },
+    {
+      "page": "/register/marketer",
+      "regex": "^/register/marketer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register/marketer(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/marketer/layout,_N_T_/marketer/alerts/layout,_N_T_/marketer/alerts/page,_N_T_/marketer/alerts"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/marketer/alerts/__PAGE__",
+    "/marketer/alerts",
+    "/marketer",
+    "/_index",
+    "/_head"
+  ]
+}

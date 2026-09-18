@@ -1,0 +1,10 @@
+{
+  "name": "@fuellink/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FuelLink API — NestJS + Prisma + Postgres + Redis/BullMQ + Socket.IO. Scaffolded in Phase 2 (exchange core: auth, orders, escrow via Providus, webhooks).",
+  "scripts": {
+    "build": "echo \"@fuellink/api scaffold lands in Phase 2\" && exit 0",
+    "start": "echo \"@fuellink/api scaffold lands in Phase 2\" && exit 0"
+  }
+}

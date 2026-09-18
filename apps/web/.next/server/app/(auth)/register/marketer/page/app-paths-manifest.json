@@ -1,0 +1,3 @@
+{
+  "/(auth)/register/marketer/page": "app/(auth)/register/marketer/page.js"
+}

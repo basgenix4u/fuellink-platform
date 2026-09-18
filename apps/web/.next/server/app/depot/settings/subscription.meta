@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/depot/layout,_N_T_/depot/settings/layout,_N_T_/depot/settings/subscription/layout,_N_T_/depot/settings/subscription/page,_N_T_/depot/settings/subscription"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/depot/settings/subscription/__PAGE__",
+    "/depot/settings/subscription",
+    "/depot/settings",
+    "/depot",
+    "/_index",
+    "/_head"
+  ]
+}

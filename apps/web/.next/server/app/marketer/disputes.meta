@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/marketer/layout,_N_T_/marketer/disputes/layout,_N_T_/marketer/disputes/page,_N_T_/marketer/disputes"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/marketer/disputes/__PAGE__",
+    "/marketer/disputes",
+    "/marketer",
+    "/_index",
+    "/_head"
+  ]
+}
