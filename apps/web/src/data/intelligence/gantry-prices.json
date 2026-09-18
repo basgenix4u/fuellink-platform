@@ -1,0 +1,126 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "description": "PMS price ladder: DPRP ex-gantry → NNPC price-revision basis → NMDPRA indicative state pump prices (Lagos/Abuja). All ₦/litre.",
+  "points": [
+    {
+      "date": "2025-10",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_lagos",
+      "price": 914.5,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-80c82709-7f84-4cea-959e-668d6e6d030e.pdf",
+      "note": null
+    },
+    {
+      "date": "2025-10",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_abuja",
+      "price": 947,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-80c82709-7f84-4cea-959e-668d6e6d030e.pdf",
+      "note": null
+    },
+    {
+      "date": "2026",
+      "product": "PMS",
+      "issuer": "nnpc",
+      "price": 1320,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "NNPC DRC monthly price revisions (2026), as reported",
+      "note": "Start of the 2026 correction cycle (month not itemised in source)"
+    },
+    {
+      "date": "2026",
+      "product": "PMS",
+      "issuer": "nnpc",
+      "price": 1150,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "NNPC DRC monthly price revisions (2026), as reported",
+      "note": "Mid-correction-cycle revision (month not itemised in source)"
+    },
+    {
+      "date": "2026",
+      "product": "PMS",
+      "issuer": "dprp",
+      "price": 1075,
+      "priceHigh": 1175,
+      "basis": "gantry",
+      "source": "DPRP ex-gantry PMS (as reported, 2026)",
+      "note": "Observed ex-gantry range ~₦1,075–1,175/L through 2026"
+    },
+    {
+      "date": "2026-03",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_lagos",
+      "price": 1249.01,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-91b8413a-87dc-4634-929d-0a130d9f81b9.pdf",
+      "note": null
+    },
+    {
+      "date": "2026-03",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_abuja",
+      "price": 1286.81,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-91b8413a-87dc-4634-929d-0a130d9f81b9.pdf",
+      "note": null
+    },
+    {
+      "date": "2026-04",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_lagos",
+      "price": 1284.05,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf",
+      "note": null
+    },
+    {
+      "date": "2026-04",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_abuja",
+      "price": 1333.05,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf",
+      "note": null
+    },
+    {
+      "date": "2026-07",
+      "product": "PMS",
+      "issuer": "nnpc",
+      "price": 1110,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "NNPC price revision, July 2026 (as reported)",
+      "note": "Lowest point of the 2026 correction cycle"
+    },
+    {
+      "date": "2026-08",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_lagos",
+      "price": 1265,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "NNPC price revision, early Aug 2026 (as reported)",
+      "note": "Rebound — Lagos"
+    },
+    {
+      "date": "2026-08",
+      "product": "PMS",
+      "issuer": "nmdpra_indicative_abuja",
+      "price": 1335,
+      "priceHigh": null,
+      "basis": "indicative",
+      "source": "NNPC price revision, early Aug 2026 (as reported)",
+      "note": "Rebound — Abuja"
+    }
+  ]
+}

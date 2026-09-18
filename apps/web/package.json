@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ingest:nmdpra": "tsx scripts/ingest-nmdpra.mts",
+    "verify:data": "tsx scripts/verify-data.mts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",
@@ -45,6 +47,8 @@
     "eslint-config-next": "16.1.6",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsx": "^4.19.0",
+    "pdf-parse": "^1.1.1"
   }
 }

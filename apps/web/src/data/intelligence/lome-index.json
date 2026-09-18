@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "paradox": {
+    "title": "The Lomé paradox",
+    "statement": "An estimated 70–80% of Nigeria's waterborne fuel 'imports' in Mar–May 2026 were Dangote Refinery product shipped out via Lomé (Togo) and re-imported into Lagos — circular trade driven by FX structure, pricing and port capacity.",
+    "period": "Mar–May 2026",
+    "shareRange": [
+      70,
+      80
+    ],
+    "source": "S&P Global Commodity Insights, via MEMAN industry webinar (2026)"
+  },
+  "monthly": [
+    {
+      "month": "2026-01",
+      "label": "January 2026",
+      "pmsImportMld": 24.8,
+      "pmsExportMld": null,
+      "atkExportMld": null,
+      "agodExportMld": null,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf"
+    },
+    {
+      "month": "2026-02",
+      "label": "February 2026",
+      "pmsImportMld": 3,
+      "pmsExportMld": null,
+      "atkExportMld": null,
+      "agodExportMld": null,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-9f4e0f4b-77c4-4c62-9f60-d273fa974116.pdf"
+    },
+    {
+      "month": "2026-04",
+      "label": "April 2026",
+      "pmsImportMld": 3.7,
+      "pmsExportMld": 17.1,
+      "atkExportMld": 20.5,
+      "agodExportMld": 17.8,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf"
+    },
+    {
+      "month": "2026-05",
+      "label": "May 2026",
+      "pmsImportMld": 5.9,
+      "pmsExportMld": null,
+      "atkExportMld": 17.5,
+      "agodExportMld": 6.5,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-8c4edc1c-6c9b-41a0-affc-c93fa831be6c.pdf"
+    },
+    {
+      "month": "2026-06",
+      "label": "June 2026",
+      "pmsImportMld": 18.1,
+      "pmsExportMld": null,
+      "atkExportMld": null,
+      "agodExportMld": null,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-137a2554-2f1b-4fb4-aa7b-84fc7bf53ec6.pdf"
+    }
+  ],
+  "nbsQ1Exports": {
+    "period": "Q1 2026",
+    "items": [
+      {
+        "product": "Petroleum (gas oil / AGO)",
+        "destination": "All destinations",
+        "nairaBillion": 278.36
+      },
+      {
+        "product": "Jet fuel (ATK)",
+        "destination": "All destinations",
+        "nairaBillion": 273.18
+      },
+      {
+        "product": "Crude oil",
+        "destination": "All destinations",
+        "nairaBillion": 220.14
+      },
+      {
+        "product": "Petrol (PMS)",
+        "destination": "Togo",
+        "nairaBillion": 105.5
+      }
+    ],
+    "otherDestinations": [
+      "Côte d'Ivoire",
+      "Cameroon",
+      "Tanzania",
+      "Ghana",
+      "Togo",
+      "Angola",
+      "South Africa",
+      "Europe"
+    ],
+    "source": "Nigeria Bureau of Statistics, foreign trade statistics Q1 2026 (as reported)"
+  },
+  "jetExports": {
+    "may2026Mt": 476099,
+    "april2026PctChangeYoy": 770,
+    "april2026Bpd": 158000,
+    "topDestination": "Europe",
+    "topDestinationSharePct": null,
+    "source": "DPRP export volumes (May 2026); S&P Global Commodity Insights via MEMAN (Apr 2026 jet export surge ~+770% to ~158k bpd; Europe largest destination)"
+  }
+}

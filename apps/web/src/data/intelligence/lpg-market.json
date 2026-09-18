@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "demandMt": {
+    "value": 1800000,
+    "year": 2026,
+    "source": "NUPRC / NALPGAM 2026 outlook, as reported by Vanguard & Legit (2026)"
+  },
+  "supplyMt": {
+    "min": 1550000,
+    "max": 1650000,
+    "year": 2026,
+    "source": "NUPRC / NMDPRA, as reported by Vanguard & Legit (2026)"
+  },
+  "bufferDays": {
+    "value": 5,
+    "source": "NMDPRA fact sheets (national LPG days-of-sufficiency, Oct 2025 sheet)"
+  },
+  "pricePerKgHistory": [
+    {
+      "year": 2016,
+      "nairaPerKg": 400
+    },
+    {
+      "year": 2026,
+      "nairaPerKg": 2000
+    }
+  ],
+  "exportSharePct": {
+    "value": 62,
+    "source": "Share of Nigeria's gas output exported (2026), as reported"
+  },
+  "producers": [
+    "Dangote (DPRP)",
+    "NLNG",
+    "Kwale",
+    "Ologbo",
+    "Pan Ocean",
+    "Seplat",
+    "PNG Gas",
+    "Greenville",
+    "LPG import terminals"
+  ],
+  "policyNote": "Federal Government directive: domestic LPG consumption takes priority over export; refinery LPG evacuation queues ran ~4x coastal-terminal times during shortage periods."
+}

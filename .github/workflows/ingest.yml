@@ -1,0 +1,69 @@
+name: NMDPRA ingest
+
+# Refreshes the L0 intelligence datasets from NMDPRA's public fact-sheet
+# container. Runs on the 12th of each month (fact sheets are typically
+# published mid-month) and on demand. When the data changes, it commits to
+# a bot branch and opens a PR — a human approves the data, same as any code.
+#
+# No secrets required: the NMDPRA blob container is public and
+# GITHUB_TOKEN has write access to the repo by default.
+
+on:
+  schedule:
+    # 08:00 UTC on the 12th (13:00 WAT — data typically lands mid-month)
+    - cron: "0 8 12 * *"
+  workflow_dispatch: {}
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      - name: Ingest NMDPRA fact sheets
+        run: npm run ingest:nmdpra
+
+      - name: Verify datasets
+        run: npm run verify:data
+
+      - name: Commit data changes (if any)
+        id: changed
+        run: |
+          git config user.name "fuellink-bot"
+          git config user.email "fuellink-bot@users.noreply.github.com"
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="bot/nmdpra-ingest-${DATE}"
+          if git diff --quiet apps/web/src/data/intelligence/ packages/contracts/; then
+            echo "changes=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No dataset changes since last ingest."
+          else
+            git add apps/web/src/data/intelligence/ packages/contracts/
+            git commit -m "chore(data): NMDPRA refresh ${DATE}"
+            git checkout -b "${BRANCH}"
+            git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "${BRANCH}"
+            echo "changes=true" >> "$GITHUB_OUTPUT"
+            echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open PR
+        if: steps.changed.outputs.changes == 'true'
+        run: |
+          head_sha=$(git rev-parse HEAD)
+          curl -s -f -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls" \
+            -d "{
+              \"title\": \"chore(data): NMDPRA refresh — ${{ steps.changed.outputs.branch }}\",
+              \"head\": \"${{ steps.changed.outputs.branch }}\",
+              \"base\": \"main\",
+              \"body\": \"Scheduled NMDPRA fact-sheet refresh.\n\n- Datasets: \`apps/web/src/data/intelligence/\`\n- Source: NMDPRA public fact-sheet container (Statistics/)\n- Verified: \`npm run verify:data\`\n\nReview the dataset diffs and merge to publish.\"
+            }"

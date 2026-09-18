@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "timeline": [
+    {
+      "date": "2026-02",
+      "nairaPerLitre": 900,
+      "nairaPerLitreHigh": null,
+      "source": "AON / AirInsight / ThisDay / Legit (2026 jet A-1 crisis coverage)",
+      "note": "Pre-crisis level"
+    },
+    {
+      "date": "2026-04",
+      "nairaPerLitre": 3300,
+      "nairaPerLitreHigh": null,
+      "source": "AON / AirInsight / ThisDay / Legit (2026 jet A-1 crisis coverage)",
+      "note": "Peak of the crisis; AON threatened to cease operations on 20 Apr 2026"
+    },
+    {
+      "date": "2026-09",
+      "nairaPerLitre": 1550,
+      "nairaPerLitreHigh": 2150,
+      "source": "AON / AirInsight / ThisDay / Legit (Jun–Sep 2026)",
+      "note": "Stabilised range; wide per-airport spreads persist"
+    }
+  ],
+  "dprpPricingModel": {
+    "currency": "USD",
+    "priceHoldbackPct": 25,
+    "note": "DPRP sells jet A-1 ex-gantry in USD with a 25% price holdback — the model FuelLink's forward/holdback mechanics mirror."
+  },
+  "airportSpreadExample": {
+    "airport": "Abuja (ABV)",
+    "minPerLitre": 1190,
+    "maxPerLitre": 2150,
+    "source": "AirInsight / ThisDay (2026) — 18+ jet marketers quoting wide per-airport spreads"
+  },
+  "context": [
+    "Jet fuel ≈ 40% of Nigerian airline operating costs.",
+    "Nigerian jet fuel prices ran ~17% above the global average during 2026.",
+    "Airlines pay slowly → receivables risk → airline-receivables factoring is the obvious finance product (L4)."
+  ]
+}

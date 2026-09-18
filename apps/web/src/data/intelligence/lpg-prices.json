@@ -1,0 +1,140 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "source": "NMDPRA fact sheets — LPG retail price monitor + national range lines.",
+  "months": [
+    {
+      "period": "2025-11",
+      "label": "November 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-90e0e578-7ed8-4822-8c1b-dca7210402c5.pdf",
+      "nationalRangePerKg": [
+        950,
+        1500
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2025-12",
+      "label": "December 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-d2493c07-7706-4c04-b83d-258560d91550.pdf",
+      "nationalRangePerKg": [
+        1120,
+        1600
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-01",
+      "label": "January 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf",
+      "nationalRangePerKg": [
+        950,
+        1550
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-02",
+      "label": "February 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-9f4e0f4b-77c4-4c62-9f60-d273fa974116.pdf",
+      "nationalRangePerKg": [
+        980,
+        1500
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-03",
+      "label": "March 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-91b8413a-87dc-4634-929d-0a130d9f81b9.pdf",
+      "nationalRangePerKg": [
+        980,
+        1450
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-04",
+      "label": "April 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf",
+      "nationalRangePerKg": [
+        1100,
+        1450
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-05",
+      "label": "May 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-8c4edc1c-6c9b-41a0-affc-c93fa831be6c.pdf",
+      "nationalRangePerKg": [
+        1100,
+        1800
+      ],
+      "states": null,
+      "notes": []
+    },
+    {
+      "period": "2026-06",
+      "label": "June 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-137a2554-2f1b-4fb4-aa7b-84fc7bf53ec6.pdf",
+      "nationalRangePerKg": null,
+      "states": [
+        {
+          "state": "lagos",
+          "maxPerKg": 2100,
+          "minPerKg": 1450,
+          "avgPerKg": 1775
+        },
+        {
+          "state": "abuja",
+          "maxPerKg": 2000,
+          "minPerKg": 1580,
+          "avgPerKg": 1790
+        },
+        {
+          "state": "kano",
+          "maxPerKg": 1800,
+          "minPerKg": 1350,
+          "avgPerKg": 1575
+        },
+        {
+          "state": "calabar",
+          "maxPerKg": 1650,
+          "minPerKg": 1200,
+          "avgPerKg": 1550
+        },
+        {
+          "state": "ibadan",
+          "maxPerKg": 1900,
+          "minPerKg": 1450,
+          "avgPerKg": 1550
+        },
+        {
+          "state": "sokoto",
+          "maxPerKg": 1800,
+          "minPerKg": 1500,
+          "avgPerKg": 1650
+        },
+        {
+          "state": "maiduguri",
+          "maxPerKg": 2100,
+          "minPerKg": 1450,
+          "avgPerKg": 1775
+        },
+        {
+          "state": "enugu",
+          "maxPerKg": 1800,
+          "minPerKg": 1450,
+          "avgPerKg": 1625
+        }
+      ],
+      "notes": []
+    }
+  ]
+}
