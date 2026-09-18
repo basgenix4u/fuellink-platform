@@ -207,7 +207,7 @@ export function DepotMap({
             <span className="text-sm font-bold">AI Travel Time Predictor</span>
           </div>
           <p className="text-xs text-white/60 mb-3">
-            Select your truck's starting location — AI estimates arrival time including traffic.
+            Select your truck&apos;s starting location — AI estimates arrival time including traffic.
           </p>
 
           <div className="flex gap-2 mb-3">

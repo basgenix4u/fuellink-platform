@@ -44,7 +44,8 @@ export function Logo({
     dark: "text-slate-900",
   };
 
-  const LogoContent = () => (
+  // Plain JSX value (not a nested component) so identity is stable across renders
+  const logoContent = (
     <>
       {/* Logo Icon */}
       <div className={cn("relative flex-shrink-0", sizeClasses[size])}>
@@ -132,14 +133,14 @@ export function Logo({
   if (onClick) {
     return (
       <button onClick={onClick} className={containerClasses}>
-        <LogoContent />
+        {logoContent}
       </button>
     );
   }
 
   return (
     <Link href={href} className={containerClasses}>
-      <LogoContent />
+      {logoContent}
     </Link>
   );
 }

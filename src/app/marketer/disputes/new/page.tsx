@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -61,7 +61,7 @@ const disputeTypes = [
   },
 ];
 
-export default function NewDisputePage() {
+function NewDisputeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order") || "";
@@ -315,5 +315,12 @@ export default function NewDisputePage() {
         </div>
       </form>
     </div>
+  );
+}
+export default function NewDisputePage() {
+  return (
+    <Suspense>
+      <NewDisputeContent />
+    </Suspense>
   );
 }

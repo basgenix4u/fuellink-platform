@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -80,7 +80,7 @@ const truckCapacities = [
   { label: "Custom", value: 0 },
 ];
 
-export default function NewOrderPage() {
+function NewOrderContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
@@ -828,5 +828,12 @@ export default function NewOrderPage() {
         )}
       </div>
     </div>
+  );
+}
+export default function NewOrderPage() {
+  return (
+    <Suspense>
+      <NewOrderContent />
+    </Suspense>
   );
 }

@@ -220,7 +220,7 @@ export default function RefineriesPage() {
                       </div>
                     </div>
                   </div>
-                  <Badge variant={statusConfig.color as any} className="gap-1">
+                  <Badge variant={statusConfig.color as "warning" | "primary" | "secondary" | "success" | "danger"} className="gap-1">
                     <StatusIcon className="w-3 h-3" />
                     {statusConfig.label}
                   </Badge>

@@ -1,8 +1,8 @@
 // src/lib/store/index.ts
 
 import { create } from "zustand";
-import { Depot, Refinery, Order, User, Notification } from "@/types";
-import { mockDepots, mockRefineries } from "@/lib/mock-data";
+import { Refinery, Order, User, Notification, ProductType } from "@/types";
+import { mockDepots, mockRefineries, type MockDepot } from "@/lib/mock-data";
 
 // Auth Store
 interface AuthState {
@@ -20,13 +20,15 @@ export const useAuthStore = create<AuthState>((set) => ({
 }));
 
 // Depot Store
+// Note: depot prices are private (revealed only via chat), so the store holds
+// the mock catalogue shape. A price-updating store action will return with the
+// real private-pricing model.
 interface DepotState {
-  depots: Depot[];
-  selectedDepot: Depot | null;
+  depots: MockDepot[];
+  selectedDepot: MockDepot | null;
   isLoading: boolean;
-  setDepots: (depots: Depot[]) => void;
-  selectDepot: (depot: Depot | null) => void;
-  updateDepotPrice: (depotId: string, productId: string, newPrice: number) => void;
+  setDepots: (depots: MockDepot[]) => void;
+  selectDepot: (depot: MockDepot | null) => void;
 }
 
 export const useDepotStore = create<DepotState>((set) => ({
@@ -35,27 +37,6 @@ export const useDepotStore = create<DepotState>((set) => ({
   isLoading: false,
   setDepots: (depots) => set({ depots }),
   selectDepot: (depot) => set({ selectedDepot: depot }),
-  updateDepotPrice: (depotId, productId, newPrice) =>
-    set((state) => ({
-      depots: state.depots.map((depot) =>
-        depot.id === depotId
-          ? {
-              ...depot,
-              products: depot.products.map((product) =>
-                product.id === productId
-                  ? {
-                      ...product,
-                      previousPrice: product.pricePerLitre,
-                      pricePerLitre: newPrice,
-                      priceChange: newPrice - product.pricePerLitre,
-                      updatedAt: new Date().toISOString(),
-                    }
-                  : product
-              ),
-            }
-          : depot
-      ),
-    })),
 }));
 
 // Refinery Store
@@ -72,16 +53,8 @@ export const useRefineryStore = create<RefineryState>((set) => ({
         refinery.id === refineryId
           ? {
               ...refinery,
-              products: refinery.products.map((product) =>
-                product.type === productType
-                  ? {
-                      ...product,
-                      previousPrice: product.exWorksPrice,
-                      exWorksPrice: newPrice,
-                      lastUpdated: new Date().toISOString(),
-                    }
-                  : product
-              ),
+              prices: { ...refinery.prices, [productType as ProductType]: newPrice },
+              lastUpdated: new Date().toISOString(),
             }
           : refinery
       ),
@@ -106,7 +79,7 @@ export const useOrderStore = create<OrderState>((set) => ({
               ...order,
               status,
               timeline: [
-                ...order.timeline,
+                ...(order.timeline ?? []),
                 { status, timestamp: new Date().toISOString(), note },
               ],
               updatedAt: new Date().toISOString(),

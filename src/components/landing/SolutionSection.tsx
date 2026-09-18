@@ -152,7 +152,7 @@ export function SolutionSection() {
             Every Problem. One Platform.
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            FuelLink was built to solve the real, daily pain points of Nigeria's petroleum
+            FuelLink was built to solve the real, daily pain points of Nigeria&apos;s petroleum
             supply chain — with AI at the center of everything.
           </p>
         </motion.div>
@@ -234,7 +234,7 @@ export function SolutionSection() {
           className="mt-12 text-center"
         >
           <Button variant="primary" size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
-            Join Nigeria's Smartest Fuel Exchange
+            Join Nigeria&apos;s Smartest Fuel Exchange
           </Button>
         </motion.div>
       </Container>

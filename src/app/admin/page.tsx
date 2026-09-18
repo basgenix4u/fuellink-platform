@@ -10,7 +10,16 @@ import { formatNumber, formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/shared/Badge";
 
 // Stat Card Component
-const StatCard = ({ title, value, change, trend, icon: Icon, color }: any) => (
+interface StatCardProps {
+  title: string;
+  value: string;
+  change: string;
+  trend: "up" | "neutral" | "down";
+  icon: React.ElementType;
+  color: string;
+}
+
+const StatCard = ({ title, value, change, trend, icon: Icon, color }: StatCardProps) => (
   <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
     <div className="flex items-center justify-between">
       <div className={`rounded-xl p-3 ${color} bg-opacity-10`}>

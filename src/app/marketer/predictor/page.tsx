@@ -338,7 +338,7 @@ export default function PricePredictorPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Predictions grid */}
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wider">Today's Price Predictions</h2>
+          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wider">Today&apos;s Price Predictions</h2>
           {MOCK_PREDICTIONS.map((pred) => (
             <PredictionCard key={pred.product} pred={pred} />
           ))}
@@ -353,7 +353,7 @@ export default function PricePredictorPage() {
               <h3 className="font-bold">Ask the AI</h3>
             </div>
             <p className="text-xs text-white/70 mb-3">
-              Ask anything about today's market conditions, pricing outlook, or what's moving prices.
+              Ask anything about today&apos;s market conditions, pricing outlook, or what&apos;s moving prices.
             </p>
             <textarea
               value={aiQuery}
