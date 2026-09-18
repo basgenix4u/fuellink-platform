@@ -161,11 +161,13 @@ function PricePredictorPreview() {
   );
 }
 
+// Real, sourced sector figures — NMDPRA fact sheet, July 2026 (latest published).
+// No invented traction numbers: the "stats" are the data product itself.
 const stats = [
-  { value: 127, label: "Active Depots", prefix: "", suffix: "+" },
-  { value: 58, label: "Billion ₦ Volume", prefix: "₦", suffix: "B+" },
-  { value: 3400, label: "Marketers", prefix: "", suffix: "+" },
-  { value: 10, label: "Nigerian Refineries", prefix: "", suffix: "" },
+  { value: 71.09, prefix: "", decimals: 2, suffix: "%", label: "Dangote refinery utilization" },
+  { value: 35.7, prefix: "", decimals: 1, suffix: " ML/d", label: "National PMS consumption" },
+  { value: 22.4, prefix: "", decimals: 1, suffix: " days", label: "PMS stock sufficiency" },
+  { value: 4.72, prefix: "", decimals: 2, suffix: " Bscf/d", label: "National gas supply" },
 ];
 
 const features = [
@@ -280,14 +282,26 @@ export function HeroSection() {
                   <p className="text-2xl font-bold text-white">
                     <AnimatedCounter
                       value={stat.value}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
+                      prefix={stat.prefix ?? ""}
+                      suffix={stat.suffix ?? ""}
+                      decimals={stat.decimals ?? 0}
                     />
                   </p>
                   <p className="text-xs text-white/50 mt-0.5">{stat.label}</p>
                 </div>
               ))}
             </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="mt-3 text-xs text-white/60"
+            >
+              Live NMDPRA sector data (Jul 2026, latest published) —{" "}
+              <a href="/intel" className="text-accent-400 hover:text-accent-300 font-semibold underline underline-offset-2">
+                explore the Intelligence layer →
+              </a>
+            </motion.p>
           </div>
 
           {/* Right: Interactive previews */}

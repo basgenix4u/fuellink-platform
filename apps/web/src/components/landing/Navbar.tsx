@@ -87,6 +87,10 @@ const navLinks: NavLink[] = [
     ],
   },
   {
+    label: "Intelligence",
+    href: "/intel",
+  },
+  {
     label: "Media Hub",
     href: "/media",
   },
