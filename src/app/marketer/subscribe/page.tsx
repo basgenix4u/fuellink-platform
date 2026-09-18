@@ -146,7 +146,7 @@ export default function SubscribePage() {
         {/* Features */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
           <h3 className="font-bold text-slate-900 mb-5">
-            What's included in {selectedPlan.label}:
+            What&apos;s included in {selectedPlan.label}:
           </h3>
           <ul className="space-y-3">
             {selectedPlan.features.map((f) => (

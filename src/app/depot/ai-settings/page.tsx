@@ -134,7 +134,7 @@ export default function AISettingsPage() {
             <h2 className="font-semibold text-slate-900">Supported Languages</h2>
           </div>
           <p className="text-xs text-slate-500 mb-4">
-            Voice notes and text messages will be auto-detected and replied to in the marketer's language.
+            Voice notes and text messages will be auto-detected and replied to in the marketer&apos;s language.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {SUPPORTED_LANGUAGES.map((lang) => {

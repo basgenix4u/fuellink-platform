@@ -123,6 +123,26 @@ export interface Order {
   qrCode?: string;
   paymentReference?: string;
   paymentMethod: "providus_transfer" | "wallet";
+  timeline?: OrderTimelineEntry[];
+}
+
+export interface OrderTimelineEntry {
+  status: OrderStatus;
+  timestamp: string;
+  note: string;
+}
+
+// ─── Notifications ───────────────────────────────────────────────────────────
+
+export type NotificationType = "order" | "price" | "system" | "dispute";
+
+export interface Notification {
+  id: string;
+  title: string;
+  body?: string;
+  type: NotificationType;
+  isRead: boolean;
+  createdAt: string;
 }
 
 // ─── Chat / Messaging ────────────────────────────────────────────────────────

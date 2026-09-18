@@ -123,8 +123,8 @@ const statusConfig = {
   confirmed: { label: "Confirmed", color: "primary", canAccept: false, canReject: true },
   "in-transit": { label: "In Transit", color: "secondary", canAccept: false, canReject: false },
   "at-depot": { label: "At Depot", color: "secondary", canAccept: false, canReject: false },
-  loading: { label: "Loading", color: "secondary", canConfirmLoading: true },
-  loaded: { label: "Loaded", color: "primary", canConfirmLoading: false },
+  loading: { label: "Loading", color: "secondary", canConfirmLoading: true, canAccept: false, canReject: false },
+  loaded: { label: "Loaded", color: "primary", canConfirmLoading: false, canAccept: false, canReject: false },
   completed: { label: "Completed", color: "success", canAccept: false, canReject: false },
   cancelled: { label: "Cancelled", color: "danger", canAccept: false, canReject: false },
 };
@@ -180,7 +180,7 @@ export default function OrderDetailPage() {
                 {order.orderNumber}
               </h1>
               <Badge
-                variant={status.color as any}
+                variant={status.color as "warning" | "primary" | "secondary" | "success" | "danger"}
                 className="text-sm"
               >
                 {status.label}

@@ -158,11 +158,13 @@ export default function MessagesPage() {
         <div className="lg:col-span-2">
           {selectedConversation ? (
             <ChatWindow
-              recipientId={selectedConversation.depot.id}
-              recipientName={selectedConversation.depot.name}
-              recipientType="depot"
+              chatId={selectedConversation.id}
+              depotId={selectedConversation.depot.id}
+              depotName={selectedConversation.depot.name}
+              depotInitials={selectedConversation.depot.avatar}
+              currentUserRole="marketer"
               currentUserId="marketer-001"
-              currentUserType="marketer"
+              currentUserName="Independent Marketer"
               orderId={selectedConversation.orderId}
               isFullPage
             />

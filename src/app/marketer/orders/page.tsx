@@ -94,7 +94,10 @@ const orders = [
   },
 ];
 
-const statusConfig: Record<string, { label: string; variant: any; icon: any }> = {
+const statusConfig: Record<
+  string,
+  { label: string; variant: "warning" | "primary" | "secondary" | "success" | "danger"; icon: React.ElementType }
+> = {
   pending: { label: "Pending", variant: "warning", icon: Clock },
   confirmed: { label: "Confirmed", variant: "primary", icon: CheckCircle2 },
   "in-transit": { label: "In Transit", variant: "secondary", icon: Truck },

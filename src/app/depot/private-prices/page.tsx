@@ -157,7 +157,7 @@ export default function PrivatePricesPage() {
         <div>
           <p className="font-bold mb-1">Your AI chatbot uses these prices</p>
           <p className="text-sm text-white/75 leading-relaxed">
-            Whenever a marketer asks your AI "How much is PMS?", the AI will share your
+            Whenever a marketer asks your AI &quot;How much is PMS?&quot;, the AI will share your
             set price and invite them to negotiate or place an order. This drives real
             conversations that lead to real deals — without exposing your pricing publicly.
           </p>

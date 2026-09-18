@@ -327,7 +327,7 @@ export function PricingSection() {
                 <TrendingUp className="w-6 h-6 text-secondary-400 mb-3" />
                 <h4 className="font-bold mb-2">How We Both Win</h4>
                 <p className="text-sm text-white/70">
-                  We earn 0.5% per closed transaction. That's it.
+                  We earn 0.5% per closed transaction. That&apos;s it.
                   No monthly fees for depots. We grow when you grow.
                 </p>
               </div>

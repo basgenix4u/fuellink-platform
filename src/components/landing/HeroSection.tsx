@@ -200,7 +200,7 @@ export function HeroSection() {
                 className="mb-6 inline-flex items-center gap-1.5"
               >
                 <Zap className="w-3.5 h-3.5" />
-                Nigeria's AI-Powered Petroleum Exchange
+                Nigeria&apos;s AI-Powered Petroleum Exchange
               </Badge>
             </motion.div>
 

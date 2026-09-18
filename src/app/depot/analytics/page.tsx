@@ -233,8 +233,8 @@ export default function AnalyticsPage() {
                     borderRadius: "12px",
                     color: "#F8FAFC",
                   }}
-                  formatter={(value: number) => [
-                    formatCurrency(value),
+                  formatter={(value: number | undefined) => [
+                    value === undefined ? "—" : formatCurrency(value),
                     "Revenue",
                   ]}
                 />
@@ -284,7 +284,10 @@ export default function AnalyticsPage() {
                     borderRadius: "12px",
                     color: "#F8FAFC",
                   }}
-                  formatter={(value: number) => [`${value}%`, "Share"]}
+                  formatter={(value: number | undefined) => [
+                    value === undefined ? "—" : `${value}%`,
+                    "Share",
+                  ]}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -342,8 +345,8 @@ export default function AnalyticsPage() {
                     borderRadius: "12px",
                     color: "#F8FAFC",
                   }}
-                  formatter={(value: number) => [
-                    `${formatNumber(value)}L`,
+                  formatter={(value: number | undefined) => [
+                    value === undefined ? "—" : `${formatNumber(value)}L`,
                     "Volume",
                   ]}
                 />

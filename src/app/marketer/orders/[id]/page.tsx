@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -116,14 +116,14 @@ export default function OrderDetailPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const isSuccess = searchParams.get("success") === "true";
-  const [order, setOrder] = useState<OrderDetail>(mockOrder);
+  // In a real app, order data is fetched server-side from params.id
+  const [order, setOrder] = useState<OrderDetail>(() => ({
+    ...mockOrder,
+    id: params.id as string,
+    orderNumber: params.id as string,
+  }));
   const [selectedTruck, setSelectedTruck] = useState<TruckQR | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(isSuccess);
-
-  useEffect(() => {
-    // In real app, fetch order data based on params.id
-    setOrder({ ...mockOrder, id: params.id as string, orderNumber: params.id as string });
-  }, [params.id]);
 
   const copyQRCode = (code: string) => {
     navigator.clipboard.writeText(code);

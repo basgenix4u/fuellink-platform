@@ -71,7 +71,7 @@ export default function DepotRegistrationPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    // @ts-ignore
+    // @ts-expect-error — `checked` exists only on HTMLInputElement, not on the select half of the union
     const checked = e.target.checked;
     setFormData({
       ...formData,

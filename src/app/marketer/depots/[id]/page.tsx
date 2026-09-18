@@ -163,7 +163,7 @@ export default function DepotDetailPage() {
         <div className="mt-3 bg-primary-50 border border-primary-100 rounded-xl px-3 py-2.5 flex items-start gap-2">
           <Bot className="w-4 h-4 text-primary-500 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-primary-700">
-            <strong>Prices are not publicly listed.</strong> Start a chat — the depot's AI will share current
+            <strong>Prices are not publicly listed.</strong> Start a chat — the depot&apos;s AI will share current
             pricing for your requested product and quantity. You can negotiate directly.
           </p>
         </div>
