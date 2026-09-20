@@ -1,0 +1,95 @@
+// FuelLink API — Prisma schema
+// Money is stored as BigInt kobo (smallest currency unit) to avoid float drift.
+// Dates are UTC timestamptz.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  DEPOT
+  MARKETER
+}
+
+enum EscrowStatus {
+  DRAFT
+  PENDING_PAYMENT
+  BANK_HELD
+  RELEASED
+  CANCELLED
+  DISPUTED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         Role     @default(MARKETER)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  ownedDepots Depot[]
+  orders      EscrowOrder[] @relation("OrderBuyer")
+
+  @@map("users")
+}
+
+model Depot {
+  id            String   @id @default(cuid())
+  ownerId       String
+  name          String
+  slug          String   @unique
+  state         String
+  lga           String?
+  address       String?
+  lat           Float?
+  lng           Float?
+  capacityKL    Float?
+  fuelTypes     String[]
+  gantryActive  Boolean  @default(false)
+  nnpcLicenseNo String?
+  notes         String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  owner  User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  orders EscrowOrder[]
+
+  @@index([state])
+  @@index([ownerId])
+  @@map("depots")
+}
+
+model EscrowOrder {
+  id             String       @id @default(cuid())
+  ref            String       @unique
+  buyerId        String
+  depotId        String
+  fuelType       String
+  quantityLiters Float
+  unitPriceKobo  BigInt
+  totalKobo      BigInt
+  status         EscrowStatus @default(DRAFT)
+  bankRef        String?
+  statusNote     String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  buyer User  @relation("OrderBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
+  depot Depot @relation(fields: [depotId], references: [id], onDelete: Restrict)
+
+  @@index([buyerId])
+  @@index([depotId])
+  @@index([status])
+  @@map("escrow_orders")
+}

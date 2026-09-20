@@ -1,0 +1,36 @@
+# FuelLink dev stack — Postgres + Redis for the API.
+#   docker compose up -d     (from repo root)
+#   docker compose down      (data persists in the fuellink-pgdata volume)
+name: fuellink-dev
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: fuellink-postgres
+    environment:
+      POSTGRES_USER: fuellink
+      POSTGRES_PASSWORD: fuellink
+      POSTGRES_DB: fuellink
+    ports:
+      - "5432:5432"
+    volumes:
+      - fuellink-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fuellink"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: fuellink-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  fuellink-pgdata:

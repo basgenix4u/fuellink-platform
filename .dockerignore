@@ -1,0 +1,11 @@
+.git
+node_modules
+**/node_modules
+**/dist
+**/.next
+**/coverage
+apps/web/.cache
+*.env
+!.env.example
+Dockerfile
+.dockerignore

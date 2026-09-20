@@ -2,17 +2,18 @@
   "name": "fuellink",
   "version": "0.1.0",
   "private": true,
-  "description": "FuelLink \u2014 Nigeria's downstream energy exchange & intelligence layer. Monorepo: apps/web (Next.js), apps/api (NestJS, Phase 2), packages/contracts (shared schemas).",
+  "description": "FuelLink — Nigeria's downstream energy exchange & intelligence layer. Monorepo: apps/web (Next.js), apps/api (NestJS, Phase 2), packages/contracts (shared schemas).",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
     "dev": "npm run dev --workspace @fuellink/web",
-    "build": "npm run build --workspace @fuellink/web",
+    "dev:api": "npm run start:dev --workspace @fuellink/api",
+    "build": "npm run build --workspace @fuellink/web && npm run build --workspace @fuellink/api",
     "start": "npm run start --workspace @fuellink/web",
-    "lint": "npm run lint --workspace @fuellink/web",
-    "typecheck": "npm run typecheck --workspace @fuellink/web",
+    "lint": "npm run lint --workspace @fuellink/web && npm run lint --workspace @fuellink/api",
+    "typecheck": "npm run typecheck --workspace @fuellink/web && npm run typecheck --workspace @fuellink/api",
     "ingest:nmdpra": "npm run ingest:nmdpra --workspace @fuellink/web",
     "verify:data": "npm run verify:data --workspace @fuellink/web",
     "generate:reports": "npm run generate:reports --workspace @fuellink/web"
