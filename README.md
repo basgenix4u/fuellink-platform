@@ -1,141 +1,46 @@
-<div align="center">
+# FuelLink
 
-# ⛽ FuelLink Platform
+**Nigeria's downstream energy exchange & intelligence layer.** FuelLink is built in layers — data on top, exchange in the middle, finance underneath — to serve the era of the Dangote Refinery's rising domestic output.
 
-**A fuel logistics marketplace connecting depots, marketers, and administrators — orders, private pricing, disputes, and demand prediction in one place.**
+- **L0 — Intelligence (public):** NMDPRA-derived market dashboards — gantry pricing, the Lomé index, fuel sufficiency radar, state price indices, LPG desk, jet A-1 desk. → public `/intel` routes (Phase 1, in this repo)
+- **L1 — Exchange:** verified product, private pricing, escrowed orders between suppliers and independent marketers (this codebase's current app — `/depot`, `/marketer`, `/admin`)
+- **L2 — LPG Exchange** · **L3 — Aviation Fuel Desk** · **L4 — Finance spine (Providus bank-held escrow, trade credit)** · **L5 — Export desk**
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Radix UI](https://img.shields.io/badge/Radix%20UI-161618?style=for-the-badge&logo=radixui&logoColor=white)](https://www.radix-ui.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](./LICENSE)
+## Monorepo
 
-</div>
+```
+apps/
+  web/    @fuellink/web — Next.js 16 (App Router, Turbopack) + React 19. Public site, intel dashboards, exchange app.
+  api/    @fuellink/api — NestJS + Prisma + Postgres + Redis/BullMQ + Socket.IO. Scaffolded in Phase 2.
+packages/
+  contracts/  @fuellink/contracts — shared zod-validated data schemas (L0 intelligence now; exchange domain model in Phase 2).
+scripts in apps/web/scripts/ — data ingestion (NMDPRA fact sheets) + validation.
+```
 
----
-
-## ✨ Overview
-
-FuelLink digitises the relationship between **fuel depots** and **marketers**. Depots publish inventory and private prices; marketers browse depots, place orders, raise disputes, and forecast demand — while administrators verify depots, moderate disputes, and oversee the marketplace.
-
----
-
-## 👥 Roles
-
-| Role | What they can do |
-| --- | --- |
-| **Depot** | Manage inventory, set private prices, receive and fulfil orders, track wallet, view ratings and analytics, configure AI settings |
-| **Marketer** | Browse depots and refineries, place orders, subscribe, chat with depots, raise disputes, set price alerts, run the demand predictor |
-| **Admin** | Verify depots, manage marketers, review and resolve disputes, monitor platform activity |
-
----
-
-## 🚀 Features
-
-### 🏭 Depot Portal
-- Inventory management
-- Order queue with per-order detail
-- **Private pricing** per marketer
-- Wallet and subscription settings
-- Ratings and reviews from marketers
-- Analytics dashboard
-- AI settings for demand insights
-- Verification workflow
-- Chat with marketers
-
-### 🛒 Marketer Portal
-- Browse depots and refineries
-- Place and track orders
-- **Demand predictor**
-- Price alerts
-- Subscribe to depots
-- Wallet
-- Dispute filing and tracking
-- Messages and chat
-
-### 🛡️ Admin Console
-- Depot verification and detail review
-- Marketer management
-- Dispute queue with resolution workflow
-
-### 🔐 Authentication
-- Login plus **separate registration flows for depots and marketers**
-
----
-
-## 🛠 Tech Stack
-
-| Layer | Technology |
-| --- | --- |
-| Framework | Next.js 15 (App Router), React |
-| Language | TypeScript |
-| Styling | Tailwind CSS |
-| UI primitives | Radix UI, Lucide Icons |
-| Utilities | `class-variance-authority`, `clsx`, `tailwind-merge` |
-
----
-
-## ⚡ Quick Start
+Workspaces are managed with npm. From the repo root:
 
 ```bash
 npm install
-npm run dev
-# → http://localhost:3000
+npm run dev          # web dev server
+npm run lint         # eslint
+npm run typecheck    # tsc --noEmit
+npm run build        # production build
+npm run ingest:nmdpra  # refresh L0 intelligence data from NMDPRA fact sheets (see below)
 ```
 
----
+CI (`.github/workflows/ci.yml`) runs **lint → typecheck → build** on pushes and PRs to `main`.
 
-## 📜 Available Scripts
+## L0 Intelligence data pipeline
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the development server |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+All intelligence data is real, published, regulator data — **no fabricated figures**.
 
----
+1. **Ingest** — `apps/web/scripts/ingest-nmdpra.mjs` enumerates NMDPRA's public fact-sheet container (`alps.blob.core.windows.net/nmdprawebsite/Statistics/`), downloads new monthly PDFs, parses the key tables, validates against the zod contracts in `@fuellink/contracts`, and writes `apps/web/src/data/intelligence/*.json`.
+2. **Verify** — `apps/web/scripts/verify-data.mjs` re-validates the committed JSON against the contracts (fails loudly on schema drift).
+3. **Serve** — the `/intel` pages import the validated JSON and chart it (recharts).
 
-## 📁 Project Structure
+Data sources per dataset are recorded inside each JSON file (`source` blocks with URLs and retrieval timestamps). Primary source: NMDPRA monthly *"State of the Midstream and Downstream Sector"* fact sheets (Oct 2025 → latest).
 
-```text
-src/
-├── app/
-│   ├── (auth)/              # Login + depot/marketer registration
-│   ├── admin/               # Depot verification, marketers, disputes
-│   ├── depot/               # Inventory, orders, prices, wallet, analytics
-│   ├── marketer/            # Orders, depots, predictor, alerts, disputes
-│   └── page.tsx             # Public landing page
-├── components/
-│   ├── depot/               # Depot-specific UI
-│   ├── landing/             # Marketing site sections
-│   ├── marketer/            # Marketer-specific UI
-│   └── shared/              # Shared design system
-└── lib/
-    ├── mock-data.ts         # Prototype dataset
-    ├── store/               # Client state
-    └── utils.ts
-```
+## Notes
 
----
-
-## 🗺 Roadmap
-
-- [ ] Real authentication and role-based access control
-- [ ] Backend API and production database
-- [ ] Live pricing feeds from depots
-- [ ] Payment gateway integration
-
----
-
-## 📄 License
-
-Released under the [MIT License](./LICENSE).
-
----
-
-<div align="center">
-
-Built by [Abdulbasit Abdulalim](https://github.com/basgenix4u)
-
-</div>
+- The exchange app's data is still in-memory (zustand + mock data) and auth is a stub — Phase 2 replaces both with `@fuellink/api`.
+- `apps/web/src/data/intelligence/` is the single source of truth for L0 dashboards; never hand-edit without re-running `verify:data`.

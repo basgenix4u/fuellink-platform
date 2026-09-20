@@ -1,0 +1,209 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "source": "NMDPRA fact sheets — 'Indicative Fuel Prices' tables (PMS pump prices, 8 states).",
+  "months": [
+    {
+      "period": "2025-10",
+      "label": "October 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-80c82709-7f84-4cea-959e-668d6e6d030e.pdf",
+      "nfemRatePerUsd": null,
+      "brentUsdPerBarrel": null,
+      "gasolineUsdPerMt": null,
+      "states": [
+        {
+          "state": "lagos",
+          "indicativePerLitre": 914.5,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "abuja",
+          "indicativePerLitre": 947,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "kano",
+          "indicativePerLitre": 980,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "calabar",
+          "indicativePerLitre": 927,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "sokoto",
+          "indicativePerLitre": 982,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "maiduguri",
+          "indicativePerLitre": 985,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "ibadan",
+          "indicativePerLitre": 930,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        },
+        {
+          "state": "enugu",
+          "indicativePerLitre": null,
+          "maxActualPerLitre": null,
+          "minActualPerLitre": null,
+          "avgActualPerLitre": null
+        }
+      ],
+      "notes": [
+        "Old-format sheet: indicative pump prices only (no max/min/avg rows); Enugu not published."
+      ]
+    },
+    {
+      "period": "2026-03",
+      "label": "March 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-91b8413a-87dc-4634-929d-0a130d9f81b9.pdf",
+      "nfemRatePerUsd": 1377.61,
+      "brentUsdPerBarrel": 103.89,
+      "gasolineUsdPerMt": 1046.52,
+      "states": [
+        {
+          "state": "lagos",
+          "indicativePerLitre": 1249.01,
+          "maxActualPerLitre": 1208,
+          "minActualPerLitre": 1073,
+          "avgActualPerLitre": 1140.5
+        },
+        {
+          "state": "abuja",
+          "indicativePerLitre": 1286.81,
+          "maxActualPerLitre": 1238,
+          "minActualPerLitre": 1166,
+          "avgActualPerLitre": 1202
+        },
+        {
+          "state": "kano",
+          "indicativePerLitre": 1298.11,
+          "maxActualPerLitre": 1273,
+          "minActualPerLitre": 1118,
+          "avgActualPerLitre": 1195.5
+        },
+        {
+          "state": "calabar",
+          "indicativePerLitre": 1252.67,
+          "maxActualPerLitre": 1250,
+          "minActualPerLitre": 1154,
+          "avgActualPerLitre": 1202
+        },
+        {
+          "state": "sokoto",
+          "indicativePerLitre": 1303.52,
+          "maxActualPerLitre": 1305,
+          "minActualPerLitre": 1148,
+          "avgActualPerLitre": 1226.5
+        },
+        {
+          "state": "maiduguri",
+          "indicativePerLitre": 1317.19,
+          "maxActualPerLitre": 1300,
+          "minActualPerLitre": 1177,
+          "avgActualPerLitre": 1238.5
+        },
+        {
+          "state": "ibadan",
+          "indicativePerLitre": 1257.07,
+          "maxActualPerLitre": 1238,
+          "minActualPerLitre": 1146,
+          "avgActualPerLitre": 1192
+        },
+        {
+          "state": "enugu",
+          "indicativePerLitre": 1280.43,
+          "maxActualPerLitre": 1368,
+          "minActualPerLitre": 1172,
+          "avgActualPerLitre": 1270
+        }
+      ],
+      "notes": []
+    },
+    {
+      "period": "2026-04",
+      "label": "April 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf",
+      "nfemRatePerUsd": 1361.22,
+      "brentUsdPerBarrel": 120.55,
+      "gasolineUsdPerMt": 1074.97,
+      "states": [
+        {
+          "state": "lagos",
+          "indicativePerLitre": 1284.05,
+          "maxActualPerLitre": 1318,
+          "minActualPerLitre": 1225,
+          "avgActualPerLitre": 1271.5
+        },
+        {
+          "state": "abuja",
+          "indicativePerLitre": 1333.05,
+          "maxActualPerLitre": 1385,
+          "minActualPerLitre": 1267,
+          "avgActualPerLitre": 1326
+        },
+        {
+          "state": "kano",
+          "indicativePerLitre": 1360.79,
+          "maxActualPerLitre": 1390,
+          "minActualPerLitre": 1290,
+          "avgActualPerLitre": 1340
+        },
+        {
+          "state": "calabar",
+          "indicativePerLitre": 1287.66,
+          "maxActualPerLitre": 1333,
+          "minActualPerLitre": 1259,
+          "avgActualPerLitre": 1296
+        },
+        {
+          "state": "sokoto",
+          "indicativePerLitre": 1357.7,
+          "maxActualPerLitre": 1400,
+          "minActualPerLitre": 1322,
+          "avgActualPerLitre": 1361
+        },
+        {
+          "state": "maiduguri",
+          "indicativePerLitre": 1377.79,
+          "maxActualPerLitre": 1413,
+          "minActualPerLitre": 1330,
+          "avgActualPerLitre": 1371.5
+        },
+        {
+          "state": "ibadan",
+          "indicativePerLitre": 1282.79,
+          "maxActualPerLitre": 1326,
+          "minActualPerLitre": 1244,
+          "avgActualPerLitre": 1285
+        },
+        {
+          "state": "enugu",
+          "indicativePerLitre": 1322.27,
+          "maxActualPerLitre": 1390,
+          "minActualPerLitre": 1268,
+          "avgActualPerLitre": 1329
+        }
+      ],
+      "notes": []
+    }
+  ]
+}

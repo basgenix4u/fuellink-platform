@@ -1,0 +1,812 @@
+{
+  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "source": {
+    "name": "Nigerian Midstream and Downstream Petroleum Regulatory Authority (NMDPRA)",
+    "description": "Monthly 'State of the Midstream and Downstream Sector' fact sheets, parsed from official PDFs.",
+    "containerListUrl": "https://alps.blob.core.windows.net/nmdprawebsite?restype=container&comp=list&prefix=Statistics/",
+    "site": "https://nmdpra.gov.ng/"
+  },
+  "months": [
+    {
+      "month": "2025-10",
+      "label": "October 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-3a0392fd-1b33-4194-b663-6a35f685da21.pdf",
+      "releasedAt": "Tue, 02 Dec 2025 19:22:57 GMT",
+      "dprp": {
+        "utilizationPct": null,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": null,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": null,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": null,
+        "units": []
+      },
+      "supply": {
+        "pmsTotalMld": null,
+        "pmsDomesticMld": null,
+        "pmsImportMld": null,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 56.74,
+        "agodMld": 17.13,
+        "atkMld": 2.61,
+        "lpgKtPerDay": 6.095
+      },
+      "sufficiencyDays": {
+        "pms": 11,
+        "agod": 38,
+        "atk": 15,
+        "lpg": 5,
+        "includesDprpStock": null
+      },
+      "lpg": {
+        "supplyMtPerDay": 5700,
+        "consumptionMtPerDay": 4410
+      },
+      "gas": {
+        "totalBscfPerDay": null,
+        "nlngBscfPerDay": null,
+        "domesticBscfPerDay": null,
+        "toPowerBscfPerDay": null,
+        "toCommercialBscfPerDay": null,
+        "toIndustriesBscfPerDay": null
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Sheet system-wide utilization 61.58% (4 active refineries, 467,000 bpd of 1,125,000 bpd installed); DPRP not separately reported in Oct 2025 sheet.",
+        "Sheet lists two sufficiency blocks: 'Fuel Sufficiency Levels' 14/41/18/4/48 days and 'National Fuel Sufficiency' 11/38/15/5/49 days (both labelled Oct 2025). National block used.",
+        "LPG consumption peak 6,711 mt/day (Aug 2025) reported in sheet."
+      ]
+    },
+    {
+      "month": "2025-11",
+      "label": "November 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-90e0e578-7ed8-4822-8c1b-dca7210402c5.pdf",
+      "releasedAt": "Tue, 09 Dec 2025 19:30:27 GMT",
+      "dprp": {
+        "utilizationPct": null,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": 23.52,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": null,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": null,
+        "units": []
+      },
+      "supply": {
+        "pmsTotalMld": null,
+        "pmsDomesticMld": null,
+        "pmsImportMld": null,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 52.9,
+        "agodMld": 15.4,
+        "atkMld": 2.5,
+        "lpgKtPerDay": 3.992
+      },
+      "sufficiencyDays": {
+        "pms": 17,
+        "agod": 35,
+        "atk": 15,
+        "lpg": 8,
+        "includesDprpStock": null
+      },
+      "lpg": {
+        "supplyMtPerDay": 4958,
+        "consumptionMtPerDay": 3992
+      },
+      "gas": {
+        "totalBscfPerDay": 4.684,
+        "nlngBscfPerDay": 2.6,
+        "domesticBscfPerDay": 2.084,
+        "toPowerBscfPerDay": null,
+        "toCommercialBscfPerDay": null,
+        "toIndustriesBscfPerDay": null
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "DPRP PMS average domestic evacuation 23.52 ML/day (Nov 2025 sheet); AGO evacuation of prior stock 0.349 ML/day.",
+        "Consumption value order in sheet is PMS/AGO/LPG/ATK; parser maps by unit."
+      ]
+    },
+    {
+      "month": "2025-12",
+      "label": "December 2025",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-d2493c07-7706-4c04-b83d-258560d91550.pdf",
+      "releasedAt": "Thu, 15 Jan 2026 13:28:42 GMT",
+      "dprp": {
+        "utilizationPct": 62.94,
+        "peakUtilizationPct": 71,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": 32.012,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": 5.783,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": 0.392,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 63.24,
+            "agoDomesticMld": 0.051
+          },
+          {
+            "name": "edo",
+            "utilizationPct": 85.43,
+            "agoDomesticMld": 0.052
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 53.89,
+            "agoDomesticMld": 0.289
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": 74.2,
+        "pmsDomesticMld": null,
+        "pmsImportMld": null,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 63.7,
+        "agodMld": 16.4,
+        "atkMld": 2.7,
+        "lpgKtPerDay": 4.38
+      },
+      "sufficiencyDays": {
+        "pms": 29,
+        "agod": 25,
+        "atk": 20,
+        "lpg": 8,
+        "includesDprpStock": false
+      },
+      "lpg": {
+        "supplyMtPerDay": 5201,
+        "consumptionMtPerDay": 4380
+      },
+      "gas": {
+        "totalBscfPerDay": 4.787,
+        "nlngBscfPerDay": 2.912,
+        "domesticBscfPerDay": 1.875,
+        "toPowerBscfPerDay": 0.586,
+        "toCommercialBscfPerDay": 0.43,
+        "toIndustriesBscfPerDay": 2025
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Highlight block: PMS total supply 74.2 ML/D, DPRP PMS 32.01 ML/D, PMS sufficiency 29.2 days, LPG domestic supply 5.2 KT/day.",
+        "DPRP PMS supply improved from 19.5 ML/day (Nov) to 32 ML/day (Dec) per sheet note."
+      ]
+    },
+    {
+      "month": "2026-01",
+      "label": "January 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf",
+      "releasedAt": "Fri, 13 Feb 2026 20:25:00 GMT",
+      "dprp": {
+        "utilizationPct": 61.27,
+        "peakUtilizationPct": 67.69,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": 40.1,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": 10.9,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": 0.296,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 61.66,
+            "agoDomesticMld": 0.124
+          },
+          {
+            "name": "edo",
+            "utilizationPct": 63.23,
+            "agoDomesticMld": 0.055
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 29.09,
+            "agoDomesticMld": 0.118
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": 64.9,
+        "pmsDomesticMld": null,
+        "pmsImportMld": 24.8,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 60.2,
+        "agodMld": 19.2,
+        "atkMld": 3.5,
+        "lpgKtPerDay": 4.86
+      },
+      "sufficiencyDays": {
+        "pms": 33,
+        "agod": 34,
+        "atk": 20,
+        "lpg": 18,
+        "includesDprpStock": false
+      },
+      "lpg": {
+        "supplyMtPerDay": 5110,
+        "consumptionMtPerDay": 5050
+      },
+      "gas": {
+        "totalBscfPerDay": 4.837,
+        "nlngBscfPerDay": 2.931,
+        "domesticBscfPerDay": 1.906,
+        "toPowerBscfPerDay": 0.648,
+        "toCommercialBscfPerDay": 0.431,
+        "toIndustriesBscfPerDay": 2026
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "PMS total supply 64.9 ML/D from highlights; import 24.8 = 64.9 − 40.1 (derived, arithmetic only).",
+        "Sufficiency excludes DPRP PMS stock earmarked for domestic market (sheet note).",
+        "Sheet reprints the Nov 2025 PMS price table (used as the 2025-11 price month source)."
+      ]
+    },
+    {
+      "month": "2026-02",
+      "label": "February 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-9f4e0f4b-77c4-4c62-9f60-d273fa974116.pdf",
+      "releasedAt": "Tue, 12 May 2026 15:05:25 GMT",
+      "dprp": {
+        "utilizationPct": 78.13,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": 36.5,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": 8.2,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": null,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 59.66,
+            "agoDomesticMld": 0.112
+          },
+          {
+            "name": "edo",
+            "utilizationPct": 81.66,
+            "agoDomesticMld": 0.085
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 34.47,
+            "agoDomesticMld": 0.171
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": 39.6,
+        "pmsDomesticMld": 36.6,
+        "pmsImportMld": 3,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 56.9,
+        "agodMld": 20.3,
+        "atkMld": 2.9,
+        "lpgKtPerDay": 4.194
+      },
+      "sufficiencyDays": {
+        "pms": 31,
+        "agod": 48,
+        "atk": 73,
+        "lpg": 22,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": 4703,
+        "consumptionMtPerDay": 4194
+      },
+      "gas": {
+        "totalBscfPerDay": 4.771,
+        "nlngBscfPerDay": 3.018,
+        "domesticBscfPerDay": 1.763,
+        "toPowerBscfPerDay": 2026,
+        "toCommercialBscfPerDay": 9,
+        "toIndustriesBscfPerDay": null
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "PMS total 39.6 ML/D from highlights (Jan 64.9 − 25.4 MoM reduction per sheet note); import 3.0 = 39.6 − 36.6 (derived, arithmetic only).",
+        "Sufficiency includes gross PMS stock at DPRP (sheet note)."
+      ]
+    },
+    {
+      "month": "2026-03",
+      "label": "March 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-91b8413a-87dc-4634-929d-0a130d9f81b9.pdf",
+      "releasedAt": "Tue, 14 Apr 2026 13:18:52 GMT",
+      "dprp": {
+        "utilizationPct": 93.62,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": 48.2,
+        "pmsDomesticSupplyMld": 34.2,
+        "pmsExportMld": null,
+        "agoProductionMld": 16.5,
+        "agoDomesticSupplyMld": 2.2,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": 0.629,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 59.56,
+            "agoDomesticMld": 0.241
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 58.84,
+            "agoDomesticMld": 0.337
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": null,
+        "pmsDomesticMld": null,
+        "pmsImportMld": null,
+        "agodTotalMld": null,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": null,
+        "lpgKtPerDay": null,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 47.3,
+        "agodMld": 14.5,
+        "atkMld": 2.1,
+        "lpgKtPerDay": 5.1
+      },
+      "sufficiencyDays": {
+        "pms": 21,
+        "agod": 55,
+        "atk": 109,
+        "lpg": 14,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": 4726,
+        "consumptionMtPerDay": null
+      },
+      "gas": {
+        "totalBscfPerDay": 4.888,
+        "nlngBscfPerDay": 3.033,
+        "domesticBscfPerDay": 1.855,
+        "toPowerBscfPerDay": 0.485,
+        "toCommercialBscfPerDay": 0.43,
+        "toIndustriesBscfPerDay": 4.888
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Sufficiency includes pumpable stock at Dangote Refinery (sheet note)."
+      ]
+    },
+    {
+      "month": "2026-04",
+      "label": "April 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-38af84f3-994a-4760-83c4-d92331e3b1e8.pdf",
+      "releasedAt": "Tue, 12 May 2026 15:17:56 GMT",
+      "dprp": {
+        "utilizationPct": 99.12,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": 53.6,
+        "pmsDomesticSupplyMld": 40.7,
+        "pmsExportMld": 17.1,
+        "agoProductionMld": 23.6,
+        "agoDomesticSupplyMld": 8,
+        "agoExportMld": 17.8,
+        "atkProductionMld": 22.9,
+        "atkDomesticSupplyMld": 2.6,
+        "atkExportMld": 20.5
+      },
+      "modular": {
+        "totalAgoDomesticMld": 0.559,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 56.14,
+            "agoDomesticMld": 0.254
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 33.95,
+            "agoDomesticMld": 0.213
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": 44.4,
+        "pmsDomesticMld": 40.7,
+        "pmsImportMld": 3.7,
+        "agodTotalMld": 10.2,
+        "agodDomesticMld": 8.5,
+        "agodImportMld": null,
+        "atkMld": 2.6,
+        "lpgKtPerDay": 4.5,
+        "crudeMbd": 0.612
+      },
+      "consumption": {
+        "pmsMld": 51.1,
+        "agodMld": 17.3,
+        "atkMld": 2.5,
+        "lpgKtPerDay": 4.8
+      },
+      "sufficiencyDays": {
+        "pms": 17.7,
+        "agod": 39,
+        "atk": 70,
+        "lpg": 13,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": 4545,
+        "consumptionMtPerDay": 4818
+      },
+      "gas": {
+        "totalBscfPerDay": 5.142,
+        "nlngBscfPerDay": 3.129,
+        "domesticBscfPerDay": 2.012,
+        "toPowerBscfPerDay": 0.549,
+        "toCommercialBscfPerDay": 0.468,
+        "toIndustriesBscfPerDay": 2026
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Dangote refinery ran at ~100% capacity utilization for most days in April (sheet note)."
+      ]
+    },
+    {
+      "month": "2026-05",
+      "label": "May 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-8c4edc1c-6c9b-41a0-affc-c93fa831be6c.pdf",
+      "releasedAt": "Wed, 17 Jun 2026 21:27:49 GMT",
+      "dprp": {
+        "utilizationPct": 101.25,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": 44.7,
+        "pmsDomesticSupplyMld": 41.5,
+        "pmsExportMld": null,
+        "agoProductionMld": 24.5,
+        "agoDomesticSupplyMld": 18.2,
+        "agoExportMld": 6.5,
+        "atkProductionMld": 21.9,
+        "atkDomesticSupplyMld": 2.8,
+        "atkExportMld": 17.5
+      },
+      "modular": {
+        "totalAgoDomesticMld": null,
+        "units": [
+          {
+            "name": "waltersmith",
+            "utilizationPct": 65.31,
+            "agoDomesticMld": 0.242
+          },
+          {
+            "name": "edo",
+            "utilizationPct": 91.66,
+            "agoDomesticMld": 0.08
+          },
+          {
+            "name": "aradel",
+            "utilizationPct": 62.94,
+            "agoDomesticMld": 0.326
+          }
+        ]
+      },
+      "supply": {
+        "pmsTotalMld": 47.4,
+        "pmsDomesticMld": 41.5,
+        "pmsImportMld": 5.9,
+        "agodTotalMld": 18.8,
+        "agodDomesticMld": 18.8,
+        "agodImportMld": null,
+        "atkMld": 3.6,
+        "lpgKtPerDay": 4.1,
+        "crudeMbd": 0.578
+      },
+      "consumption": {
+        "pmsMld": 46.3,
+        "agodMld": 16,
+        "atkMld": 3.1,
+        "lpgKtPerDay": 4.5
+      },
+      "sufficiencyDays": {
+        "pms": 16,
+        "agod": 31,
+        "atk": 94,
+        "lpg": 11,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": 4100,
+        "consumptionMtPerDay": 4500
+      },
+      "gas": {
+        "totalBscfPerDay": 4.984,
+        "nlngBscfPerDay": 2.851,
+        "domesticBscfPerDay": 2.133,
+        "toPowerBscfPerDay": 0.557,
+        "toCommercialBscfPerDay": 0.51,
+        "toIndustriesBscfPerDay": 2026
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "May sheet's 'Daily Average Supply' shows ATK 19.2 ML/day — contradicted by the sheet's own embedded statistics table (3.6 ML/day); statistics table value used."
+      ]
+    },
+    {
+      "month": "2026-06",
+      "label": "June 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-137a2554-2f1b-4fb4-aa7b-84fc7bf53ec6.pdf",
+      "releasedAt": "Fri, 17 Jul 2026 21:04:13 GMT",
+      "dprp": {
+        "utilizationPct": 101.36,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": null,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": null,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": 0.562,
+        "units": []
+      },
+      "supply": {
+        "pmsTotalMld": 50.6,
+        "pmsDomesticMld": null,
+        "pmsImportMld": 18.1,
+        "agodTotalMld": 16.2,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": 2.5,
+        "lpgKtPerDay": 5.1,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 47.4,
+        "agodMld": 16,
+        "atkMld": 2.9,
+        "lpgKtPerDay": 4.1
+      },
+      "sufficiencyDays": {
+        "pms": 20,
+        "agod": 37,
+        "atk": 73,
+        "lpg": 16,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": null,
+        "consumptionMtPerDay": null
+      },
+      "gas": {
+        "totalBscfPerDay": 5.116,
+        "nlngBscfPerDay": 2.99,
+        "domesticBscfPerDay": 2.126,
+        "toPowerBscfPerDay": 0.509,
+        "toCommercialBscfPerDay": 0.554,
+        "toIndustriesBscfPerDay": 2026
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Sheet embeds the \"2026-04 → 2026-05\" statistics table (used as primary source for those months).",
+        "PMS imports 18.1 ML/day (+207% MoM) and domestic PMS supply ~32.5 ML/day per NMDPRA June 2026 data as reported (Megastar, 18 Jul 2026)."
+      ]
+    },
+    {
+      "month": "2026-07",
+      "label": "July 2026",
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-a903f57a-a1cb-49b6-bfbc-23d4471db755.pdf",
+      "releasedAt": "Mon, 24 Aug 2026 15:57:49 GMT",
+      "dprp": {
+        "utilizationPct": 71.09,
+        "peakUtilizationPct": null,
+        "pmsProductionMld": null,
+        "pmsDomesticSupplyMld": null,
+        "pmsExportMld": null,
+        "agoProductionMld": null,
+        "agoDomesticSupplyMld": null,
+        "agoExportMld": null,
+        "atkProductionMld": null,
+        "atkDomesticSupplyMld": null,
+        "atkExportMld": null
+      },
+      "modular": {
+        "totalAgoDomesticMld": null,
+        "units": []
+      },
+      "supply": {
+        "pmsTotalMld": 45.5,
+        "pmsDomesticMld": null,
+        "pmsImportMld": null,
+        "agodTotalMld": 23.6,
+        "agodDomesticMld": null,
+        "agodImportMld": null,
+        "atkMld": 1.9,
+        "lpgKtPerDay": 5.3,
+        "crudeMbd": null
+      },
+      "consumption": {
+        "pmsMld": 35.7,
+        "agodMld": 14.7,
+        "atkMld": 1.7,
+        "lpgKtPerDay": 4.4
+      },
+      "sufficiencyDays": {
+        "pms": 22.4,
+        "agod": 46.5,
+        "atk": 58.6,
+        "lpg": 16.3,
+        "includesDprpStock": true
+      },
+      "lpg": {
+        "supplyMtPerDay": null,
+        "consumptionMtPerDay": null
+      },
+      "gas": {
+        "totalBscfPerDay": 4.723,
+        "nlngBscfPerDay": 2.695,
+        "domesticBscfPerDay": 2.028,
+        "toPowerBscfPerDay": 0.534,
+        "toCommercialBscfPerDay": 0.507,
+        "toIndustriesBscfPerDay": 2026
+      },
+      "benchmark": {
+        "pmsMld": 50,
+        "agodMld": 14,
+        "atkMld": 3,
+        "lpgKtPerDay": 3.9
+      },
+      "notes": [
+        "Sheet embeds the \"2026-04 → 2026-05\" statistics table (used as primary source for those months).",
+        "July sheet carries NMDPRA editorial QA comments in the PDF (draft-stage quality); figures as printed."
+      ]
+    }
+  ],
+  "pipelineProgress": [
+    {
+      "asOf": "2026-01",
+      "label": "January 2026 (NGIC, via NMDPRA fact sheet)",
+      "akkPct": 77.9,
+      "ob3OverallPct": 99.9,
+      "ob3NigerCrossingPct": 56.35,
+      "odidiWarriPct": 66.76,
+      "escravosOdidiPct": 10.54,
+      "elpsMidlinePct": 92.7,
+      "overallPct": 69.67,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf"
+    },
+    {
+      "asOf": "2026-06",
+      "label": "June 2026 (NGIC, via NMDPRA fact sheet)",
+      "akkPct": 94.3,
+      "ob3OverallPct": 96,
+      "ob3NigerCrossingPct": 100,
+      "odidiWarriPct": 74.58,
+      "escravosOdidiPct": 23.69,
+      "elpsMidlinePct": 95.41,
+      "overallPct": null,
+      "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-137a2554-2f1b-4fb4-aa7b-84fc7bf53ec6.pdf"
+    }
+  ]
+}
