@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T07:25:46.927Z",
+  "generatedAt": "2026-09-20T16:33:00.256Z",
   "source": {
     "name": "Nigerian Midstream and Downstream Petroleum Regulatory Authority (NMDPRA)",
     "description": "Monthly 'State of the Midstream and Downstream Sector' fact sheets, parsed from official PDFs.",
@@ -218,7 +218,7 @@
         "domesticBscfPerDay": 1.875,
         "toPowerBscfPerDay": 0.586,
         "toCommercialBscfPerDay": 0.43,
-        "toIndustriesBscfPerDay": 2025
+        "toIndustriesBscfPerDay": 0.569
       },
       "benchmark": {
         "pmsMld": 50,
@@ -303,7 +303,7 @@
         "domesticBscfPerDay": 1.906,
         "toPowerBscfPerDay": 0.648,
         "toCommercialBscfPerDay": 0.431,
-        "toIndustriesBscfPerDay": 2026
+        "toIndustriesBscfPerDay": 0.573
       },
       "benchmark": {
         "pmsMld": 50,
@@ -387,9 +387,9 @@
         "totalBscfPerDay": 4.771,
         "nlngBscfPerDay": 3.018,
         "domesticBscfPerDay": 1.763,
-        "toPowerBscfPerDay": 2026,
-        "toCommercialBscfPerDay": 9,
-        "toIndustriesBscfPerDay": null
+        "toPowerBscfPerDay": 0.536,
+        "toCommercialBscfPerDay": 0.44,
+        "toIndustriesBscfPerDay": 0.628
       },
       "benchmark": {
         "pmsMld": 50,
@@ -469,7 +469,7 @@
         "domesticBscfPerDay": 1.855,
         "toPowerBscfPerDay": 0.485,
         "toCommercialBscfPerDay": 0.43,
-        "toIndustriesBscfPerDay": 4.888
+        "toIndustriesBscfPerDay": 0.601
       },
       "benchmark": {
         "pmsMld": 50,
@@ -548,7 +548,7 @@
         "domesticBscfPerDay": 2.012,
         "toPowerBscfPerDay": 0.549,
         "toCommercialBscfPerDay": 0.468,
-        "toIndustriesBscfPerDay": 2026
+        "toIndustriesBscfPerDay": 0.671
       },
       "benchmark": {
         "pmsMld": 50,
@@ -632,7 +632,7 @@
         "domesticBscfPerDay": 2.133,
         "toPowerBscfPerDay": 0.557,
         "toCommercialBscfPerDay": 0.51,
-        "toIndustriesBscfPerDay": 2026
+        "toIndustriesBscfPerDay": 0.635
       },
       "benchmark": {
         "pmsMld": 50,
@@ -700,7 +700,7 @@
         "domesticBscfPerDay": 2.126,
         "toPowerBscfPerDay": 0.509,
         "toCommercialBscfPerDay": 0.554,
-        "toIndustriesBscfPerDay": 2026
+        "toIndustriesBscfPerDay": 0.643
       },
       "benchmark": {
         "pmsMld": 50,
@@ -769,7 +769,7 @@
         "domesticBscfPerDay": 2.028,
         "toPowerBscfPerDay": 0.534,
         "toCommercialBscfPerDay": 0.507,
-        "toIndustriesBscfPerDay": 2026
+        "toIndustriesBscfPerDay": 0.552
       },
       "benchmark": {
         "pmsMld": 50,

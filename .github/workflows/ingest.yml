@@ -34,6 +34,9 @@ jobs:
       - name: Verify datasets
         run: npm run verify:data
 
+      - name: Regenerate monthly reports
+        run: npm run generate:reports
+
       - name: Commit data changes (if any)
         id: changed
         run: |
@@ -41,11 +44,11 @@ jobs:
           git config user.email "fuellink-bot@users.noreply.github.com"
           DATE=$(date -u +%Y-%m-%d)
           BRANCH="bot/nmdpra-ingest-${DATE}"
-          if git diff --quiet apps/web/src/data/intelligence/ packages/contracts/; then
+          if git diff --quiet apps/web/src/data/intelligence/ apps/web/src/data/reports/ packages/contracts/; then
             echo "changes=false" >> "$GITHUB_OUTPUT"
             echo "::notice::No dataset changes since last ingest."
           else
-            git add apps/web/src/data/intelligence/ packages/contracts/
+            git add apps/web/src/data/intelligence/ apps/web/src/data/reports/ packages/contracts/
             git commit -m "chore(data): NMDPRA refresh ${DATE}"
             git checkout -b "${BRANCH}"
             git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "${BRANCH}"

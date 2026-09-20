@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "ingest:nmdpra": "tsx scripts/ingest-nmdpra.mts",
-    "verify:data": "tsx scripts/verify-data.mts"
+    "verify:data": "tsx scripts/verify-data.mts",
+    "generate:reports": "tsx scripts/generate-reports.mts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",

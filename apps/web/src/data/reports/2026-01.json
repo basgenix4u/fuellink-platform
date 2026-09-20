@@ -1,0 +1,272 @@
+{
+  "month": "2026-01",
+  "title": "Nigeria fuel sector in numbers — January 2026",
+  "description": "Dangote refinery ran at 61.27% of installed capacity (−1.7 pts MoM). National PMS consumption was 60.2 ML/day — 120% of the NMDPRA 2026 benchmark of 50 ML/day (derived). Full breakdown of Nigeria's downstream sector from the NMDPRA fact sheet.",
+  "generatedAt": "2026-09-20T16:33:00.256Z",
+  "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf",
+  "site": "https://nmdpra.gov.ng/",
+  "highlights": [
+    {
+      "text": "Dangote refinery ran at 61.27% of installed capacity (−1.7 pts MoM).",
+      "tone": "warn"
+    },
+    {
+      "text": "National PMS consumption was 60.2 ML/day — 120% of the NMDPRA 2026 benchmark of 50 ML/day (derived).",
+      "tone": "neutral"
+    },
+    {
+      "text": "PMS stock sufficiency: 33 days excluding Dangote refinery stock.",
+      "tone": "good"
+    },
+    {
+      "text": "PMS import receipts: 24.8 ML/day.",
+      "tone": "neutral"
+    },
+    {
+      "text": "National gas supply: 4.837 Bscf/day.",
+      "tone": "neutral"
+    },
+    {
+      "text": "LPG remains the tightest product: 18 days of national stock.",
+      "tone": "warn"
+    }
+  ],
+  "sections": [
+    {
+      "id": "refinery",
+      "heading": "Refinery output — Dangote (DPRP)",
+      "bullets": [],
+      "table": {
+        "caption": "Average daily, ML/day unless noted. Source: NMDPRA fact sheet.",
+        "headers": [
+          "Indicator",
+          "2026-01"
+        ],
+        "rows": [
+          [
+            "Utilization",
+            "61.27%"
+          ],
+          [
+            "Peak utilization",
+            "67.69%"
+          ],
+          [
+            "PMS production",
+            "not reported"
+          ],
+          [
+            "PMS domestic supply",
+            "40.1"
+          ],
+          [
+            "PMS exports",
+            "not reported"
+          ],
+          [
+            "AGO production",
+            "not reported"
+          ],
+          [
+            "AGO domestic supply",
+            "10.9"
+          ],
+          [
+            "AGO exports",
+            "not reported"
+          ],
+          [
+            "ATK production",
+            "not reported"
+          ],
+          [
+            "ATK domestic supply",
+            "not reported"
+          ],
+          [
+            "ATK exports",
+            "not reported"
+          ],
+          [
+            "Modular refineries — AGO domestic",
+            "0.296"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "supply-consumption",
+      "heading": "Supply & consumption vs regulator benchmarks",
+      "bullets": [],
+      "table": {
+        "caption": "NMDPRA 2026 daily demand benchmarks shown for reference.",
+        "headers": [
+          "Product",
+          "Consumption",
+          "Supply (total)",
+          "Benchmark"
+        ],
+        "rows": [
+          [
+            "PMS",
+            "60.2 ML/d",
+            "64.9 ML/d",
+            "50 ML/d"
+          ],
+          [
+            "AGO",
+            "19.2 ML/d",
+            "not reported ML/d",
+            "14 ML/d"
+          ],
+          [
+            "ATK",
+            "3.5 ML/d",
+            "not reported ML/d",
+            "3 ML/d"
+          ],
+          [
+            "LPG",
+            "4.86 kt/d",
+            "not reported kt/d",
+            "3.9 kt/d"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "sufficiency",
+      "heading": "National fuel sufficiency (days of stock)",
+      "bullets": [],
+      "table": {
+        "caption": "Days the country could coast on existing national stock at the average daily consumption rate.",
+        "headers": [
+          "Product",
+          "Days",
+          "vs previous month"
+        ],
+        "rows": [
+          [
+            "PMS",
+            "33",
+            "(+4 days MoM)"
+          ],
+          [
+            "AGO",
+            "34",
+            "(+9 days MoM)"
+          ],
+          [
+            "ATK",
+            "20",
+            "(unchanged MoM)"
+          ],
+          [
+            "LPG",
+            "18",
+            "(+10 days MoM)"
+          ]
+        ]
+      },
+      "note": "Excludes DPRP PMS stock earmarked for the domestic market (per sheet note)."
+    },
+    {
+      "id": "gas",
+      "heading": "Gas sector",
+      "bullets": [
+        {
+          "text": "Total gas supplied: 4.837 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "NLNG: 2.931 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "Domestic: 1.906 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "Sectoral split — power 0.648, commercial 0.431, industries 0.573 Bscf/day.",
+          "tone": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "lpg-prices",
+      "heading": "LPG retail prices",
+      "bullets": [
+        {
+          "text": "LPG national retail range: ₦950–₦1,550/kg.",
+          "tone": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "trade",
+      "heading": "Trade flows & the Lomé question",
+      "bullets": [
+        {
+          "text": "PMS import receipts: 24.8 ML/day (NMDPRA).",
+          "tone": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "heading": "Pipeline completion (NGIC, via fact sheet)",
+      "bullets": [],
+      "table": {
+        "caption": "As reported in the sheet.",
+        "headers": [
+          "Pipeline",
+          "Complete"
+        ],
+        "rows": [
+          [
+            "Akan-Koko (AKK)",
+            "77.9%"
+          ],
+          [
+            "Obang Archi–Obio-Akpor (OB3) overall",
+            "99.9%"
+          ],
+          [
+            "OB3 Niger delta crossing",
+            "56.4%"
+          ],
+          [
+            "Odidi–Warri (OWEP)",
+            "66.8%"
+          ],
+          [
+            "Escravos–Odidi (EOP)",
+            "10.5%"
+          ],
+          [
+            "ELPS midline",
+            "92.7%"
+          ],
+          [
+            "Overall",
+            "69.7%"
+          ]
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "NMDPRA fact sheet (January 2026) — source PDF",
+      "url": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-2a9129c4-5631-4569-83ee-d8d8234cda6f.pdf"
+    },
+    {
+      "label": "NMDPRA website",
+      "url": "https://nmdpra.gov.ng/"
+    },
+    {
+      "label": "FuelLink Intelligence",
+      "url": "/intel"
+    }
+  ]
+}
