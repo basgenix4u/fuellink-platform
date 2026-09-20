@@ -328,6 +328,45 @@ export const LpgPriceDatasetSchema = z.object({
 
 /* ------------------------------ NMDPRA monthly ---------------------------- */
 
+/* ------------------------- Monthly reports (SEO) -------------------------- */
+
+export const ReportBulletSchema = z.object({
+  text: z.string(),
+  tone: z.enum(["neutral", "good", "warn", "bad"]).default("neutral"),
+});
+
+export const ReportTableSchema = z.object({
+  caption: z.string().nullable(),
+  headers: z.array(z.string()),
+  rows: z.array(z.array(z.string())),
+});
+
+export const ReportSectionSchema = z.object({
+  id: z.string(),
+  heading: z.string(),
+  bullets: z.array(ReportBulletSchema).default([]),
+  table: ReportTableSchema.nullable().optional(),
+  note: z.string().nullable().optional(),
+});
+
+export const ReportSourceSchema = z.object({
+  label: z.string(),
+  /** Absolute URL or site-internal path (e.g. /intel). */
+  url: z.union([z.string().url(), z.string().regex(/^\//)]),
+});
+
+export const MonthlyReportSchema = z.object({
+  month: monthStr,
+  title: z.string(),
+  description: z.string(),
+  generatedAt: z.string(),
+  sourceUrl: z.string().url(),
+  site: z.string().url(),
+  highlights: z.array(ReportBulletSchema),
+  sections: z.array(ReportSectionSchema),
+  sources: z.array(ReportSourceSchema),
+});
+
 export type PmsPriceMonth = z.infer<typeof PmsPriceMonthSchema>;
 export type LpgPriceMonth = z.infer<typeof LpgPriceMonthSchema>;
 export type NmdpraDataset = z.infer<typeof NmdpraDatasetSchema>;
@@ -338,3 +377,6 @@ export type GantryDataset = z.infer<typeof GantryDatasetSchema>;
 export type LomeDataset = z.infer<typeof LomeDatasetSchema>;
 export type LpgMarketDataset = z.infer<typeof LpgMarketDatasetSchema>;
 export type JetDataset = z.infer<typeof JetDatasetSchema>;
+export type ReportBullet = z.infer<typeof ReportBulletSchema>;
+export type ReportSection = z.infer<typeof ReportSectionSchema>;
+export type MonthlyReport = z.infer<typeof MonthlyReportSchema>;

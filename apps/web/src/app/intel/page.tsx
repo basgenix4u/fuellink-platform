@@ -13,6 +13,7 @@ import {
   Map,
   Plane,
   Scale,
+  Newspaper,
 } from "lucide-react";
 import { IntelHeader, Metric, Note, TableShell, Th, Td } from "@/components/intel/bits";
 import { latestMonth, monthBefore, monthLabel, fmt, fmtPct, nmdpra, generatedAtDate } from "@/lib/intel";
@@ -85,6 +86,13 @@ const DASHBOARDS: {
     desc: "The 2026 jet-fuel crisis timeline, DPRP's USD + 25% holdback model, airport spreads.",
     icon: Plane,
     accent: "bg-indigo-50 text-indigo-700",
+  },
+  {
+    href: "/reports",
+    title: "Monthly Reports",
+    desc: "The month in numbers — a deterministic, NMDPRA-sourced report for every month we cover.",
+    icon: Newspaper,
+    accent: "bg-primary-50 text-primary-700",
   },
 ];
 

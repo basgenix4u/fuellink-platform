@@ -1,0 +1,216 @@
+{
+  "month": "2025-12",
+  "title": "Nigeria fuel sector in numbers — December 2025",
+  "description": "Dangote refinery ran at 62.94% of installed capacity. National PMS consumption was 63.7 ML/day — 127% of the NMDPRA 2026 benchmark of 50 ML/day (derived). Full breakdown of Nigeria's downstream sector from the NMDPRA fact sheet.",
+  "generatedAt": "2026-09-20T16:33:00.256Z",
+  "sourceUrl": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-d2493c07-7706-4c04-b83d-258560d91550.pdf",
+  "site": "https://nmdpra.gov.ng/",
+  "highlights": [
+    {
+      "text": "Dangote refinery ran at 62.94% of installed capacity.",
+      "tone": "warn"
+    },
+    {
+      "text": "National PMS consumption was 63.7 ML/day — 127% of the NMDPRA 2026 benchmark of 50 ML/day (derived).",
+      "tone": "neutral"
+    },
+    {
+      "text": "PMS stock sufficiency: 29 days excluding Dangote refinery stock.",
+      "tone": "good"
+    },
+    {
+      "text": "National gas supply: 4.787 Bscf/day.",
+      "tone": "neutral"
+    },
+    {
+      "text": "LPG remains the tightest product: 8 days of national stock.",
+      "tone": "bad"
+    }
+  ],
+  "sections": [
+    {
+      "id": "refinery",
+      "heading": "Refinery output — Dangote (DPRP)",
+      "bullets": [],
+      "table": {
+        "caption": "Average daily, ML/day unless noted. Source: NMDPRA fact sheet.",
+        "headers": [
+          "Indicator",
+          "2025-12"
+        ],
+        "rows": [
+          [
+            "Utilization",
+            "62.94%"
+          ],
+          [
+            "Peak utilization",
+            "71%"
+          ],
+          [
+            "PMS production",
+            "not reported"
+          ],
+          [
+            "PMS domestic supply",
+            "32"
+          ],
+          [
+            "PMS exports",
+            "not reported"
+          ],
+          [
+            "AGO production",
+            "not reported"
+          ],
+          [
+            "AGO domestic supply",
+            "5.8"
+          ],
+          [
+            "AGO exports",
+            "not reported"
+          ],
+          [
+            "ATK production",
+            "not reported"
+          ],
+          [
+            "ATK domestic supply",
+            "not reported"
+          ],
+          [
+            "ATK exports",
+            "not reported"
+          ],
+          [
+            "Modular refineries — AGO domestic",
+            "0.392"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "supply-consumption",
+      "heading": "Supply & consumption vs regulator benchmarks",
+      "bullets": [],
+      "table": {
+        "caption": "NMDPRA 2026 daily demand benchmarks shown for reference.",
+        "headers": [
+          "Product",
+          "Consumption",
+          "Supply (total)",
+          "Benchmark"
+        ],
+        "rows": [
+          [
+            "PMS",
+            "63.7 ML/d",
+            "74.2 ML/d",
+            "50 ML/d"
+          ],
+          [
+            "AGO",
+            "16.4 ML/d",
+            "not reported ML/d",
+            "14 ML/d"
+          ],
+          [
+            "ATK",
+            "2.7 ML/d",
+            "not reported ML/d",
+            "3 ML/d"
+          ],
+          [
+            "LPG",
+            "4.38 kt/d",
+            "not reported kt/d",
+            "3.9 kt/d"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "sufficiency",
+      "heading": "National fuel sufficiency (days of stock)",
+      "bullets": [],
+      "table": {
+        "caption": "Days the country could coast on existing national stock at the average daily consumption rate.",
+        "headers": [
+          "Product",
+          "Days",
+          "vs previous month"
+        ],
+        "rows": [
+          [
+            "PMS",
+            "29",
+            "(+12 days MoM)"
+          ],
+          [
+            "AGO",
+            "25",
+            "(−10 days MoM)"
+          ],
+          [
+            "ATK",
+            "20",
+            "(+5 days MoM)"
+          ],
+          [
+            "LPG",
+            "8",
+            "(unchanged MoM)"
+          ]
+        ]
+      },
+      "note": "Excludes DPRP PMS stock earmarked for the domestic market (per sheet note)."
+    },
+    {
+      "id": "gas",
+      "heading": "Gas sector",
+      "bullets": [
+        {
+          "text": "Total gas supplied: 4.787 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "NLNG: 2.912 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "Domestic: 1.875 Bscf/day.",
+          "tone": "neutral"
+        },
+        {
+          "text": "Sectoral split — power 0.586, commercial 0.43, industries 0.569 Bscf/day.",
+          "tone": "neutral"
+        }
+      ]
+    },
+    {
+      "id": "lpg-prices",
+      "heading": "LPG retail prices",
+      "bullets": [
+        {
+          "text": "LPG national retail range: ₦1,120–₦1,600/kg.",
+          "tone": "neutral"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "NMDPRA fact sheet (December 2025) — source PDF",
+      "url": "https://alps.blob.core.windows.net/nmdprawebsite/Statistics/Upload-d2493c07-7706-4c04-b83d-258560d91550.pdf"
+    },
+    {
+      "label": "NMDPRA website",
+      "url": "https://nmdpra.gov.ng/"
+    },
+    {
+      "label": "FuelLink Intelligence",
+      "url": "/intel"
+    }
+  ]
+}
