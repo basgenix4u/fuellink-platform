@@ -52,7 +52,17 @@ for (const file of readdirSync(DATA_DIR).sort()) {
 
 // quick integrity invariants (catch bad transcriptions early)
 const nmdpra = SCHEMAS["nmdpra-monthly.json"].parse(JSON.parse(readFileSync(path.join(DATA_DIR, "nmdpra-monthly.json"), "utf8"))) as unknown as {
-  months: { month: string; consumption: { pmsMld: number | null }; sufficiencyDays: { pms: number | null } }[];
+  months: {
+    month: string;
+    consumption: { pmsMld: number | null };
+    sufficiencyDays: { pms: number | null };
+    gas: {
+      totalBscfPerDay: number | null;
+      toPowerBscfPerDay: number | null;
+      toCommercialBscfPerDay: number | null;
+      toIndustriesBscfPerDay: number | null;
+    };
+  }[];
 };
 for (const m of nmdpra.months) {
   if (m.consumption.pmsMld != null && (m.consumption.pmsMld < 20 || m.consumption.pmsMld > 90)) {
@@ -62,6 +72,26 @@ for (const m of nmdpra.months) {
   if (m.sufficiencyDays.pms != null && (m.sufficiencyDays.pms < 1 || m.sufficiencyDays.pms > 150)) {
     failures++;
     console.error(`FAIL  ${m.month}: PMS sufficiency ${m.sufficiencyDays.pms} days outside plausible range 1–150`);
+  }
+  // gas: national total is ~4–6 Bscf/d; a sectoral value that reaches (or
+  // exceeds) the total — or a year token like 2026 — is a parse bug, not data
+  if (m.gas.totalBscfPerDay != null && (m.gas.totalBscfPerDay < 0.5 || m.gas.totalBscfPerDay > 20)) {
+    failures++;
+    console.error(`FAIL  ${m.month}: gas total ${m.gas.totalBscfPerDay} Bscf/d outside plausible range 0.5–20`);
+  }
+  for (const [label, v] of [
+    ["power", m.gas.toPowerBscfPerDay],
+    ["commercial", m.gas.toCommercialBscfPerDay],
+    ["industries", m.gas.toIndustriesBscfPerDay],
+  ] as const) {
+    if (v == null) continue;
+    if (v < 0 || v > 20) {
+      failures++;
+      console.error(`FAIL  ${m.month}: gas ${label} ${v} Bscf/d outside plausible range 0–20 (year token?)`);
+    } else if (m.gas.totalBscfPerDay != null && v >= m.gas.totalBscfPerDay) {
+      failures++;
+      console.error(`FAIL  ${m.month}: gas ${label} ${v} Bscf/d >= national total ${m.gas.totalBscfPerDay} — likely a mis-parsed total`);
+    }
   }
 }
 

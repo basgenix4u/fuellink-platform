@@ -326,15 +326,51 @@ function parseGas(text: string) {
   const tgVals = afterTg ? floats(afterTg, 3).slice(0, 2) : [];
   const nlng = tgVals[0] ?? null;
   const domestic = tgVals[1] ?? null;
-  const sectorW = lastWindow(text, /Sectoral Gas Utilization/, 320);
-  const sector = sectorW ? floats(sectorW.slice(0, 260), 3).slice(0, 3) : [];
+  // Sectoral split (power / commercial / industries). Layout, verified
+  // against extracted text of the Jul/Feb/Mar 2026 sheets:
+  //   "Gas-to-Power / Gas to Commercial / Gas Based Industries"
+  //   "Sectoral Gas Utilization"  ← table heading
+  //   <power> Bscf/day
+  //   <commercial> Bscf/day
+  //   [(Daily Average …)] [sometimes the total block intrudes here]
+  //   <industries> Bscf/day        ← always the last Bscf value before
+  //   "LNG exported by NLNG"       ←   this label
+  // The heading also appears in a footnote ("Total Sectoral Gas Utilization
+  // excludes: …") — exclude occurrences preceded by "Total".
+  let sectorIdx = -1;
+  for (const m of text.matchAll(/Sectoral Gas Utilization/g)) {
+    const before = text.slice(Math.max(0, m.index! - 12), m.index!);
+    if (!/Total\s*$/.test(before)) sectorIdx = m.index!;
+  }
+  let power: number | null = null;
+  let commercial: number | null = null;
+  let industries: number | null = null;
+  if (sectorIdx >= 0) {
+    const after = text.slice(sectorIdx, sectorIdx + 900);
+    const gasNums = (seg: string): number[] => {
+      const out: number[] = [];
+      const re = new RegExp(GAS_UNIT.source, "g");
+      for (const m of seg.matchAll(re)) out.push(parseFloat(m[1]));
+      return out;
+    };
+    const seq = gasNums(after);
+    power = seq[0] ?? null;
+    commercial = seq[1] ?? null;
+    const lngIdx = after.indexOf("LNG exported by NLNG");
+    if (lngIdx >= 0) {
+      const beforeLng = gasNums(after.slice(0, lngIdx));
+      industries = beforeLng.length ? beforeLng[beforeLng.length - 1] : null;
+    } else {
+      industries = seq[2] ?? null;
+    }
+  }
   return {
     totalBscfPerDay: num(total),
     nlngBscfPerDay: nlng,
     domesticBscfPerDay: domestic,
-    toPowerBscfPerDay: sector[0] ?? null,
-    toCommercialBscfPerDay: sector[1] ?? null,
-    toIndustriesBscfPerDay: sector[2] ?? null,
+    toPowerBscfPerDay: power,
+    toCommercialBscfPerDay: commercial,
+    toIndustriesBscfPerDay: industries,
   };
 }
 
