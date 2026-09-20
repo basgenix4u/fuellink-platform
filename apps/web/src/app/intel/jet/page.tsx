@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { IntelHeader, Metric, Note } from "@/components/intel/bits";
 import { jet, lome, monthLabel, fmt, fmtNaira } from "@/lib/intel";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Jet A-1 Desk",
@@ -108,9 +109,9 @@ export default function JetPage() {
             2026 and surged ~+{lome.jetExports.april2026PctChangeYoy}%
             YoY in April — the product is simultaneously a domestic crisis and a fast-growing
             export book. See the{" "}
-            <a href="/intel/lome" className="text-primary-700 hover:underline font-semibold">
+            <Link href="/intel/lome" className="text-primary-700 hover:underline font-semibold">
               Lomé Index
-            </a>
+            </Link>
             .
           </Note>
         </div>

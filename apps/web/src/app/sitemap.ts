@@ -7,6 +7,9 @@ import type { MetadataRoute } from "next";
 import { readdirSync } from "node:fs";
 import path from "node:path";
 
+// Static export requires an explicit static directive on metadata routes.
+export const dynamic = "force-static";
+
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fuellink.ng";
 
 const STATIC_ROUTES: { path: string; priority: number }[] = [

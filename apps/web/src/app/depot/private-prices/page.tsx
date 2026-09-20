@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/shared/Button";
 import { Badge } from "@/components/shared/Badge";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const products = [
   { id: "PMS", label: "PMS (Petrol)", unit: "₦/litre", refPrice: 897, color: "bg-green-100 text-green-700" },
@@ -162,9 +163,9 @@ export default function PrivatePricesPage() {
             conversations that lead to real deals — without exposing your pricing publicly.
           </p>
           <div className="mt-3">
-            <a href="/depot/ai-settings" className="text-secondary-300 text-sm font-semibold hover:text-secondary-200 transition-colors">
+            <Link href="/depot/ai-settings" className="text-secondary-300 text-sm font-semibold hover:text-secondary-200 transition-colors">
               Configure your AI chatbot →
-            </a>
+            </Link>
           </div>
         </div>
       </div>

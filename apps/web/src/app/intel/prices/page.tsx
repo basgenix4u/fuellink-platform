@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { IntelHeader, Metric, Note, TableShell, Th, Td, Derived, NR } from "@/components/intel/bits";
 import { LineChartBox, RangeBandBox } from "@/components/intel/charts";
 import { STATE_LABELS, monthLabel, fmt, fmtNaira, fmtDelta, pmsPrices, lpgPrices, nmdpra } from "@/lib/intel";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "State Price Indices",
@@ -196,7 +197,7 @@ export default function PricesPage() {
           <Note>
             LPG prices more than doubled inside this window: the national top moved from ₦1,500/kg
             (Nov 2025) to ₦1,800/kg (May 2026) — see the{" "}
-            <a href="/intel/lpg" className="text-primary-700 hover:underline">LPG Desk</a> for the
+            <Link href="/intel/lpg" className="text-primary-700 hover:underline">LPG Desk</Link> for the
             structural deficit behind it.
           </Note>
         </div>
