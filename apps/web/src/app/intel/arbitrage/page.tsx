@@ -4,6 +4,7 @@
 import type { Metadata } from "next";
 import { IntelHeader, Note, Derived } from "@/components/intel/bits";
 import { latestMonth, monthLabel, fmt, fmtNaira, nmdpra, gantry, lome, lpgMarket, jet, pmsPrices } from "@/lib/intel";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Arbitrage Signals",
@@ -149,9 +150,9 @@ export default function ArbitragePage() {
         <Note tone="warn">
           <strong>Reading these signals.</strong> A spread only becomes a trade after your own
           freight, risk, working-capital cost, and execution friction — enter those in the{" "}
-          <a href="/intel/calculator" className="text-primary-700 hover:underline font-semibold">
+          <Link href="/intel/calculator" className="text-primary-700 hover:underline font-semibold">
             calculator
-          </a>
+          </Link>
           . Values tagged <Derived /> are arithmetic over sourced figures; nothing here is a
           market estimate or a recommendation.
         </Note>

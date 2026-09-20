@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/shared/Button";
 import { Badge } from "@/components/shared/Badge";
 import { formatCompactNumber } from "@/lib/utils";
+import Link from "next/link";
 
 // Animated counter
 function AnimatedCounter({
@@ -298,9 +299,9 @@ export function HeroSection() {
               className="mt-3 text-xs text-white/60"
             >
               Live NMDPRA sector data (Jul 2026, latest published) —{" "}
-              <a href="/intel" className="text-accent-400 hover:text-accent-300 font-semibold underline underline-offset-2">
+              <Link href="/intel" className="text-accent-400 hover:text-accent-300 font-semibold underline underline-offset-2">
                 explore the Intelligence layer →
-              </a>
+              </Link>
             </motion.p>
           </div>
 

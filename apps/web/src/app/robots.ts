@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+// Static export requires an explicit static directive on metadata routes.
+export const dynamic = "force-static";
+
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fuellink.ng";
 
 export default function robots(): MetadataRoute.Robots {
