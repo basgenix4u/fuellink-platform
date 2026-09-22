@@ -96,6 +96,39 @@ cmd_up() {
     "$pgbin/initdb" -D "$PGDATA_DIR" -U postgres --auth-local=trust --auth-host=md5 >/dev/null
   fi
 
+  # Snapshot/restore and archive extraction can widen these permissions;
+  # PostgreSQL refuses to start unless they are 0700 or 0750.
+  chmod 700 "$PGDATA_DIR"
+
+  # Several PGDATA subdirectories are empty at rest. Tools that do not record
+  # empty directories (git, some snapshot/restore mechanisms, tar --exclude
+  # of empty paths) silently drop them, after which the server refuses to
+  # start with "could not open directory". They hold only transient runtime
+  # state, so recreating them is safe and loses no committed data.
+  for runtime_dir in \
+    pg_notify pg_stat pg_stat_tmp pg_dynshmem pg_commit_ts pg_replslot \
+    pg_serial pg_snapshots pg_tblspc pg_twophase pg_subtrans \
+    pg_logical/snapshots pg_logical/mappings \
+    pg_wal/archive_status pg_wal/summaries \
+    pg_multixact/members pg_multixact/offsets pg_xact
+  do
+    if [ ! -d "$PGDATA_DIR/$runtime_dir" ]; then
+      echo "==> Recreating missing runtime directory: $runtime_dir"
+      mkdir -p "$PGDATA_DIR/$runtime_dir"
+      chmod 700 "$PGDATA_DIR/$runtime_dir"
+    fi
+  done
+
+  # A pid file left behind by a killed server blocks startup. If no process
+  # actually holds it, it is safe to remove.
+  if [ -f "$PGDATA_DIR/postmaster.pid" ]; then
+    stale_pid=$(head -1 "$PGDATA_DIR/postmaster.pid" 2>/dev/null || echo "")
+    if [ -n "$stale_pid" ] && ! kill -0 "$stale_pid" 2>/dev/null; then
+      echo "==> Removing stale postmaster.pid (pid $stale_pid is not running)"
+      rm -f "$PGDATA_DIR/postmaster.pid"
+    fi
+  fi
+
   if ! "$pgbin/pg_ctl" -D "$PGDATA_DIR" status >/dev/null 2>&1; then
     echo "==> Starting PostgreSQL on port $PGPORT"
     # unix_socket_directories must be writable by the current user.

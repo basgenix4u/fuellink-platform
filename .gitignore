@@ -47,3 +47,6 @@ apps/web/.cache/
 # build output
 dist/
 
+
+# local document storage (KYC, waybills)
+.storage/

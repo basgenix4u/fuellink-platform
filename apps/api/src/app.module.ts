@@ -7,6 +7,9 @@ import { AuthModule } from "./auth/auth.module";
 import { CommonModule } from "./common/common.module";
 import { HealthController } from "./health/health.controller";
 import { PrismaModule } from "./prisma/prisma.module";
+import { StorageModule } from "./storage/storage.module";
+import { OrganizationsModule } from "./organizations/organizations.module";
+import { DepotsModule } from "./depots/depots.module";
 import { env } from "./config/env";
 
 @Module({
@@ -21,6 +24,9 @@ import { env } from "./config/env";
     CommonModule,
     AuditModule,
     AuthModule,
+    StorageModule,
+    OrganizationsModule,
+    DepotsModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
