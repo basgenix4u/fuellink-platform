@@ -115,14 +115,25 @@ Escrow release fires on `DELIVERED → COMPLETED`, either by buyer confirmation 
 
 | Phase | Content | State |
 |---|---|---|
-| **P3 — Foundation** | Full schema + migrations; hardened auth (argon2id, refresh rotation, revocation); RBAC incl. org scoping; security middleware (helmet, rate limiting, CORS, body limits); global error contract; request/audit logging; idempotency; **test harness against real Postgres** | ← **this build** |
-| **P4a — Trust & supply** | Organisations, KYC vault + admin review queue, depots, tanks, product listings with validity windows, inventory, loading slots | next |
-| **P4b — Trade** | RFQ/quotes, orders + full lifecycle, allocation, delivery + waybill + quantity reconciliation | |
-| **P4c — Money** | Ledger, escrow, payment provider abstraction + manual adapter, payouts, fees, invoices, subscriptions | |
+| **P3 — Foundation** | Full schema + migrations; hardened auth (argon2id, refresh rotation, revocation); RBAC incl. org scoping; security middleware (helmet, rate limiting, CORS, body limits); global error contract; request/audit logging; idempotency; **test harness against real Postgres** | ✅ **DONE** — PR #6, 43 unit + 33 integration |
+| **P4a — Trust & supply** | Organisations, KYC vault + admin review queue, depots, tanks, product listings with validity windows, inventory, loading slots | ✅ **DONE** — PR #7, +57 integration |
+| **P4b — Trade** | Orders + full lifecycle, allocation, delivery + waybill + quantity reconciliation, oversell prevention, idempotent placement | ✅ **DONE** — PR #8, +28 integration (118 total) |
+| **P4c — Money** | Ledger wiring, escrow fund/release/refund, payment provider abstraction + manual bank-transfer adapter, payouts, fees, invoices, subscriptions | ← **next** |
 | **P4d — Around the trade** | Disputes, notifications (in-app + email + SMS), messaging/RFQ threads, analytics dashboards | |
-| **P5 — Hardening** | Load/edge-case testing, authz matrix tests, penetration review, data-integrity jobs, backup/restore drill | |
+| **P4e — Web app** | Replace mock data with the real API: auth flows, depot console, marketplace, order workspace, admin review console | |
+| **P5 — Hardening** | Load/edge-case testing, full authz matrix, penetration review, data-integrity jobs, backup/restore drill | |
 | **P6 — Deploy** | Vercel + Railway + Neon + Upstash, migrations in CI/CD, observability, rollback runbook | |
 | **P7 — Launch readiness** | Documented status of every feature: complete / tested / known-limited | |
+
+### Verified behaviour so far (not claims — test-backed)
+- Unbalanced ledger transaction (off by ₦0.01) rejected at COMMIT; ledger rows immutable.
+- Refresh-token reuse revokes the whole session family; logout kills a stolen access token.
+- Unverified or suspended organisations cannot list or trade; suspension withdraws listings.
+- A script renamed `.pdf` is rejected by magic-byte inspection.
+- 10 buyers racing for 90,000 L produce exactly 3 orders of 30,000 L — never an oversell.
+- 10 concurrent listing edits produce exactly 1 winner and 9 `409`s — no lost updates.
+- A 1,000 L short delivery is flagged and blocks completion; 100 L (within 0.5%) passes.
+- Retried order placement with the same Idempotency-Key returns the original order.
 
 ---
 
