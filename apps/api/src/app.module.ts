@@ -10,6 +10,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { StorageModule } from "./storage/storage.module";
 import { OrganizationsModule } from "./organizations/organizations.module";
 import { DepotsModule } from "./depots/depots.module";
+import { OrdersModule } from "./orders/orders.module";
 import { env } from "./config/env";
 
 @Module({
@@ -27,6 +28,7 @@ import { env } from "./config/env";
     StorageModule,
     OrganizationsModule,
     DepotsModule,
+    OrdersModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
