@@ -1,28 +1,23 @@
 import { Global, Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import type { SignOptions } from "jsonwebtoken";
-import { env } from "../config/env";
+import { AuditModule } from "../audit/audit.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { JwtAuthGuard } from "./jwt-auth.guard";
+import { PasswordService } from "./password.service";
 import { RolesGuard } from "./roles.guard";
+import { TokenService } from "./token.service";
 
 /**
- * Global so every module can use @UseGuards(JwtAuthGuard, RolesGuard):
- * Nest resolves guard classes (and their JwtService dependency) from the
- * module context, and JwtService only exists where JwtModule is registered.
+ * Global so every feature module can apply @UseGuards(JwtAuthGuard,
+ * RolesGuard) without importing auth: Nest resolves guard dependencies from
+ * the module context of the consumer.
  */
 @Global()
 @Module({
-  imports: [
-    JwtModule.register({
-      secret: env.JWT_SECRET,
-      // env values are free-form strings; ms-compatible values (12h, 2d…) are documented in .env.example
-      signOptions: { expiresIn: env.JWT_EXPIRES_IN as SignOptions["expiresIn"] }
-    })
-  ],
+  imports: [JwtModule.register({}), AuditModule],
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard, RolesGuard],
-  exports: [AuthService, JwtAuthGuard, RolesGuard, JwtModule]
+  providers: [AuthService, PasswordService, TokenService, JwtAuthGuard, RolesGuard],
+  exports: [AuthService, PasswordService, TokenService, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

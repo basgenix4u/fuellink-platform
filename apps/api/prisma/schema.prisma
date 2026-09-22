@@ -1,6 +1,11 @@
-// FuelLink API — Prisma schema
-// Money is stored as BigInt kobo (smallest currency unit) to avoid float drift.
-// Dates are UTC timestamptz.
+// FuelLink — authoritative data model.
+//
+// Conventions:
+//  * Money is BigInt **kobo** (1 naira = 100 kobo). Never floats. Serialized as strings.
+//  * Volume is stored in **litres as Decimal(14,3)** — millilitre precision, no float drift.
+//  * Every money movement is a LedgerTransaction with >= 2 LedgerEntries summing to zero.
+//  * Mutating, user-visible state changes are attributable via AuditLog.
+//  * Soft delete (isActive / archivedAt) wherever history must survive.
 
 generator client {
   provider = "prisma-client-js"
@@ -11,85 +16,1103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ---------------------------------------------------------------------------
+// Identity, organisations, access control
+// ---------------------------------------------------------------------------
+
 enum Role {
-  ADMIN
-  DEPOT
-  MARKETER
+  ADMIN // FuelLink platform operator
+  DEPOT // supplier side (depot / terminal / refinery)
+  MARKETER // buyer side (independent marketer / station)
 }
 
-enum EscrowStatus {
-  DRAFT
-  PENDING_PAYMENT
-  BANK_HELD
-  RELEASED
-  CANCELLED
-  DISPUTED
+/// Role of a user *within* an organisation. Platform Role governs which app
+/// they see; OrgRole governs what they may do on behalf of the company.
+enum OrgRole {
+  OWNER //  full control incl. billing + bank accounts
+  MANAGER //  approve prices, confirm deliveries, manage staff
+  STAFF //  day-to-day: create listings, raise orders
+  FINANCE //  payouts, invoices, statements — no trading
+  VIEWER //  read-only
+}
+
+enum OrgType {
+  DEPOT
+  MARKETER
+  PLATFORM
+}
+
+/// Verification state of an organisation. Trading is gated on VERIFIED.
+enum VerificationStatus {
+  UNVERIFIED
+  PENDING //  documents submitted, awaiting admin review
+  VERIFIED
+  REJECTED
+  SUSPENDED //  was verified, later revoked
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  name         String
-  phone        String?
-  role         Role     @default(MARKETER)
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String    @id @default(cuid())
+  email            String    @unique
+  phone            String?   @unique
+  passwordHash     String
+  name             String
+  role             Role      @default(MARKETER)
+  isActive         Boolean   @default(true)
+  emailVerifiedAt  DateTime?
+  phoneVerifiedAt  DateTime?
+  lastLoginAt      DateTime?
+  /// Consecutive failed logins; drives lockout.
+  failedLoginCount Int       @default(0)
+  lockedUntil      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  ownedDepots Depot[]
-  orders      EscrowOrder[] @relation("OrderBuyer")
+  memberships   OrgMember[]
+  sessions      Session[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  reviewsMade   VerificationReview[] @relation("ReviewerUser")
+  messages      Message[]
+  tokens        VerificationToken[]
 
+  @@index([role])
   @@map("users")
 }
 
-model Depot {
-  id            String   @id @default(cuid())
-  ownerId       String
-  name          String
-  slug          String   @unique
-  state         String
-  lga           String?
-  address       String?
-  lat           Float?
-  lng           Float?
-  capacityKL    Float?
-  fuelTypes     String[]
-  gantryActive  Boolean  @default(false)
-  nnpcLicenseNo String?
-  notes         String?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+/// A company. All trading happens on behalf of an organisation, never a bare user.
+model Organization {
+  id                 String             @id @default(cuid())
+  name               String
+  slug               String             @unique
+  type               OrgType
+  /// Corporate Affairs Commission registration number.
+  rcNumber           String?
+  tin                String?
+  /// NMDPRA / DPR licence number where applicable.
+  licenseNumber      String?
+  licenseExpiry      DateTime?
+  phone              String?
+  email              String?
+  addressLine        String?
+  state              String?
+  lga                String?
+  verificationStatus VerificationStatus @default(UNVERIFIED)
+  verifiedAt         DateTime?
+  /// Set when SUSPENDED/REJECTED so staff and the org can see why.
+  statusReason       String?
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 
-  owner  User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  orders EscrowOrder[]
+  members        OrgMember[]
+  depots         Depot[]
+  kycDocuments   KycDocument[]
+  reviews        VerificationReview[]
+  bankAccounts   BankAccount[]
+  ledgerAccounts LedgerAccount[]
+  buyerOrders    Order[]                   @relation("BuyerOrg")
+  sellerOrders   Order[]                   @relation("SellerOrg")
+  subscriptions  Subscription[]
+  invoices       Invoice[]
+  conversations  ConversationParticipant[]
+  payments       Payment[]
 
+  @@index([type, verificationStatus])
   @@index([state])
-  @@index([ownerId])
+  @@map("organizations")
+}
+
+model OrgMember {
+  id         String    @id @default(cuid())
+  orgId      String
+  userId     String
+  role       OrgRole   @default(STAFF)
+  /// Invitation flow: a member exists before the user accepts.
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId])
+  @@index([userId])
+  @@map("org_members")
+}
+
+/// Server-side session backing a refresh token. Enables instant revocation.
+model Session {
+  id               String    @id @default(cuid())
+  userId           String
+  /// SHA-256 of the refresh token — the raw token is never stored.
+  refreshTokenHash String    @unique
+  userAgent        String?
+  ip               String?
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  /// Set when this session was rotated into a successor; reuse of a rotated
+  /// token indicates theft and revokes the whole family.
+  rotatedToId      String?   @unique
+  createdAt        DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+enum TokenPurpose {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  ORG_INVITE
+}
+
+/// Single-use, hashed, expiring tokens for out-of-band flows.
+model VerificationToken {
+  id        String       @id @default(cuid())
+  userId    String?
+  email     String
+  tokenHash String       @unique
+  purpose   TokenPurpose
+  /// Arbitrary context (e.g. invited orgId + role).
+  metadata  Json?
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime     @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([email, purpose])
+  @@index([expiresAt])
+  @@map("verification_tokens")
+}
+
+// ---------------------------------------------------------------------------
+// KYC / verification
+// ---------------------------------------------------------------------------
+
+enum KycDocumentType {
+  CAC_CERTIFICATE
+  CAC_STATUS_REPORT
+  TIN_CERTIFICATE
+  NMDPRA_LICENSE
+  TANK_FARM_LICENSE
+  DIRECTOR_ID
+  PROOF_OF_ADDRESS
+  BANK_STATEMENT
+  OTHER
+}
+
+enum KycDocumentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model KycDocument {
+  id              String            @id @default(cuid())
+  orgId           String
+  type            KycDocumentType
+  status          KycDocumentStatus @default(PENDING)
+  /// Object-storage key. Never a public URL — access is brokered by the API.
+  storageKey      String
+  fileName        String
+  mimeType        String
+  sizeBytes       Int
+  /// SHA-256 of the file; detects tampering and duplicate uploads.
+  checksum        String
+  /// Document-specific fields the reviewer confirms (number, expiry…).
+  documentNumber  String?
+  expiresAt       DateTime?
+  rejectionReason String?
+  uploadedById    String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId, status])
+  @@index([checksum])
+  @@map("kyc_documents")
+}
+
+/// An admin decision on an organisation's verification. Append-only history.
+model VerificationReview {
+  id         String             @id @default(cuid())
+  orgId      String
+  reviewerId String
+  decision   VerificationStatus
+  notes      String?
+  createdAt  DateTime           @default(now())
+
+  org      Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  reviewer User         @relation("ReviewerUser", fields: [reviewerId], references: [id], onDelete: Restrict)
+
+  @@index([orgId, createdAt])
+  @@map("verification_reviews")
+}
+
+model BankAccount {
+  id            String    @id @default(cuid())
+  orgId         String
+  bankName      String
+  bankCode      String
+  accountNumber String
+  accountName   String
+  /// Name-enquiry confirmation (manual today, provider later).
+  isVerified    Boolean   @default(false)
+  verifiedAt    DateTime?
+  isPrimary     Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org     Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  payouts Payout[]
+
+  @@unique([orgId, bankCode, accountNumber])
+  @@index([orgId, isActive])
+  @@map("bank_accounts")
+}
+
+// ---------------------------------------------------------------------------
+// Supply: depots, tanks, listings, loading capacity
+// ---------------------------------------------------------------------------
+
+enum FuelProduct {
+  PMS
+  AGO
+  ATK
+  LPG
+  DPK
+}
+
+model Depot {
+  id                   String   @id @default(cuid())
+  orgId                String
+  name                 String
+  slug                 String   @unique
+  state                String
+  lga                  String?
+  address              String?
+  lat                  Float?
+  lng                  Float?
+  /// Total storage across tanks, litres.
+  capacityLitres       Decimal? @db.Decimal(14, 3)
+  gantryActive         Boolean  @default(false)
+  /// Trucks that can be loaded per day — caps allocation.
+  dailyLoadingCapacity Int?
+  operatingHours       String?
+  contactPhone         String?
+  notes                String?
+  isActive             Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  org      Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  tanks    Tank[]
+  listings ProductListing[]
+  orders   Order[]
+  slots    LoadingSlot[]
+
+  @@index([orgId])
+  @@index([state, isActive])
   @@map("depots")
 }
 
-model EscrowOrder {
-  id             String       @id @default(cuid())
-  ref            String       @unique
-  buyerId        String
+model Tank {
+  id             String      @id @default(cuid())
   depotId        String
-  fuelType       String
-  quantityLiters Float
-  unitPriceKobo  BigInt
+  name           String
+  product        FuelProduct
+  capacityLitres Decimal     @db.Decimal(14, 3)
+  /// Last physically confirmed dip reading.
+  currentLitres  Decimal     @default(0) @db.Decimal(14, 3)
+  lastDipAt      DateTime?
+  isActive       Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  depot Depot @relation(fields: [depotId], references: [id], onDelete: Cascade)
+
+  @@index([depotId, product])
+  @@map("tanks")
+}
+
+/// A sellable offer: product + price + available volume + validity window.
+/// `availableLitres` is decremented under a transaction when an order is
+/// confirmed, and `version` gives optimistic locking against oversell.
+model ProductListing {
+  id                String      @id @default(cuid())
+  depotId           String
+  product           FuelProduct
+  /// Price per litre in kobo.
+  pricePerLitreKobo BigInt
+  availableLitres   Decimal     @db.Decimal(14, 3)
+  /// Volume committed to confirmed-but-not-yet-loaded orders.
+  reservedLitres    Decimal     @default(0) @db.Decimal(14, 3)
+  minOrderLitres    Decimal     @default(0) @db.Decimal(14, 3)
+  maxOrderLitres    Decimal?    @db.Decimal(14, 3)
+  /// Prices in this market move intraday — an expired price cannot be ordered.
+  validFrom         DateTime    @default(now())
+  validUntil        DateTime
+  isActive          Boolean     @default(true)
+  /// Optimistic-lock counter.
+  version           Int         @default(0)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  depot   Depot          @relation(fields: [depotId], references: [id], onDelete: Cascade)
+  history PriceHistory[]
+  orders  Order[]
+
+  @@index([depotId, product, isActive])
+  @@index([product, isActive, validUntil])
+  @@map("product_listings")
+}
+
+model PriceHistory {
+  id                String   @id @default(cuid())
+  listingId         String
+  pricePerLitreKobo BigInt
+  availableLitres   Decimal  @db.Decimal(14, 3)
+  changedById       String?
+  createdAt         DateTime @default(now())
+
+  listing ProductListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId, createdAt])
+  @@map("price_history")
+}
+
+/// Loading slots cap how much a depot can actually dispatch in a day.
+model LoadingSlot {
+  id             String   @id @default(cuid())
+  depotId        String
+  slotDate       DateTime @db.Date
+  capacityTrucks Int
+  bookedTrucks   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  depot Depot @relation(fields: [depotId], references: [id], onDelete: Cascade)
+
+  @@unique([depotId, slotDate])
+  @@map("loading_slots")
+}
+
+// ---------------------------------------------------------------------------
+// Trade: RFQ, orders, delivery
+// ---------------------------------------------------------------------------
+
+enum QuoteStatus {
+  REQUESTED
+  QUOTED
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  WITHDRAWN
+}
+
+/// Request for quote — the negotiation that precedes an order.
+model QuoteRequest {
+  id                      String      @id @default(cuid())
+  ref                     String      @unique
+  buyerOrgId              String
+  depotId                 String
+  product                 FuelProduct
+  quantityLitres          Decimal     @db.Decimal(14, 3)
+  deliveryState           String?
+  deliveryAddress         String?
+  neededBy                DateTime?
+  buyerNote               String?
+  status                  QuoteStatus @default(REQUESTED)
+  /// Depot's answer.
+  quotedPricePerLitreKobo BigInt?
+  quotedValidUntil        DateTime?
+  depotNote               String?
+  respondedAt             DateTime?
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+
+  @@index([buyerOrgId, status])
+  @@index([depotId, status])
+  @@map("quote_requests")
+}
+
+enum OrderStatus {
+  DRAFT
+  AWAITING_PAYMENT //  order confirmed, buyer must fund escrow
+  ESCROW_FUNDED //  money held at the bank
+  ALLOCATED //  depot assigned a loading slot
+  LOADING
+  IN_TRANSIT
+  DELIVERED //  buyer/driver reports delivery; awaiting confirmation
+  COMPLETED //  escrow released to seller
+  DISPUTED
+  CANCELLED
+  REFUNDED
+}
+
+model Order {
+  id                String      @id @default(cuid())
+  ref               String      @unique
+  buyerOrgId        String
+  sellerOrgId       String
+  depotId           String
+  listingId         String?
+  product           FuelProduct
+  quantityLitres    Decimal     @db.Decimal(14, 3)
+  pricePerLitreKobo BigInt
+  /// quantity × unit price, computed server-side.
+  subtotalKobo      BigInt
+  /// Platform commission, computed from the fee policy at order time.
+  feeKobo           BigInt      @default(0)
+  /// What the buyer must fund.
+  totalKobo         BigInt
+  status            OrderStatus @default(DRAFT)
+  /// Optimistic-lock counter for concurrent status transitions.
+  version           Int         @default(0)
+
+  deliveryAddress     String?
+  deliveryState       String?
+  deliveryLga         String?
+  expectedLoadingDate DateTime?
+
+  /// Buyer confirmation deadline after DELIVERED; auto-completes when passed.
+  autoCompleteAt DateTime?
+  completedAt    DateTime?
+  cancelledAt    DateTime?
+  cancelReason   String?
+
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  buyerOrg  Organization    @relation("BuyerOrg", fields: [buyerOrgId], references: [id], onDelete: Restrict)
+  sellerOrg Organization    @relation("SellerOrg", fields: [sellerOrgId], references: [id], onDelete: Restrict)
+  depot     Depot           @relation(fields: [depotId], references: [id], onDelete: Restrict)
+  listing   ProductListing? @relation(fields: [listingId], references: [id], onDelete: SetNull)
+
+  events        OrderEvent[]
+  documents     OrderDocument[]
+  delivery      Delivery?
+  dispute       Dispute?
+  payments      Payment[]
+  ledgerTxns    LedgerTransaction[]
+  conversations Conversation[]
+
+  @@index([buyerOrgId, status])
+  @@index([sellerOrgId, status])
+  @@index([depotId, status])
+  @@index([status, autoCompleteAt])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+/// Immutable audit trail of an order's life. Never updated, only appended.
+model OrderEvent {
+  id          String       @id @default(cuid())
+  orderId     String
+  fromStatus  OrderStatus?
+  toStatus    OrderStatus
+  note        String?
+  /// Null when the actor is the system (auto-complete job).
+  actorUserId String?
+  actorOrgId  String?
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+  @@map("order_events")
+}
+
+enum OrderDocumentType {
+  WAYBILL
+  METER_TICKET
+  PROOF_OF_PAYMENT
+  DELIVERY_NOTE
+  QUALITY_CERTIFICATE
+  OTHER
+}
+
+model OrderDocument {
+  id           String            @id @default(cuid())
+  orderId      String
+  type         OrderDocumentType
+  storageKey   String
+  fileName     String
+  mimeType     String
+  sizeBytes    Int
+  checksum     String
+  uploadedById String?
+  createdAt    DateTime          @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, type])
+  @@map("order_documents")
+}
+
+/// Physical fulfilment. Loaded vs received litres is the #1 dispute source,
+/// so both are recorded and reconciled against a tolerance policy.
+model Delivery {
+  id              String    @id @default(cuid())
+  orderId         String    @unique
+  truckPlate      String?
+  driverName      String?
+  driverPhone     String?
+  haulierName     String?
+  waybillNumber   String?
+  loadedLitres    Decimal?  @db.Decimal(14, 3)
+  loadedAt        DateTime?
+  dispatchedAt    DateTime?
+  arrivedAt       DateTime?
+  receivedLitres  Decimal?  @db.Decimal(14, 3)
+  receivedAt      DateTime?
+  receivedByName  String?
+  /// receivedLitres - loadedLitres (negative = short delivery).
+  varianceLitres  Decimal?  @db.Decimal(14, 3)
+  /// True when |variance| exceeds the configured tolerance.
+  varianceFlagged Boolean   @default(false)
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("deliveries")
+}
+
+// ---------------------------------------------------------------------------
+// Disputes
+// ---------------------------------------------------------------------------
+
+enum DisputeReason {
+  SHORT_DELIVERY
+  QUALITY
+  NON_DELIVERY
+  LATE_DELIVERY
+  WRONG_PRODUCT
+  PAYMENT
+  OTHER
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  AWAITING_PARTY
+  RESOLVED
+  CLOSED
+}
+
+enum DisputeResolution {
+  RELEASE_TO_SELLER
+  REFUND_TO_BUYER
+  PARTIAL_REFUND
+  NO_ACTION
+}
+
+model Dispute {
+  id                 String             @id @default(cuid())
+  ref                String             @unique
+  orderId            String             @unique
+  raisedByOrgId      String
+  raisedByUserId     String?
+  reason             DisputeReason
+  description        String
+  /// Buyer's claim, if monetary.
+  claimedAmountKobo  BigInt?
+  status             DisputeStatus      @default(OPEN)
+  resolution         DisputeResolution?
+  /// Amount actually refunded on PARTIAL_REFUND / REFUND_TO_BUYER.
+  resolvedAmountKobo BigInt?
+  resolutionNote     String?
+  resolvedById       String?
+  resolvedAt         DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  order    Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  messages DisputeMessage[]
+  evidence DisputeEvidence[]
+
+  @@index([status, createdAt])
+  @@index([raisedByOrgId])
+  @@map("disputes")
+}
+
+model DisputeMessage {
+  id           String   @id @default(cuid())
+  disputeId    String
+  authorUserId String?
+  authorOrgId  String?
+  /// Admin-only notes are hidden from the parties.
+  isInternal   Boolean  @default(false)
+  body         String
+  createdAt    DateTime @default(now())
+
+  dispute Dispute @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+
+  @@index([disputeId, createdAt])
+  @@map("dispute_messages")
+}
+
+model DisputeEvidence {
+  id           String   @id @default(cuid())
+  disputeId    String
+  storageKey   String
+  fileName     String
+  mimeType     String
+  sizeBytes    Int
+  checksum     String
+  uploadedById String?
+  createdAt    DateTime @default(now())
+
+  dispute Dispute @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+
+  @@index([disputeId])
+  @@map("dispute_evidence")
+}
+
+// ---------------------------------------------------------------------------
+// Money: double-entry ledger, payments, payouts, escrow
+// ---------------------------------------------------------------------------
+
+/// Chart of accounts. Every org gets its own accounts; the platform holds
+/// escrow, fee-revenue and bank-settlement accounts.
+enum LedgerAccountType {
+  /// Funds held at the bank for a specific trade (liability to the buyer).
+  ESCROW
+  /// Amount owed to a seller after release, before payout.
+  PAYABLE
+  /// Platform commission earned.
+  FEE_REVENUE
+  /// Mirror of the real bank account (asset).
+  BANK_SETTLEMENT
+  /// Buyer-side clearing account for received funds.
+  RECEIVABLE
+}
+
+model LedgerAccount {
+  id        String            @id @default(cuid())
+  /// Null for platform-level accounts.
+  orgId     String?
+  type      LedgerAccountType
+  currency  String            @default("NGN")
+  /// Human-readable code, e.g. "ESCROW:org_123" or "PLATFORM:FEE_REVENUE".
+  code      String            @unique
+  createdAt DateTime          @default(now())
+
+  org     Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  entries LedgerEntry[]
+
+  @@index([orgId, type])
+  @@map("ledger_accounts")
+}
+
+enum LedgerTxnKind {
+  ESCROW_FUND
+  ESCROW_RELEASE
+  ESCROW_REFUND
+  FEE_CHARGE
+  PAYOUT
+  ADJUSTMENT
+  SUBSCRIPTION_CHARGE
+}
+
+/// A balanced set of entries. Entries for one transaction always sum to zero.
+model LedgerTransaction {
+  id          String        @id @default(cuid())
+  ref         String        @unique
+  kind        LedgerTxnKind
+  orderId     String?
+  paymentId   String?
+  payoutId    String?
+  description String
+  /// Who/what caused this movement.
+  actorUserId String?
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+
+  order   Order?        @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  entries LedgerEntry[]
+
+  @@index([kind, createdAt])
+  @@index([orderId])
+  @@map("ledger_transactions")
+}
+
+/// Signed amounts: debits positive, credits negative (sum == 0 per txn).
+model LedgerEntry {
+  id            String   @id @default(cuid())
+  transactionId String
+  accountId     String
+  amountKobo    BigInt
+  createdAt     DateTime @default(now())
+
+  transaction LedgerTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  account     LedgerAccount     @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([accountId, createdAt])
+  @@index([transactionId])
+  @@map("ledger_entries")
+}
+
+enum PaymentProviderKind {
+  /// Buyer transfers to the escrow account; admin confirms with proof.
+  MANUAL_BANK_TRANSFER
+  PROVIDUS
+  PAYSTACK
+  FLUTTERWAVE
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentPurpose {
+  ESCROW_FUNDING
+  SUBSCRIPTION
+}
+
+model Payment {
+  id              String              @id @default(cuid())
+  ref             String              @unique
+  orgId           String
+  orderId         String?
+  purpose         PaymentPurpose      @default(ESCROW_FUNDING)
+  provider        PaymentProviderKind
+  amountKobo      BigInt
+  status          PaymentStatus       @default(PENDING)
+  /// Provider's own identifier (transfer reference, charge id…).
+  providerRef     String?
+  /// Virtual account / instructions returned to the payer.
+  instructions    Json?
+  /// Proof-of-payment upload for the manual adapter.
+  proofStorageKey String?
+  confirmedById   String?
+  confirmedAt     DateTime?
+  failureReason   String?
+  expiresAt       DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  org      Organization     @relation(fields: [orgId], references: [id], onDelete: Restrict)
+  order    Order?           @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  attempts PaymentAttempt[]
+
+  @@index([orgId, status])
+  @@index([orderId])
+  @@index([provider, providerRef])
+  @@map("payments")
+}
+
+/// Every provider interaction, for debugging and reconciliation.
+model PaymentAttempt {
+  id              String        @id @default(cuid())
+  paymentId       String
+  status          PaymentStatus
+  /// Raw provider payload, secrets stripped before persisting.
+  providerPayload Json?
+  errorMessage    String?
+  createdAt       DateTime      @default(now())
+
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@index([paymentId, createdAt])
+  @@map("payment_attempts")
+}
+
+enum PayoutStatus {
+  REQUESTED
+  APPROVED
+  PROCESSING
+  PAID
+  FAILED
+  CANCELLED
+}
+
+model Payout {
+  id              String              @id @default(cuid())
+  ref             String              @unique
+  orgId           String
+  bankAccountId   String
+  amountKobo      BigInt
+  status          PayoutStatus        @default(REQUESTED)
+  provider        PaymentProviderKind @default(MANUAL_BANK_TRANSFER)
+  providerRef     String?
+  /// Bank transfer evidence for manual payouts.
+  proofStorageKey String?
+  approvedById    String?
+  approvedAt      DateTime?
+  paidAt          DateTime?
+  failureReason   String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Restrict)
+
+  @@index([orgId, status])
+  @@map("payouts")
+}
+
+// ---------------------------------------------------------------------------
+// Commercial: subscriptions, invoices, fees
+// ---------------------------------------------------------------------------
+
+enum SubscriptionPlan {
+  FREE
+  DEPOT_STANDARD
+  DEPOT_PRO
+  MARKETER_PLUS
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+  TRIALING
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  orgId              String
+  plan               SubscriptionPlan   @default(FREE)
+  status             SubscriptionStatus @default(ACTIVE)
+  priceKobo          BigInt             @default(0)
+  /// Months per billing cycle.
+  intervalMonths     Int                @default(1)
+  currentPeriodStart DateTime           @default(now())
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean            @default(false)
+  cancelledAt        DateTime?
+  trialEndsAt        DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  org      Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
+
+  @@index([orgId, status])
+  @@index([status, currentPeriodEnd])
+  @@map("subscriptions")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  OPEN
+  PAID
+  VOID
+  UNCOLLECTIBLE
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  ref            String        @unique
+  orgId          String
+  subscriptionId String?
+  amountKobo     BigInt
+  taxKobo        BigInt        @default(0)
   totalKobo      BigInt
-  status         EscrowStatus @default(DRAFT)
-  bankRef        String?
-  statusNote     String?
+  status         InvoiceStatus @default(OPEN)
+  dueAt          DateTime
+  paidAt         DateTime?
+  lineItems      Json
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  org          Organization  @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, status])
+  @@map("invoices")
+}
+
+/// Commission policy. Versioned so historical orders keep the fee that applied.
+model FeePolicy {
+  id             String       @id @default(cuid())
+  name           String
+  product        FuelProduct?
+  /// Basis points of subtotal (100 bps = 1%).
+  bps            Int          @default(0)
+  flatKobo       BigInt       @default(0)
+  minFeeKobo     BigInt       @default(0)
+  maxFeeKobo     BigInt?
+  effectiveFrom  DateTime     @default(now())
+  effectiveUntil DateTime?
+  isActive       Boolean      @default(true)
   createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
 
-  buyer User  @relation("OrderBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
-  depot Depot @relation(fields: [depotId], references: [id], onDelete: Restrict)
+  @@index([isActive, effectiveFrom])
+  @@map("fee_policies")
+}
 
-  @@index([buyerId])
-  @@index([depotId])
-  @@index([status])
-  @@map("escrow_orders")
+// ---------------------------------------------------------------------------
+// Messaging
+// ---------------------------------------------------------------------------
+
+model Conversation {
+  id            String    @id @default(cuid())
+  /// Conversations are usually attached to an order or a quote.
+  orderId       String?
+  subject       String?
+  lastMessageAt DateTime?
+  isArchived    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  order        Order?                    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@index([orderId])
+  @@index([lastMessageAt])
+  @@map("conversations")
+}
+
+model ConversationParticipant {
+  id             String    @id @default(cuid())
+  conversationId String
+  orgId          String
+  lastReadAt     DateTime?
+  createdAt      DateTime  @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  org          Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, orgId])
+  @@index([orgId])
+  @@map("conversation_participants")
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  senderUserId   String?
+  senderOrgId    String?
+  body           String
+  /// Attachment metadata; files live in object storage.
+  attachments    Json?
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User?        @relation(fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  SMS
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+model Notification {
+  id            String              @id @default(cuid())
+  userId        String
+  channel       NotificationChannel @default(IN_APP)
+  /// Stable event key, e.g. "order.escrow_funded".
+  type          String
+  title         String
+  body          String
+  /// Deep link into the app.
+  actionUrl     String?
+  data          Json?
+  status        NotificationStatus  @default(PENDING)
+  sentAt        DateTime?
+  readAt        DateTime?
+  failureReason String?
+  createdAt     DateTime            @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status, createdAt])
+  @@index([status, createdAt])
+  @@map("notifications")
+}
+
+model NotificationPreference {
+  id        String   @id @default(cuid())
+  userId    String
+  /// Event key prefix, e.g. "order" or "order.escrow_funded".
+  type      String
+  inApp     Boolean  @default(true)
+  email     Boolean  @default(true)
+  sms       Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, type])
+  @@map("notification_preferences")
+}
+
+// ---------------------------------------------------------------------------
+// Platform plumbing
+// ---------------------------------------------------------------------------
+
+/// Deduplicates unsafe writes. The client sends Idempotency-Key; the stored
+/// response is replayed on retry instead of performing the action twice.
+model IdempotencyKey {
+  id           String    @id @default(cuid())
+  key          String
+  /// Scoped per user so keys cannot collide or be guessed across accounts.
+  userId       String?
+  endpoint     String
+  /// Hash of the request body — a same-key-different-body retry is rejected.
+  requestHash  String
+  statusCode   Int?
+  responseBody Json?
+  /// Set while in flight so concurrent duplicates get 409 rather than racing.
+  completedAt  DateTime?
+  expiresAt    DateTime
+  createdAt    DateTime  @default(now())
+
+  @@unique([key, userId, endpoint])
+  @@index([expiresAt])
+  @@map("idempotency_keys")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  actorOrgId  String?
+  /// e.g. "order.status_changed", "org.verified".
+  action      String
+  entityType  String
+  entityId    String
+  /// Before/after for mutations; never contains secrets.
+  changes     Json?
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([action, createdAt])
+  @@map("audit_logs")
 }
