@@ -11,6 +11,8 @@ import { StorageModule } from "./storage/storage.module";
 import { OrganizationsModule } from "./organizations/organizations.module";
 import { DepotsModule } from "./depots/depots.module";
 import { OrdersModule } from "./orders/orders.module";
+import { LedgerModule } from "./ledger/ledger.module";
+import { PaymentsModule } from "./payments/payments.module";
 import { env } from "./config/env";
 
 @Module({
@@ -29,6 +31,8 @@ import { env } from "./config/env";
     OrganizationsModule,
     DepotsModule,
     OrdersModule,
+    LedgerModule,
+    PaymentsModule,
   ],
   controllers: [HealthController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
