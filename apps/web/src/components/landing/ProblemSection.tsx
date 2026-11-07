@@ -2,9 +2,8 @@
 
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   Phone,
   Clock,
@@ -79,13 +78,7 @@ function ChatBubble({
   const isEven = index % 2 === 0;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: isEven ? -20 : 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className={`flex ${isEven ? "justify-start" : "justify-end"}`}
-    >
+    <Reveal className={`flex ${isEven ? "justify-start" : "justify-end"}`}>
       <div
         className={`max-w-[80%] rounded-2xl px-4 py-2 ${
           isEven
@@ -102,24 +95,19 @@ function ChatBubble({
           {message.time}
         </p>
       </div>
-    </motion.div>
+    </Reveal>
   );
 }
 
 export function ProblemSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="py-24 bg-slate-50 overflow-hidden">
       <Container size="wide">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
+          <Reveal>
             <span className="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-wider mb-4">
               <XCircle className="w-4 h-4" />
               The Current Reality
@@ -132,7 +120,7 @@ export function ProblemSection() {
               Every day, thousands of marketers lose money, time, and peace of
               mind navigating a broken system. Here&apos;s what they face:
             </p>
-          </motion.div>
+          </Reveal>
         </div>
 
         {/* Main Content Grid */}
@@ -140,13 +128,7 @@ export function ProblemSection() {
           {/* Left - Problem Cards */}
           <div className="space-y-6">
             {problems.map((problem, index) => (
-              <motion.div
-                key={problem.title}
-                initial={{ opacity: 0, x: -30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow"
-              >
+              <Reveal key={problem.title} className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow">
                 <div className="flex gap-4">
                   <div
                     className={`flex-shrink-0 w-12 h-12 rounded-xl ${problem.bgColor} flex items-center justify-center`}
@@ -170,17 +152,12 @@ export function ProblemSection() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
 
           {/* Right - WhatsApp Chaos Visualization */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="relative"
-          >
+          <Reveal className="relative" delay={300}>
             {/* Phone Frame */}
             <div className="bg-slate-900 rounded-[3rem] p-3 shadow-2xl max-w-sm mx-auto">
               <div className="bg-white rounded-[2.5rem] overflow-hidden">
@@ -209,85 +186,36 @@ export function ProblemSection() {
                   ))}
 
                   {/* Typing Indicator */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                    className="flex justify-start"
-                  >
+                  <Reveal className="flex justify-start" delay={800}>
                     <div className="bg-white rounded-2xl rounded-tl-none px-4 py-3">
                       <div className="flex gap-1">
-                        <motion.div
-                          className="w-2 h-2 bg-slate-400 rounded-full"
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{
-                            duration: 0.6,
-                            repeat: Infinity,
-                            delay: 0,
-                          }}
-                        />
-                        <motion.div
-                          className="w-2 h-2 bg-slate-400 rounded-full"
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{
-                            duration: 0.6,
-                            repeat: Infinity,
-                            delay: 0.2,
-                          }}
-                        />
-                        <motion.div
-                          className="w-2 h-2 bg-slate-400 rounded-full"
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{
-                            duration: 0.6,
-                            repeat: Infinity,
-                            delay: 0.4,
-                          }}
-                        />
+                        <div className="w-2 h-2 bg-slate-400 rounded-full" />
+                        <div className="w-2 h-2 bg-slate-400 rounded-full" />
+                        <div className="w-2 h-2 bg-slate-400 rounded-full" />
                       </div>
                     </div>
-                  </motion.div>
+                  </Reveal>
                 </div>
               </div>
             </div>
 
             {/* Floating Warning Labels */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.6 }}
-              className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-            >
+            <Reveal className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={600}>
               ❌ No Verification
-            </motion.div>
+            </Reveal>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.7 }}
-              className="absolute top-1/3 -left-8 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-            >
+            <Reveal className="absolute top-1/3 -left-8 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={700}>
               ⚠️ Outdated Info
-            </motion.div>
+            </Reveal>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.8 }}
-              className="absolute bottom-20 -right-4 bg-yellow-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-            >
+            <Reveal className="absolute bottom-20 -right-4 bg-yellow-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={800}>
               💸 Payment Risk
-            </motion.div>
-          </motion.div>
+            </Reveal>
+          </Reveal>
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-16"
-        >
+        <Reveal className="text-center mt-16" delay={500}>
           <p className="text-xl text-slate-700 font-medium">
             The industry loses over{" "}
             <span className="text-red-600 font-bold">₦100 Billion</span>{" "}
@@ -296,7 +224,7 @@ export function ProblemSection() {
           <p className="text-lg text-slate-500 mt-2">
             There has to be a better way...
           </p>
-        </motion.div>
+        </Reveal>
       </Container>
     </section>
   );

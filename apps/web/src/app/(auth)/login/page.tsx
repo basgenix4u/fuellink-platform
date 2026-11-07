@@ -4,7 +4,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import {
   Mail,
   Lock,
@@ -166,12 +165,7 @@ export default function LoginPage() {
 
       {/* Right Side - Login Form */}
       <div className="flex-1 flex items-center justify-center p-5 sm:p-8 lg:p-12 bg-[#f7f8f7]">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-md"
-        >
+        <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden mb-8 text-center">
             <Logo variant="default" size="lg" className="justify-center mb-4" />
@@ -225,16 +219,12 @@ export default function LoginPage() {
                   <span className="text-xs text-slate-500 mt-1">{role.description}</span>
 
                   {selectedRole === role.id && (
-                    <motion.div
-                      layoutId="activeRoleIndicator"
-                      className={cn(
+                    <div className={cn(
                         "absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full flex items-center justify-center shadow-lg",
                         role.id === "marketer" ? "bg-secondary-500" : "bg-primary-500"
-                      )}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    >
+                      )}>
                       <CheckCircle2 className="w-4 h-4 text-white" />
-                    </motion.div>
+                    </div>
                   )}
                 </button>
               ))}
@@ -326,7 +316,7 @@ export default function LoginPage() {
               Create account
             </Link>
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

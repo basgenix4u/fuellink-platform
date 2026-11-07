@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Package,
   Plus,
@@ -117,18 +116,14 @@ function TankVisualization({ tank }: { tank: Tank }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={cn(
+    <div className={cn(
         "bg-white rounded-2xl shadow-sm border p-6 hover:shadow-md transition-shadow",
         tank.status === "critical"
           ? "border-danger-200"
           : tank.status === "warning"
           ? "border-warning-200"
           : "border-slate-100"
-      )}
-    >
+      )}>
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
@@ -180,20 +175,15 @@ function TankVisualization({ tank }: { tank: Tank }) {
           </div>
 
           {/* Fill Level */}
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: `${fillPercentage}%` }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className={cn(
+          <div className={cn(
               "absolute bottom-0 left-0 right-0 bg-gradient-to-t",
               getStatusColor()
-            )}
-          >
+            )}>
             {/* Wave Animation */}
             <div className="absolute inset-x-0 top-0 h-4 overflow-hidden">
               <div className="wave-animation" />
             </div>
-          </motion.div>
+          </div>
 
           {/* Percentage Label */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -250,7 +240,7 @@ function TankVisualization({ tank }: { tank: Tank }) {
             : "Normal"}
         </Badge>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -295,11 +285,7 @@ export default function InventoryPage() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center">
               <Droplets className="w-6 h-6 text-primary-500" />
@@ -311,14 +297,9 @@ export default function InventoryPage() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-secondary-50 flex items-center justify-center">
               <BarChart3 className="w-6 h-6 text-secondary-500" />
@@ -330,14 +311,9 @@ export default function InventoryPage() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-warning-50 flex items-center justify-center">
               <AlertTriangle className="w-6 h-6 text-warning-500" />
@@ -349,14 +325,9 @@ export default function InventoryPage() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-danger-50 flex items-center justify-center">
               <TrendingDown className="w-6 h-6 text-danger-500" />
@@ -368,16 +339,12 @@ export default function InventoryPage() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Alerts */}
       {(criticalTanks > 0 || warningTanks > 0) && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-danger-50 border border-danger-100 rounded-2xl p-4"
-        >
+        <div className="bg-danger-50 border border-danger-100 rounded-2xl p-4">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-xl bg-danger-100 flex items-center justify-center flex-shrink-0">
               <AlertTriangle className="w-5 h-5 text-danger-600" />
@@ -395,7 +362,7 @@ export default function InventoryPage() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Filters */}

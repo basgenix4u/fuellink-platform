@@ -4,7 +4,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   TrendingUp,
   TrendingDown,
@@ -126,15 +125,10 @@ function ConfidenceBar({ value }: { value: number }) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className={cn(
+        <div className={cn(
             "h-full rounded-full",
             value >= 85 ? "bg-green-500" : value >= 70 ? "bg-amber-500" : "bg-red-400"
-          )}
-        />
+          )}/>
       </div>
       <span className="text-xs font-bold text-slate-600 w-10 text-right">{value}%</span>
     </div>
@@ -147,11 +141,7 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
   const midPrice = Math.round((pred.predictedMin + pred.predictedMax) / 2);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
-    >
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -187,18 +177,12 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
 
           {/* Range bar */}
           <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "60%" }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              style={{ left: "15%" }}
-              className={cn(
+            <div style={{ left: "15%" }} className={cn(
                 "absolute h-full rounded-full",
                 pred.trend === "up" ? "bg-gradient-to-r from-amber-400 to-red-400" :
                 pred.trend === "down" ? "bg-gradient-to-r from-green-400 to-emerald-500" :
                 "bg-gradient-to-r from-primary-400 to-primary-500"
-              )}
-            />
+              )}/>
             {/* Current price marker */}
             <div
               className="absolute top-0 bottom-0 w-0.5 bg-slate-700"
@@ -229,14 +213,9 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
           {expanded ? "Hide" : "Show"} price factors ({pred.factors.length})
         </button>
 
-        <AnimatePresence>
+        <>
           {expanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
+            <div className="overflow-hidden">
               <div className="mt-3 space-y-2 pt-3 border-t border-slate-100">
                 {pred.factors.map((f, i) => (
                   <div key={i} className="flex items-start gap-2.5">
@@ -259,11 +238,11 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        </>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -374,15 +353,11 @@ export default function PricePredictorPage() {
             </Button>
 
             {aiResponse && (
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-3 bg-white/10 rounded-xl p-3"
-              >
+              <div className="mt-3 bg-white/10 rounded-xl p-3">
                 <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">
                   {aiResponse.replace(/\*\*(.*?)\*\*/g, '$1')}
                 </p>
-              </motion.div>
+              </div>
             )}
           </div>
 

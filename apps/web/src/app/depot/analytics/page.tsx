@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   TrendingUp,
   TrendingDown,
@@ -149,13 +148,7 @@ export default function AnalyticsPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-          >
+          <div key={stat.label} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
             <div className="flex items-start justify-between mb-4">
               <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center">
                 <stat.icon className="w-6 h-6 text-primary-500" />
@@ -184,19 +177,14 @@ export default function AnalyticsPage() {
                 ? `${formatCompactNumber(stat.value)}${stat.suffix || ""}`
                 : formatNumber(stat.value)}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Charts Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Revenue Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-semibold text-slate-900">
@@ -248,15 +236,10 @@ export default function AnalyticsPage() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </div>
 
         {/* Product Distribution */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">
             Product Distribution
           </h2>
@@ -307,18 +290,13 @@ export default function AnalyticsPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Volume Trend & Top Customers */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Volume Trend */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-semibold text-slate-900">
@@ -358,15 +336,10 @@ export default function AnalyticsPage() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </div>
 
         {/* Top Customers */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="p-6 border-b border-slate-100">
             <h2 className="text-lg font-semibold text-slate-900">
               Top Customers
@@ -399,16 +372,11 @@ export default function AnalyticsPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Performance Metrics */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 text-white"
-      >
+      <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 text-white">
         <h2 className="text-xl font-bold mb-6">Performance Metrics</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
@@ -444,7 +412,7 @@ export default function AnalyticsPage() {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

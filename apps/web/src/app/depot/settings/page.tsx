@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Building2,
   User,
@@ -514,11 +513,7 @@ export default function SettingsPage() {
 
       <div className="grid lg:grid-cols-4 gap-6">
         {/* Sidebar Navigation */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="lg:col-span-1"
-        >
+        <div className="lg:col-span-1">
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-2">
             {settingsSections.map((section) => (
               <button
@@ -556,17 +551,12 @@ export default function SettingsPage() {
               </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Content Area */}
-        <motion.div
-          key={activeSection}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div key={activeSection} className="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           {renderSectionContent()}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

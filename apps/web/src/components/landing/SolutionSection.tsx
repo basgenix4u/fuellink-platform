@@ -1,9 +1,8 @@
 // src/components/landing/SolutionSection.tsx
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   Bot,
   TrendingUp,
@@ -136,18 +135,12 @@ const comparisonData = [
 
 export function SolutionSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="solutions" ref={ref} className="py-24 bg-slate-50">
       <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <Reveal className="text-center mb-16">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
             Every Problem. One Platform.
           </h2>
@@ -155,18 +148,12 @@ export function SolutionSection() {
             FuelLink was built to solve the real, daily pain points of Nigeria&apos;s petroleum
             supply chain — with AI at the center of everything.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Solution cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {solutions.map((solution, i) => (
-            <motion.div
-              key={solution.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
-            >
+            <Reveal key={solution.title} className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
               <div className={`w-12 h-12 rounded-xl ${solution.bgColor} flex items-center justify-center mb-5`}>
                 <solution.icon className={`w-6 h-6 ${solution.iconColor}`} />
               </div>
@@ -180,17 +167,12 @@ export function SolutionSection() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 
         {/* Before/After comparison */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-lg"
-        >
+        <Reveal className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-lg" delay={300}>
           <div className="bg-gradient-to-r from-primary-600 to-primary-800 px-6 py-4">
             <div className="flex items-center gap-3">
               <Zap className="w-5 h-5 text-secondary-400" />
@@ -224,19 +206,14 @@ export function SolutionSection() {
               </tbody>
             </table>
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-12 text-center"
-        >
+        <Reveal className="mt-12 text-center" delay={500}>
           <Button variant="primary" size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
             Join Nigeria&apos;s Smartest Fuel Exchange
           </Button>
-        </motion.div>
+        </Reveal>
       </Container>
     </section>
   );

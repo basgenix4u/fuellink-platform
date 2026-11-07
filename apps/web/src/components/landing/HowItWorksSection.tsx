@@ -2,8 +2,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   Building2,
   ShoppingCart,
@@ -122,7 +121,6 @@ const depotSteps = [
 
 export function HowItWorksSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState<UserType>("marketer");
   const [activeStep, setActiveStep] = useState(0);
 
@@ -132,12 +130,7 @@ export function HowItWorksSection() {
     <section id="how-it-works" ref={ref} className="py-24 bg-white">
       <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <Reveal className="text-center mb-16">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
             How FuelLink Works
           </h2>
@@ -145,7 +138,7 @@ export function HowItWorksSection() {
             From discovery to delivery — a streamlined AI-powered flow
             for both marketers and depots.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Tab switcher */}
         <div className="flex justify-center mb-12">
@@ -169,15 +162,8 @@ export function HowItWorksSection() {
         </div>
 
         {/* Steps */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="grid lg:grid-cols-5 gap-8"
-          >
+        <>
+          <Reveal key={activeTab} className="grid lg:grid-cols-5 gap-8">
             {/* Step list */}
             <div className="lg:col-span-2 space-y-2">
               {steps.map((step, i) => (
@@ -222,15 +208,8 @@ export function HowItWorksSection() {
 
             {/* Step detail */}
             <div className="lg:col-span-3">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStep}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.25 }}
-                  className="bg-gradient-to-br from-primary-900 to-primary-700 rounded-3xl p-8 h-full min-h-[360px] flex flex-col justify-between text-white relative overflow-hidden"
-                >
+              <>
+                <Reveal key={activeStep} className="bg-gradient-to-br from-primary-900 to-primary-700 rounded-3xl p-8 h-full min-h-[360px] flex flex-col justify-between text-white relative overflow-hidden">
                   {/* Background glow */}
                   <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-500/15 rounded-full blur-[80px]" />
 
@@ -288,19 +267,14 @@ export function HowItWorksSection() {
                       Next <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                </motion.div>
-              </AnimatePresence>
+                </Reveal>
+              </>
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </Reveal>
+        </>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
+        <Reveal className="mt-16 text-center" delay={400}>
           <Button
             variant="primary"
             size="lg"
@@ -314,7 +288,7 @@ export function HowItWorksSection() {
           >
             {activeTab === "marketer" ? "Start as Marketer" : "Register Your Depot"}
           </Button>
-        </motion.div>
+        </Reveal>
       </Container>
     </section>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Bell, X, TrendingDown, TrendingUp } from "lucide-react";
 import { Button } from "@/components/shared/Button";
 import { cn, formatNumber } from "@/lib/utils";
@@ -40,23 +39,10 @@ export function FloatingPriceAlert({ isOpen, onClose }: FloatingPriceAlertProps)
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/40 backdrop-blur-sm"
-          onClick={onClose}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="w-full max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-xl p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/40 backdrop-blur-sm" onClick={onClose}>
+          <div className="w-full max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-xl p-6" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary-50 text-primary-500 flex items-center justify-center">
@@ -183,9 +169,9 @@ export function FloatingPriceAlert({ isOpen, onClose }: FloatingPriceAlertProps)
                 </Button>
               </div>
             </form>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }

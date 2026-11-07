@@ -3,8 +3,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 import { Star, Quote } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 
@@ -82,13 +81,7 @@ function TestimonialCard({
   index: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300"
-    >
+    <Reveal className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
       {/* Quote Icon */}
       <Quote className="w-10 h-10 text-primary-100 mb-4" />
 
@@ -112,24 +105,19 @@ function TestimonialCard({
           <p className="text-xs text-slate-400">{testimonial.location}</p>
         </div>
       </div>
-    </motion.div>
+    </Reveal>
   );
 }
 
 export function TestimonialsSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="py-24 bg-slate-50 overflow-hidden">
       <Container size="wide">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
+          <Reveal>
             <span className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm uppercase tracking-wider mb-4">
               <Star className="w-4 h-4 fill-primary-600" />
               Testimonials
@@ -144,7 +132,7 @@ export function TestimonialsSection() {
               See what depot owners, marketers, and transporters are saying
               about their experience with FuelLink.
             </p>
-          </motion.div>
+          </Reveal>
         </div>
 
         {/* Testimonials Grid */}
@@ -159,12 +147,7 @@ export function TestimonialsSection() {
         </div>
 
         {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-8 text-white"
-        >
+        <Reveal className="mt-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-8 text-white" delay={500}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <p className="text-4xl font-bold mb-2">4.9/5</p>
@@ -183,7 +166,7 @@ export function TestimonialsSection() {
               <p className="text-white/80">Support Available</p>
             </div>
           </div>
-        </motion.div>
+        </Reveal>
       </Container>
     </section>
   );

@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   QrCode,
   Camera,
@@ -129,11 +128,7 @@ export default function VerificationPage() {
         {/* Left Column - Scanner */}
         <div className="space-y-6">
           {/* Camera Scanner */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Scan QR Code
@@ -158,15 +153,7 @@ export default function VerificationPage() {
                         <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-secondary-500 rounded-br-lg" />
                         
                         {/* Scanning line animation */}
-                        <motion.div
-                          className="absolute left-2 right-2 h-0.5 bg-secondary-500"
-                          animate={{ y: [0, 180, 0] }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                        />
+                        <div className="absolute left-2 right-2 h-0.5 bg-secondary-500"/>
                       </div>
                     </div>
                     <p className="absolute bottom-4 left-0 right-0 text-center text-white/70 text-sm">
@@ -202,15 +189,10 @@ export default function VerificationPage() {
                 )}
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Manual Entry */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Manual Entry
@@ -247,25 +229,20 @@ export default function VerificationPage() {
                 Example: FUELLINK-ORD2025001234-VERIFY
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Column - Result & History */}
         <div className="space-y-6">
           {/* Verification Result */}
-          <AnimatePresence mode="wait">
+          <>
             {result && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className={cn(
+              <div className={cn(
                   "rounded-2xl shadow-sm border overflow-hidden",
                   result.success
                     ? "bg-success-50 border-success-200"
                     : "bg-danger-50 border-danger-200"
-                )}
-              >
+                )}>
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-6">
                     {result.success ? (
@@ -384,18 +361,13 @@ export default function VerificationPage() {
                     </Button>
                   )}
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
+          </>
 
           {/* Instructions */}
           {!result && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-primary-50 border border-primary-100 rounded-2xl p-6"
-            >
+            <div className="bg-primary-50 border border-primary-100 rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
                   <AlertCircle className="w-5 h-5 text-primary-600" />
@@ -412,16 +384,11 @@ export default function VerificationPage() {
                   </ol>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Recent Verifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Recent Verifications
@@ -455,7 +422,7 @@ export default function VerificationPage() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

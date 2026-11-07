@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Search,
   Filter,
@@ -188,11 +187,7 @@ export default function MarketerOrdersPage() {
 
             return (
               <Link key={order.id} href={`/marketer/orders/${order.id}`}>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="p-4 hover:bg-slate-50 transition-colors"
-                >
+                <div className="p-4 hover:bg-slate-50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className={cn(
@@ -221,7 +216,7 @@ export default function MarketerOrdersPage() {
                       </Badge>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               </Link>
             );
           })}

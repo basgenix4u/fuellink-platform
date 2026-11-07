@@ -5,7 +5,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Search,
   MapPin,
@@ -43,14 +42,10 @@ function DepotCard({ depot, viewMode }: { depot: MockDepot; viewMode: "grid" | "
   const isList = viewMode === "list";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={cn(
+    <div className={cn(
         "bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group",
         isList && "flex"
-      )}
-    >
+      )}>
       {/* Logo banner */}
       <div
         className={cn(
@@ -160,7 +155,7 @@ function DepotCard({ depot, viewMode }: { depot: MockDepot; viewMode: "grid" | "
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

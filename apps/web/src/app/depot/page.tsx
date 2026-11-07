@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   TrendingUp,
@@ -191,11 +190,7 @@ export default function DepotDashboardPage() {
       </div>
 
       {/* Platform Fee Notice */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4"
-      >
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
         <div className="flex flex-wrap items-start gap-3 sm:flex-nowrap sm:items-center sm:gap-4">
           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-amber-100 sm:h-12 sm:w-12">
             <Fuel className="h-5 w-5 text-amber-600 sm:h-6 sm:w-6" />
@@ -211,18 +206,12 @@ export default function DepotDashboardPage() {
             <Button variant="ghost" size="sm">View details</Button>
           </Link>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
-          >
+          <div key={stat.label} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div
                 className={cn(
@@ -265,19 +254,14 @@ export default function DepotDashboardPage() {
             {stat.subtext && (
               <p className="text-xs text-slate-500 mt-1">{stat.subtext}</p>
             )}
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {quickActions.map((action, index) => (
-          <motion.div
-            key={action.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 + index * 0.05 }}
-          >
+          <div key={action.label}>
             <Link
               href={action.href}
               className="group block bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-lg hover:border-primary-200 transition-all"
@@ -293,19 +277,14 @@ export default function DepotDashboardPage() {
               <h3 className="font-semibold text-slate-900 mb-1">{action.label}</h3>
               <p className="text-sm text-slate-500">{action.description}</p>
             </Link>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Main Content Grid */}
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Recent Orders */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100"
-        >
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100">
           <div className="flex items-center justify-between p-6 border-b border-slate-100">
             <h2 className="text-lg font-semibold text-slate-900">Recent Orders</h2>
             <Link
@@ -373,15 +352,10 @@ export default function DepotDashboardPage() {
               </tbody>
             </table>
           </div>
-        </motion.div>
+        </div>
 
         {/* Current Prices & Stock */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
           <div className="flex items-center justify-between p-6 border-b border-slate-100">
             <h2 className="text-lg font-semibold text-slate-900">Prices & Stock</h2>
             <Link href="/depot/private-prices" className="text-sm font-medium text-primary-600">
@@ -455,16 +429,11 @@ export default function DepotDashboardPage() {
               </Button>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Verification CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-        className="bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white"
-      >
+      <div className="bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
@@ -483,7 +452,7 @@ export default function DepotDashboardPage() {
             </Button>
           </Link>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

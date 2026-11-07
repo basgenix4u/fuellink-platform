@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Bell,
   Plus,
@@ -96,18 +95,12 @@ export default function PriceAlertsPage() {
       {/* Alerts List */}
       <div className="grid gap-4">
         {alerts.map((alert, index) => (
-          <motion.div
-            key={alert.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={cn(
+          <div key={alert.id} className={cn(
               "bg-white rounded-2xl p-6 border transition-all",
               alert.status === "triggered"
                 ? "border-success-200 shadow-sm"
                 : "border-slate-100 shadow-sm hover:shadow-md"
-            )}
-          >
+            )}>
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4">
                 <div
@@ -179,7 +172,7 @@ export default function PriceAlertsPage() {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
 
         {alerts.length === 0 && (

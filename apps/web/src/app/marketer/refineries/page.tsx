@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Factory,
   MapPin,
@@ -145,11 +144,7 @@ export default function RefineriesPage() {
       </div>
 
       {/* Info Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-primary-50 border border-primary-100 rounded-2xl p-4"
-      >
+      <div className="bg-primary-50 border border-primary-100 rounded-2xl p-4">
         <div className="flex items-start gap-4">
           <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
             <AlertCircle className="w-5 h-5 text-primary-600" />
@@ -162,7 +157,7 @@ export default function RefineriesPage() {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Status Filters */}
       <div className="flex gap-2">
@@ -195,16 +190,10 @@ export default function RefineriesPage() {
           const StatusIcon = statusConfig.icon;
 
           return (
-            <motion.div
-              key={refinery.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={cn(
+            <div key={refinery.id} className={cn(
                 "bg-white rounded-2xl shadow-sm border overflow-hidden",
                 refinery.status === "inactive" && "opacity-75"
-              )}
-            >
+              )}>
               {/* Header */}
               <div className="p-6 border-b border-slate-100">
                 <div className="flex items-start justify-between">
@@ -282,7 +271,7 @@ export default function RefineriesPage() {
                   <p className="text-sm">No products available</p>
                 </div>
               )}
-            </motion.div>
+            </div>
           );
         })}
       </div>

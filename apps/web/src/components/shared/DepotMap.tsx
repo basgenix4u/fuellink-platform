@@ -5,7 +5,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   MapPin,
   Navigation,
@@ -242,11 +241,7 @@ export function DepotMap({
 
           {/* Result */}
           {travelEstimate && (
-            <motion.div
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white/10 rounded-xl p-3 space-y-2"
-            >
+            <div className="bg-white/10 rounded-xl p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-secondary-400" />
@@ -279,7 +274,7 @@ export function DepotMap({
                 <Car className="w-3.5 h-3.5" />
                 Open Turn-by-Turn Directions
               </a>
-            </motion.div>
+            </div>
           )}
         </div>
       )}

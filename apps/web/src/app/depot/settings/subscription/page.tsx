@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   CreditCard,
   Check,
@@ -136,11 +135,7 @@ export default function SubscriptionPage() {
 
       {/* Current Plan Banner */}
       {currentPlan && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 text-white"
-        >
+        <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 text-white">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
@@ -164,7 +159,7 @@ export default function SubscriptionPage() {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Billing Cycle Toggle */}
@@ -207,20 +202,14 @@ export default function SubscriptionPage() {
             : plan.price;
 
           return (
-            <motion.div
-              key={plan.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={cn(
+            <div key={plan.id} className={cn(
                 "relative bg-white rounded-2xl border-2 p-6 transition-all",
                 plan.current
                   ? "border-primary-500 ring-2 ring-primary-100"
                   : plan.popular
                   ? "border-secondary-500"
                   : "border-slate-200 hover:border-slate-300"
-              )}
-            >
+              )}>
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <Badge variant="secondary">Most Popular</Badge>
@@ -271,18 +260,13 @@ export default function SubscriptionPage() {
               >
                 {plan.current ? "Current Plan" : "Upgrade"}
               </Button>
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
       {/* Billing History */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-      >
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">
@@ -353,15 +337,10 @@ export default function SubscriptionPage() {
             </tbody>
           </table>
         </div>
-      </motion.div>
+      </div>
 
       {/* Payment Method */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-      >
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
         <h2 className="text-lg font-semibold text-slate-900 mb-4">
           Payment Method
         </h2>
@@ -379,7 +358,7 @@ export default function SubscriptionPage() {
             Update
           </Button>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

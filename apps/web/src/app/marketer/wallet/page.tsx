@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Wallet,
   ArrowUpRight,
@@ -74,11 +73,7 @@ export default function MarketerWalletPage() {
       {/* Balance Cards */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Main Balance */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white"
-        >
+        <div className="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
@@ -104,15 +99,10 @@ export default function MarketerWalletPage() {
               Withdraw
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Escrow Balance */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"
-        >
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600">
@@ -128,7 +118,7 @@ export default function MarketerWalletPage() {
           <p className="text-sm text-slate-500">
             Funds are held securely until you confirm loading is complete.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Transaction History */}

@@ -5,7 +5,6 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -282,12 +281,7 @@ function NewOrderContent() {
       </div>
 
       {/* Step Content */}
-      <motion.div
-        key={currentStep}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-      >
+      <div key={currentStep} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
         {/* Step 1: Product Selection */}
         {currentStep === 1 && (
           <div className="space-y-6">
@@ -393,15 +387,9 @@ function NewOrderContent() {
 
             {/* Trucks List */}
             <div className="space-y-4">
-              <AnimatePresence mode="popLayout">
+              <>
                 {truckOrders.map((truck, index) => (
-                  <motion.div
-                    key={truck.id}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="p-5 rounded-xl border border-slate-200 bg-slate-50"
-                  >
+                  <div key={truck.id} className="p-5 rounded-xl border border-slate-200 bg-slate-50">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center">
@@ -535,9 +523,9 @@ function NewOrderContent() {
                         {formatCurrency(truck.quantity * selectedProduct.pricePerLitre)}
                       </span>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </AnimatePresence>
+              </>
             </div>
 
             {/* Pickup Date */}
@@ -791,7 +779,7 @@ function NewOrderContent() {
             </div>
           </div>
         )}
-      </motion.div>
+      </div>
 
       {/* Navigation Buttons */}
       <div className="flex justify-between">

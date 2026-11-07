@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Wallet,
   ArrowUpRight,
@@ -202,11 +201,7 @@ export default function WalletPage() {
       {/* Balance Cards */}
       <div className="grid md:grid-cols-3 gap-6">
         {/* Available Balance */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-6 text-white"
-        >
+        <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
               <Wallet className="w-6 h-6" />
@@ -226,15 +221,10 @@ export default function WalletPage() {
           <p className="text-3xl font-bold">
             {showBalance ? formatCurrency(walletBalance) : "₦••••••••"}
           </p>
-        </motion.div>
+        </div>
 
         {/* Pending Balance */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 rounded-xl bg-warning-50 flex items-center justify-center">
               <Clock className="w-6 h-6 text-warning-600" />
@@ -245,15 +235,10 @@ export default function WalletPage() {
             {showBalance ? formatCurrency(pendingBalance) : "₦••••••••"}
           </p>
           <p className="text-sm text-warning-600 mt-2">Processing</p>
-        </motion.div>
+        </div>
 
         {/* Total Earnings */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 rounded-xl bg-success-50 flex items-center justify-center">
               <ArrowDownLeft className="w-6 h-6 text-success-600" />
@@ -264,16 +249,11 @@ export default function WalletPage() {
             {showBalance ? formatCurrency(totalEarnings) : "₦••••••••"}
           </p>
           <p className="text-sm text-success-600 mt-2">+₦341M this month</p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Bank Account Details */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-      >
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-slate-900">
             Withdrawal Account
@@ -304,15 +284,10 @@ export default function WalletPage() {
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Transactions */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-      >
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="p-6 border-b border-slate-100">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h2 className="text-lg font-semibold text-slate-900">
@@ -430,7 +405,7 @@ export default function WalletPage() {
             </div>
           </div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }

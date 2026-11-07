@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   AlertTriangle,
   Plus,
@@ -206,13 +205,7 @@ export default function DisputesPage() {
           const StatusIcon = statusInfo.icon;
 
           return (
-            <motion.div
-              key={dispute.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow"
-            >
+            <div key={dispute.id} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-md transition-shadow">
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                 {/* Left: Dispute Info */}
                 <div className="flex-1">
@@ -285,7 +278,7 @@ export default function DisputesPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

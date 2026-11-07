@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   Search,
@@ -322,12 +321,7 @@ export default function OrdersPage() {
                 const StatusIcon = statusInfo.icon;
 
                 return (
-                  <motion.tr
-                    key={order.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="border-b border-slate-50 hover:bg-slate-50 transition-colors"
-                  >
+                  <tr key={order.id} className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
                     <td className="py-4 px-4">
                       <input
                         type="checkbox"
@@ -398,7 +392,7 @@ export default function OrdersPage() {
                         </button>
                       </div>
                     </td>
-                  </motion.tr>
+                  </tr>
                 );
               })}
             </tbody>

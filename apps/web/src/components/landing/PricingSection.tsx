@@ -2,8 +2,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   Check,
   Sparkles,
@@ -134,19 +133,13 @@ const marketerPlans = [
 
 export function PricingSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeTab, setActiveTab] = useState<"marketer" | "depot">("marketer");
 
   return (
     <section id="pricing" ref={ref} className="py-24 bg-slate-50">
       <Container>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <Reveal className="text-center mb-16">
           <Badge variant="primary" className="mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             Simple, Fair Pricing
@@ -158,7 +151,7 @@ export function PricingSection() {
             Depots join free. Marketers subscribe for full access.
             We earn a small transaction fee — only when a deal closes.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Tab switcher */}
         <div className="flex justify-center mb-12">
@@ -186,25 +179,15 @@ export function PricingSection() {
 
         {/* MARKETER PLANS */}
         {activeTab === "marketer" && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+          <Reveal>
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               {marketerPlans.map((plan, i) => (
-                <motion.div
-                  key={plan.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className={cn(
+                <Reveal key={plan.id} className={cn(
                     "bg-white rounded-2xl border p-6 relative",
                     plan.id === "quarterly"
                       ? "border-primary-200 shadow-xl shadow-primary-500/10 ring-2 ring-primary-500/20"
                       : "border-slate-200 shadow-md"
-                  )}
-                >
+                  )}>
                   {plan.badge && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <Badge variant={plan.id === "annual" ? "success" : "primary"} className="text-xs">
@@ -239,7 +222,7 @@ export function PricingSection() {
                   >
                     Get Started
                   </Button>
-                </motion.div>
+                </Reveal>
               ))}
             </div>
 
@@ -270,17 +253,12 @@ export function PricingSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
         )}
 
         {/* DEPOT PLAN */}
         {activeTab === "depot" && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid md:grid-cols-2 gap-8 items-start"
-          >
+          <Reveal className="grid md:grid-cols-2 gap-8 items-start">
             <div className="bg-white rounded-2xl border border-slate-200 shadow-md p-8">
               <Badge variant="success" className="mb-4">Free to Join</Badge>
               <h3 className="text-2xl font-bold text-slate-900 mb-2">Depot Account</h3>
@@ -332,7 +310,7 @@ export function PricingSection() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
         )}
       </Container>
     </section>

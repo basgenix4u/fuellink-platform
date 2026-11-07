@@ -5,7 +5,6 @@
 import { useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   CheckCircle2,
   QrCode,
@@ -164,11 +163,7 @@ export default function OrderDetailPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Success Modal */}
       {showSuccessModal && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm"
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
           <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl">
             <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="w-10 h-10 text-emerald-600" />
@@ -194,7 +189,7 @@ export default function OrderDetailPage() {
               View QR Codes
             </Button>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Header */}
@@ -279,12 +274,7 @@ export default function OrderDetailPage() {
 
         <div className="grid sm:grid-cols-2 gap-6">
           {order.trucks.map((truck) => (
-            <motion.div
-              key={truck.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="border border-slate-200 rounded-2xl p-5 hover:shadow-lg transition-shadow"
-            >
+            <div key={truck.id} className="border border-slate-200 rounded-2xl p-5 hover:shadow-lg transition-shadow">
               {/* Truck Header */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -368,7 +358,7 @@ export default function OrderDetailPage() {
                   Share
                 </Button>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

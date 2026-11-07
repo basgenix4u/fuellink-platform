@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   ArrowLeft, CheckCircle2, XCircle, FileText, Database, 
   History, AlertTriangle, ShieldAlert, BarChart, Download
@@ -98,11 +97,7 @@ export default function DepotDetailPage() {
       {/* TANK VISUALIZATION (The "See Everything" Feature) */}
       <div className="grid lg:grid-cols-3 gap-6">
         {depotData.tanks.map((tank) => (
-          <motion.div 
-            initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-            key={tank.id} 
-            className="bg-white rounded-2xl border border-slate-200 p-6 relative overflow-hidden"
-          >
+          <div key={tank.id} className="bg-white rounded-2xl border border-slate-200 p-6 relative overflow-hidden">
             <div className="flex justify-between items-start mb-4 z-10 relative">
               <div>
                 <Badge variant="outline" className="bg-slate-50">{tank.product}</Badge>
@@ -134,7 +129,7 @@ export default function DepotDetailPage() {
                 <div className="border-b border-slate-300/50 w-full h-0" />
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 

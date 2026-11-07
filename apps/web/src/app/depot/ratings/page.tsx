@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Star,
   TrendingUp,
@@ -150,11 +149,7 @@ function ReviewCard({ review }: { review: Review }) {
   const isLongComment = review.comment.length > 200;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-    >
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -219,7 +214,7 @@ function ReviewCard({ review }: { review: Review }) {
           Respond to Review
         </Button>
       )}
-    </motion.div>
+    </div>
   );
 }
 
@@ -254,11 +249,7 @@ export default function RatingsPage() {
       {/* Stats Overview */}
       <div className="grid md:grid-cols-4 gap-6">
         {/* Average Rating */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 text-center"
-        >
+        <div className="md:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 text-center">
           <div className="text-5xl font-bold text-slate-900 mb-2">
             {ratingStats.average}
           </div>
@@ -282,15 +273,10 @@ export default function RatingsPage() {
               {ratingStats.trends.change} from last month
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Rating Distribution */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="md:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div className="md:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <h3 className="font-semibold text-slate-900 mb-4">
             Rating Distribution
           </h3>
@@ -312,12 +298,7 @@ export default function RatingsPage() {
                   <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 </button>
                 <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${item.percentage}%` }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="h-full bg-yellow-400 rounded-full"
-                  />
+                  <div className="h-full bg-yellow-400 rounded-full"/>
                 </div>
                 <span className="w-12 text-right text-sm text-slate-500">
                   {item.count}
@@ -328,7 +309,7 @@ export default function RatingsPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Filters */}
@@ -369,14 +350,9 @@ export default function RatingsPage() {
       {/* Reviews List */}
       <div className="space-y-6">
         {filteredReviews.map((review, index) => (
-          <motion.div
-            key={review.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
+          <div key={review.id}>
             <ReviewCard review={review} />
-          </motion.div>
+          </div>
         ))}
 
         {filteredReviews.length === 0 && (

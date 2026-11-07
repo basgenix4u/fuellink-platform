@@ -3,7 +3,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   User,
   Building,
@@ -131,12 +130,7 @@ export default function MarketerSettingsPage() {
 
         {/* Content */}
         <div className="lg:col-span-3">
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-          >
+          <div key={activeSection} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
             {/* Profile Section */}
             {activeSection === "profile" && (
               <div className="space-y-6">
@@ -485,7 +479,7 @@ export default function MarketerSettingsPage() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

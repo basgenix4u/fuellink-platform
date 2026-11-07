@@ -5,7 +5,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2,
   User,
@@ -194,7 +193,7 @@ export default function DepotRegistrationPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* STEP 1: FACILITY & TANKS */}
             {step === 1 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-5">
+              <div className="space-y-5">
                 {/* Basic Info */}
                 <div className="space-y-4">
                   <div>
@@ -232,15 +231,9 @@ export default function DepotRegistrationPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <AnimatePresence>
+                    <>
                       {tanks.map((tank, index) => (
-                        <motion.div 
-                          key={tank.id}
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="p-4 bg-white border border-slate-200 rounded-xl shadow-sm relative"
-                        >
+                        <div key={tank.id} className="p-4 bg-white border border-slate-200 rounded-xl shadow-sm relative">
                           {tanks.length > 1 && (
                             <button type="button" onClick={() => removeTank(tank.id)} className="absolute top-2 right-2 p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg">
                               <Trash2 className="w-4 h-4" />
@@ -279,31 +272,31 @@ export default function DepotRegistrationPage() {
                               />
                             </div>
                           </div>
-                        </motion.div>
+                        </div>
                       ))}
-                    </AnimatePresence>
+                    </>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
 
             {/* Steps 2 & 3 remain mostly the same (Contact & Password) - keeping brevity */}
             {step === 2 && (
-               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-5">
+               <div className="space-y-5">
                  {/* Contact fields inputs... */}
                  <div><label className="text-sm font-medium">Contact Name</label><input name="contactName" onChange={handleInputChange} className="w-full mt-1 p-3 border rounded-xl" /></div>
                  <div><label className="text-sm font-medium">Email</label><input name="contactEmail" onChange={handleInputChange} className="w-full mt-1 p-3 border rounded-xl" /></div>
                  <div><label className="text-sm font-medium">Phone</label><input name="contactPhone" onChange={handleInputChange} className="w-full mt-1 p-3 border rounded-xl" /></div>
-               </motion.div>
+               </div>
             )}
 
             {step === 3 && (
-               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-5">
+               <div className="space-y-5">
                  {/* Password fields... */}
                  <div><label className="text-sm font-medium">Password</label><input type="password" name="password" onChange={handleInputChange} className="w-full mt-1 p-3 border rounded-xl" /></div>
                  <div><label className="text-sm font-medium">Confirm</label><input type="password" name="confirmPassword" onChange={handleInputChange} className="w-full mt-1 p-3 border rounded-xl" /></div>
                  <div className="flex items-center gap-2"><input type="checkbox" name="agreeToTerms" onChange={handleInputChange} /> <span>Agree to Terms</span></div>
-               </motion.div>
+               </div>
             )}
 
             {/* Navigation */}

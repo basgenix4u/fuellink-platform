@@ -5,7 +5,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import {
   ShoppingCart,
   User,
@@ -199,12 +198,7 @@ export default function MarketerRegistrationPage() {
         </div>
 
         <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full max-w-lg"
-          >
+          <div className="w-full max-w-lg">
             {/* Header */}
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary-100 rounded-2xl mb-4">
@@ -254,12 +248,7 @@ export default function MarketerRegistrationPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Step 1: Personal Info */}
               {step === 1 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-5"
-                >
+                <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
                       Full Name *
@@ -310,17 +299,12 @@ export default function MarketerRegistrationPage() {
                       />
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* Step 2: Business Info */}
               {step === 2 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-5"
-                >
+                <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
                       Business Name *
@@ -394,17 +378,12 @@ export default function MarketerRegistrationPage() {
                       Adding your CAC number helps verify your business
                     </p>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* Step 3: Security */}
               {step === 3 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-5"
-                >
+                <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
                       Password *
@@ -486,7 +465,7 @@ export default function MarketerRegistrationPage() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* Navigation Buttons */}
@@ -553,7 +532,7 @@ export default function MarketerRegistrationPage() {
                 Sign in
               </Link>
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

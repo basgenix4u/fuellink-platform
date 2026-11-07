@@ -8,7 +8,6 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
   Paperclip,
@@ -141,12 +140,7 @@ function Bubble({ msg, isOwn }: { msg: ChatMessage; isOwn: boolean }) {
   const isDepotSide = isDepotAI || isDepotStaff;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.15 }}
-      className={cn("flex gap-2", isOwn ? "justify-end" : "justify-start")}
-    >
+    <div className={cn("flex gap-2", isOwn ? "justify-end" : "justify-start")}>
       {/* Avatar — depot side only */}
       {!isOwn && (
         <div className={cn(
@@ -205,7 +199,7 @@ function Bubble({ msg, isOwn }: { msg: ChatMessage; isOwn: boolean }) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -238,8 +232,7 @@ function VoiceRecordButton({ onSend }: { onSend: (sec: number) => void }) {
   if (recording) {
     return (
       <div className="flex items-center gap-2 flex-1 bg-red-50 rounded-2xl px-3 py-2">
-        <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 0.9 }}
-          className="w-2 h-2 rounded-full bg-red-500" />
+        <div className="w-2 h-2 rounded-full bg-red-500"/>
         <span className="text-sm text-red-700 flex-1 font-medium">{seconds}s</span>
         <button onClick={cancel} className="p-1 text-slate-400 hover:text-red-500">
           <X className="w-4 h-4" />
@@ -371,23 +364,18 @@ export function ChatWindow({
             {currentLang.flag} {currentLang.label}
             <ChevronDown className="w-3 h-3" />
           </button>
-          <AnimatePresence>
+          <>
             {showLangPicker && (
-              <motion.div
-                initial={{ opacity: 0, y: 4, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 4, scale: 0.95 }}
-                className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-20 w-36"
-              >
+              <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-20 w-36">
                 {LANGUAGES.map((l) => (
                   <button key={l.code} onClick={() => { setLanguage(l.code); setShowLangPicker(false); }}
                     className={cn("w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-slate-50 transition-colors", language === l.code && "bg-primary-50 text-primary-700 font-semibold")}>
                     {l.flag} {l.label}
                   </button>
                 ))}
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
+          </>
         </div>
 
         <button onClick={() => fileInputRef.current?.click()} className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
@@ -414,36 +402,33 @@ export function ChatWindow({
         ))}
 
         {/* Typing indicator */}
-        <AnimatePresence>
+        <>
           {isTyping && (
-            <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex gap-2 items-end">
+            <div className="flex gap-2 items-end">
               <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: depotColor }}>
                 {depotInitials}
               </div>
               <div className="bg-white border border-slate-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                 <div className="flex gap-1">
                   {[0, 0.2, 0.4].map((d) => (
-                    <motion.div key={d} animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.7, delay: d }}
-                      className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                    <div key={d} className="w-1.5 h-1.5 rounded-full bg-slate-400"/>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        </>
         <div ref={bottomRef} />
       </div>
 
       {/* Scroll to bottom */}
-      <AnimatePresence>
+      <>
         {showScrollBtn && (
-          <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => scrollDown()}
-            className="absolute bottom-20 right-5 w-8 h-8 bg-white shadow-md rounded-full flex items-center justify-center border border-slate-200 text-slate-500 z-10">
+          <button onClick={() => scrollDown()} className="absolute bottom-20 right-5 w-8 h-8 bg-white shadow-md rounded-full flex items-center justify-center border border-slate-200 text-slate-500 z-10">
             <ArrowDown className="w-4 h-4" />
-          </motion.button>
+          </button>
         )}
-      </AnimatePresence>
+      </>
 
       {/* Input */}
       <div className="px-3 py-3 border-t border-slate-100 bg-white">

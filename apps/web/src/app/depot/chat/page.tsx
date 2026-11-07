@@ -4,7 +4,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Search,
   Bot,
@@ -277,11 +276,7 @@ export default function DepotChatPage() {
 
             {/* Attention banner */}
             {selected.needsAttention && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mx-4 mt-3 bg-orange-50 border border-orange-200 rounded-2xl px-4 py-3 flex items-center gap-3"
-              >
+              <div className="mx-4 mt-3 bg-orange-50 border border-orange-200 rounded-2xl px-4 py-3 flex items-center gap-3">
                 <ShoppingCart className="w-5 h-5 text-orange-500 flex-shrink-0" />
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-orange-800">
@@ -291,7 +286,7 @@ export default function DepotChatPage() {
                     Jump in to confirm the price and close the deal.
                   </p>
                 </div>
-              </motion.div>
+              </div>
             )}
 
             <ChatWindow

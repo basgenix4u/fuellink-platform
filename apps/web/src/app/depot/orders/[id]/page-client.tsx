@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -235,11 +234,7 @@ export default function OrderDetailPage() {
         {/* Left Column - Order Details */}
         <div className="lg:col-span-2 space-y-6">
           {/* Product Details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Product Details
@@ -292,15 +287,10 @@ export default function OrderDetailPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Customer Details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Customer Information
@@ -349,15 +339,10 @@ export default function OrderDetailPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Truck & Driver Details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Truck & Driver
@@ -429,17 +414,13 @@ export default function OrderDetailPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Column - Timeline, Payment, QR */}
         <div className="space-y-6">
           {/* Payment Summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Payment Summary
@@ -485,15 +466,10 @@ export default function OrderDetailPage() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* QR Verification Code */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Verification Code
@@ -526,15 +502,10 @@ export default function OrderDetailPage() {
                 </Button>
               </Link>
             </div>
-          </motion.div>
+          </div>
 
           {/* Order Timeline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
                 Order Timeline
@@ -581,7 +552,7 @@ export default function OrderDetailPage() {
                 })}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@
 
 "use client";
 
-import { motion } from "framer-motion";
 import { Factory } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 
@@ -31,11 +30,7 @@ export default function RefineryTicker() {
       
       {/* Moving Ticker */}
       <div className="flex-1 flex items-center overflow-hidden">
-        <motion.div
-          className="flex items-center gap-8 whitespace-nowrap pl-4"
-          animate={{ x: ["0%", "-33.33%"] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-        >
+        <div className="flex items-center gap-8 whitespace-nowrap pl-4">
           {duplicated.map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <span className="text-slate-400">{item.name}</span>
@@ -46,7 +41,7 @@ export default function RefineryTicker() {
               <span className="text-slate-700">|</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

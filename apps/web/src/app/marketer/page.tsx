@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   TrendingUp,
   TrendingDown,
@@ -174,13 +173,7 @@ export default function MarketerDashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-          >
+          <div key={stat.label} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
             <div className="flex items-start justify-between mb-4">
               <div className={cn(
                 "w-12 h-12 rounded-xl flex items-center justify-center",
@@ -207,19 +200,14 @@ export default function MarketerDashboardPage() {
                 ? formatCurrency(stat.value) 
                 : `${formatNumber(stat.value)}${stat.suffix || ""}`}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Main Content Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Live Prices */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100"
-        >
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100">
           <div className="p-6 border-b border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
@@ -270,15 +258,10 @@ export default function MarketerDashboardPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Refinery Prices */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
           <div className="p-6 border-b border-slate-100">
             <h2 className="text-lg font-semibold text-slate-900">Refinery Prices</h2>
             <p className="text-sm text-slate-500">Ex-works prices</p>
@@ -314,16 +297,11 @@ export default function MarketerDashboardPage() {
               </Button>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Active Orders */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100"
-      >
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900">Active Orders</h2>
           <Link href="/marketer/orders" className="text-sm font-medium text-secondary-600">
@@ -366,17 +344,12 @@ export default function MarketerDashboardPage() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Quick Actions & Alerts */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Price Alerts */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
-        >
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-slate-900">Price Alerts</h2>
             <Link href="/marketer/alerts" className="text-sm font-medium text-secondary-600">
@@ -405,15 +378,10 @@ export default function MarketerDashboardPage() {
               Create New Alert
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Quick Calculator */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white"
-        >
+        <div className="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-6 text-white">
           <h2 className="text-lg font-semibold mb-4">Quick Profit Calculator</h2>
           <p className="text-white/80 mb-6">
             Calculate your potential profit margin before placing an order.
@@ -441,7 +409,7 @@ export default function MarketerDashboardPage() {
               Open Full Calculator
             </Button>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
