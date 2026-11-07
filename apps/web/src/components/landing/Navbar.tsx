@@ -473,7 +473,7 @@ export function Navbar({
                 })}
               </div>
 
-              <div className="mt-auto pt-3">
+              <div className="pt-3">
               <Link
                 href="/intel"
                 onClick={close}
