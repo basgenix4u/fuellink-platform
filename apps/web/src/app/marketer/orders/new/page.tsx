@@ -226,7 +226,7 @@ function NewOrderContent() {
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Place Order</h1>
+          <h1 className="t-h2 text-slate-900">Place Order</h1>
           <p className="text-slate-500">{depot.name}</p>
         </div>
       </div>
@@ -334,7 +334,7 @@ function NewOrderContent() {
                   <p className="font-semibold text-slate-900 text-sm mb-1">
                     {product.name}
                   </p>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="stat-value text-slate-900">
                     ₦{formatNumber(product.pricePerLitre)}
                     <span className="text-sm font-normal text-slate-500">/L</span>
                   </p>

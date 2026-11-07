@@ -152,7 +152,9 @@ export default function MarketerRegistrationPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-secondary-500 via-secondary-600 to-secondary-700 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-[#04120b] mesh-ink relative overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 grid-lines-dark" />
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-[380px] w-[380px] rounded-full opacity-25 blur-[90px]" style={{ background: "radial-gradient(circle, #17a34a 0%, transparent 70%)" }} />
         {/* Background Elements */}
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
@@ -190,7 +192,7 @@ export default function MarketerRegistrationPage() {
       </div>
 
       {/* Right Side - Registration Form */}
-      <div className="flex-1 flex flex-col bg-slate-50">
+      <div className="flex-1 flex flex-col bg-[#f7f8f7]">
         {/* Mobile Header */}
         <div className="lg:hidden p-6 bg-white border-b border-slate-100">
           <Logo variant="default" size="md" />
@@ -208,7 +210,7 @@ export default function MarketerRegistrationPage() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary-100 rounded-2xl mb-4">
                 <ShoppingCart className="w-8 h-8 text-secondary-600" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+              <h1 className="t-h1 text-slate-900 mb-2">
                 Create Marketer Account
               </h1>
               <p className="text-slate-600">

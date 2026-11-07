@@ -47,7 +47,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Regulatory Oversight</h1>
+        <h1 className="t-h2 text-slate-900">Regulatory Oversight</h1>
         <p className="text-slate-500 mt-1">Real-time market monitoring and compliance status.</p>
       </div>
 

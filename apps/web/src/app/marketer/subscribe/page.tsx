@@ -94,7 +94,7 @@ export default function SubscribePage() {
           <Zap className="w-3.5 h-3.5" />
           Marketer Subscription
         </Badge>
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">
+        <h1 className="t-h1 text-slate-900 mb-2">
           Unlock the full FuelLink experience
         </h1>
         <p className="text-slate-600 max-w-xl mx-auto">
@@ -128,7 +128,7 @@ export default function SubscribePage() {
             )}
 
             <p className="font-bold text-slate-900 mb-1">{plan.label}</p>
-            <p className="text-2xl font-bold text-slate-900">
+            <p className="stat-value text-slate-900">
               {formatCurrency(plan.price)}
             </p>
             <p className="text-xs text-slate-500">per {plan.period}</p>

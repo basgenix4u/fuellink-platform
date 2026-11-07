@@ -119,7 +119,7 @@ export default function VerificationPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">QR Verification</h1>
+        <h1 className="t-h2 text-slate-900">QR Verification</h1>
         <p className="text-slate-500">
           Scan or enter the verification code to authorize truck loading
         </p>

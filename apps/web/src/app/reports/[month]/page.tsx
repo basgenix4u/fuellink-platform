@@ -136,7 +136,7 @@ export default async function ReportPage({ params }: { params: Promise<{ month: 
         <Badge variant="primary" size="sm">Monthly report</Badge>
         <Badge variant="default" size="sm">deterministic · NMDPRA-sourced</Badge>
       </div>
-      <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{report.title}</h1>
+      <h1 className="t-h1 text-slate-900">{report.title}</h1>
       <p className="mt-2 text-slate-600">{report.description}</p>
       <p className="mt-2 text-xs text-slate-400">
         Generated {report.generatedAt.slice(0, 10)} from the NMDPRA fact sheet for {label(month)}.

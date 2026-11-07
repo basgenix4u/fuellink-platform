@@ -123,7 +123,7 @@ function NewDisputeContent() {
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">File a Dispute</h1>
+          <h1 className="t-h2 text-slate-900">File a Dispute</h1>
           <p className="text-slate-500">Report an issue for NMDPRA review</p>
         </div>
       </div>

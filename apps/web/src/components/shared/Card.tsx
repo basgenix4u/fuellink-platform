@@ -24,28 +24,28 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     ref
   ) => {
     const variants = {
-      default: "bg-white border border-slate-200 shadow-sm",
-      elevated: "bg-white border border-slate-100 shadow-lg",
-      outline: "bg-transparent border-2 border-slate-200",
-      filled: "bg-slate-50 border border-slate-100",
-      glass: "bg-white/80 backdrop-blur-md border border-white/20 shadow-lg",
+      default: "bg-white border border-[var(--hairline)] shadow-[var(--shadow-panel)]",
+      elevated: "bg-white border border-[var(--hairline)] shadow-[var(--shadow-raised)]",
+      outline: "bg-transparent border border-[var(--hairline-strong)]",
+      filled: "bg-[#f7f8f7] border border-[var(--hairline)]",
+      glass: "bg-white/75 backdrop-blur-xl border border-white/40 shadow-[var(--shadow-raised)]",
     };
 
     const paddings = {
       none: "",
-      sm: "p-4",
-      md: "p-6",
-      lg: "p-8",
+      sm: "p-3.5",
+      md: "p-5",
+      lg: "p-7",
     };
 
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-2xl transition-all duration-200",
+          "rounded-[18px] transition-[transform,box-shadow,border-color,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
           variants[variant],
           paddings[padding],
-          hover && "hover:shadow-lg hover:border-slate-300 hover:-translate-y-0.5",
+          hover && "hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] hover:border-[var(--hairline-strong)]",
           clickable && "cursor-pointer active:scale-[0.99]",
           className
         )}
@@ -77,10 +77,10 @@ const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
         {(title || description) ? (
           <div className="space-y-1">
             {title && (
-              <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+              <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-slate-900">{title}</h3>
             )}
             {description && (
-              <p className="text-sm text-slate-500">{description}</p>
+              <p className="text-[12.5px] text-slate-500">{description}</p>
             )}
           </div>
         ) : (
@@ -136,13 +136,13 @@ function StatCard({ title, value, change, icon, trend, className }: StatCardProp
     <Card className={cn("relative overflow-hidden", className)}>
       <div className="flex items-start justify-between">
         <div className="space-y-2">
-          <p className="text-sm font-medium text-slate-500">{title}</p>
-          <p className="text-2xl font-bold text-slate-900">{value}</p>
+          <p className="text-[11.5px] font-medium uppercase tracking-[0.08em] text-slate-400">{title}</p>
+          <p className="stat-value text-[26px] text-slate-900">{value}</p>
           {change && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <span
                 className={cn(
-                  "text-sm font-medium",
+                  "delta-pill",
                   change.type === "increase" && "text-emerald-600",
                   change.type === "decrease" && "text-red-600",
                   change.type === "neutral" && "text-slate-500"
@@ -152,12 +152,12 @@ function StatCard({ title, value, change, icon, trend, className }: StatCardProp
                 {change.type === "decrease" && "-"}
                 {Math.abs(change.value)}%
               </span>
-              <span className="text-xs text-slate-400">vs last period</span>
+              <span className="text-[11px] text-slate-400">vs last period</span>
             </div>
           )}
         </div>
         {icon && (
-          <div className="p-3 rounded-xl bg-primary-50 text-primary-600">
+          <div className="rounded-xl bg-primary-50 p-2.5 text-primary-600 ring-1 ring-primary-100">
             {icon}
           </div>
         )}

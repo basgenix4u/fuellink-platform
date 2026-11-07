@@ -85,7 +85,7 @@ export default function MessagesPage() {
           {/* Header */}
           <div className="p-4 border-b border-slate-100">
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-xl font-bold text-slate-900">Messages</h1>
+              <h1 className="t-h3 text-slate-900">Messages</h1>
               <Badge variant="secondary">{mockConversations.length}</Badge>
             </div>
             <div className="relative">

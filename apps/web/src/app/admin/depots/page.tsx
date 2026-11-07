@@ -17,7 +17,7 @@ export default function AdminDepotsList() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-slate-900">Depot Oversight</h1>
+        <h1 className="t-h2 text-slate-900">Depot Oversight</h1>
         <div className="flex gap-2">
           <Button variant="outline" size="sm"><Filter className="w-4 h-4 mr-2" /> Filter</Button>
           <Button variant="primary" size="sm">Add Depot Manual</Button>

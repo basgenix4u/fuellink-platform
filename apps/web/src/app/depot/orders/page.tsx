@@ -190,7 +190,7 @@ export default function OrdersPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Orders</h1>
+          <h1 className="t-h2 text-slate-900">Orders</h1>
           <p className="text-slate-500">
             Manage and track all incoming orders
           </p>
@@ -208,10 +208,10 @@ export default function OrdersPage() {
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-white rounded-xl p-4 border border-slate-100">
           <p className="text-sm text-slate-500">Total Orders Today</p>
-          <p className="text-2xl font-bold text-slate-900">23</p>
+          <p className="stat-value text-slate-900">23</p>
         </div>
         <div className="bg-white rounded-xl p-4 border border-slate-100">
           <p className="text-sm text-slate-500">Pending</p>

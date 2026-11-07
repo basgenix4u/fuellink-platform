@@ -158,9 +158,11 @@ export default function DepotRegistrationPage() {
   ];
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
+    <div className="min-h-screen flex bg-[#f7f8f7]">
       {/* Left Side Branding (Same as before...) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-[#04120b] mesh-ink relative overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 grid-lines-dark" />
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-[380px] w-[380px] rounded-full opacity-25 blur-[90px]" style={{ background: "radial-gradient(circle, #17a34a 0%, transparent 70%)" }} />
         {/* ... (Branding content) ... */}
         <div className="relative z-10 flex flex-col justify-center px-20">
           <Logo variant="white" size="lg" />
@@ -174,7 +176,7 @@ export default function DepotRegistrationPage() {
         <div className="w-full max-w-xl mx-auto">
           {/* Header & Steps */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Register Depot Facility</h1>
+            <h1 className="t-h1 text-slate-900 mb-2">Register Depot Facility</h1>
             <p className="text-slate-500">Step {step} of 3: {steps[step-1].title}</p>
           </div>
 

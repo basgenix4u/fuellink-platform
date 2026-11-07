@@ -186,7 +186,7 @@ export default function DepotsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Browse Depots</h1>
+          <h1 className="t-h2 text-slate-900">Browse Depots</h1>
           <p className="text-slate-500 text-sm">
             {filteredDepots.length} verified depots across Nigeria •{" "}
             <span className="text-primary-600 font-medium">Chat any depot for pricing</span>

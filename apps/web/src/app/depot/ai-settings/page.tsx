@@ -80,7 +80,7 @@ export default function AISettingsPage() {
           <Bot className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">AI Chatbot Settings</h1>
+          <h1 className="t-h2 text-slate-900">AI Chatbot Settings</h1>
           <p className="text-sm text-slate-500">Configure how your AI handles marketer inquiries</p>
         </div>
       </div>

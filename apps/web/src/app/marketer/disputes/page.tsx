@@ -122,7 +122,7 @@ export default function DisputesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Disputes</h1>
+          <h1 className="t-h2 text-slate-900">Disputes</h1>
           <p className="text-slate-500">
             Track and manage your dispute reports to NMDPRA
           </p>
@@ -135,10 +135,10 @@ export default function DisputesPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-white rounded-xl p-4 border border-slate-100">
           <p className="text-sm text-slate-500">Total Disputes</p>
-          <p className="text-2xl font-bold text-slate-900">{mockDisputes.length}</p>
+          <p className="stat-value text-slate-900">{mockDisputes.length}</p>
         </div>
         <div className="bg-white rounded-xl p-4 border border-slate-100">
           <p className="text-sm text-slate-500">Pending</p>

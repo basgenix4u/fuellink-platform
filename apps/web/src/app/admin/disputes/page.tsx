@@ -50,7 +50,7 @@ export default function AdminDisputesPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dispute Resolution</h1>
+          <h1 className="t-h2 text-slate-900">Dispute Resolution</h1>
           <p className="text-slate-500">Manage conflicts and enforce compliance</p>
         </div>
         <div className="flex gap-2">

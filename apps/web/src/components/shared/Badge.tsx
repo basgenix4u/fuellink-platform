@@ -48,9 +48,9 @@ export function Badge({
   };
 
   const sizes = {
-    sm: "px-2 py-0.5 text-[10px]",
-    md: "px-2.5 py-1 text-xs",
-    lg: "px-3 py-1.5 text-sm",
+    sm: "px-1.5 py-0.5 text-[10px]",
+    md: "px-2 py-[3px] text-[11px]",
+    lg: "px-2.5 py-1 text-[12.5px]",
   };
 
   const dotColors = {
@@ -70,7 +70,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 font-semibold rounded-full whitespace-nowrap",
+        "inline-flex items-center gap-1.5 rounded-full font-semibold leading-none whitespace-nowrap",
         variants[variant],
         sizes[size],
         className
@@ -241,9 +241,9 @@ export function ProductBadge({ type, size = "md", showFullName = false, classNam
 
   const config = productConfig[type];
   const sizes = {
-    sm: "px-2 py-0.5 text-[10px]",
-    md: "px-2.5 py-1 text-xs",
-    lg: "px-3 py-1.5 text-sm",
+    sm: "px-1.5 py-0.5 text-[10px]",
+    md: "px-2 py-[3px] text-[11px]",
+    lg: "px-2.5 py-1 text-[12.5px]",
   };
 
   return (

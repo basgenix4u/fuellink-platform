@@ -116,7 +116,7 @@ export default function AnalyticsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Analytics</h1>
+          <h1 className="t-h2 text-slate-900">Analytics</h1>
           <p className="text-slate-500">
             Track your depot performance and insights
           </p>
@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.label}
@@ -177,7 +177,7 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <p className="text-sm text-slate-500 mb-1">{stat.label}</p>
-            <p className="text-2xl font-bold text-slate-900">
+            <p className="stat-value text-slate-900">
               {stat.format === "currency"
                 ? formatCurrency(stat.value)
                 : stat.format === "volume"

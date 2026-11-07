@@ -93,7 +93,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] bg-[#04120b] mesh-ink relative overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 grid-lines-dark" />
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-[380px] w-[380px] rounded-full opacity-25 blur-[90px]" style={{ background: "radial-gradient(circle, #17a34a 0%, transparent 70%)" }} />
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat" />
         </div>
@@ -163,7 +165,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-slate-50">
+      <div className="flex-1 flex items-center justify-center p-5 sm:p-8 lg:p-12 bg-[#f7f8f7]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,7 +180,7 @@ export default function LoginPage() {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Welcome Back</h1>
+            <h1 className="t-h1 text-slate-900 mb-2">Welcome Back</h1>
             <p className="text-slate-600">Sign in to your FuelLink account</p>
           </div>
 
@@ -295,7 +297,7 @@ export default function LoginPage() {
                 <span className="text-sm text-slate-600">Remember me</span>
               </label>
               <Link
-                href="/forgot-password"
+                href="mailto:hello@fuellink.ng?subject=Password%20reset"
                 className="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
               >
                 Forgot password?

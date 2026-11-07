@@ -53,7 +53,7 @@ export default function PrivatePricesPage() {
             <Lock className="w-5 h-5 text-primary-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Private Price Settings</h1>
+            <h1 className="t-h2 text-slate-900">Private Price Settings</h1>
             <p className="text-sm text-slate-500">Only your AI chatbot knows these prices — not shown publicly</p>
           </div>
         </div>

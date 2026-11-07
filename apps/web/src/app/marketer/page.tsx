@@ -150,13 +150,13 @@ export default function MarketerDashboardPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+          <h1 className="t-h2 text-slate-900">Dashboard</h1>
           <p className="text-slate-500">
             Welcome back! Here&apos;s the latest market overview.
           </p>
         </div>
         <div className="flex gap-3">
-          <Link href="/marketer/prices">
+          <Link href="/intel/prices">
             <Button variant="outline" size="md">
               <TrendingUp className="w-4 h-4 mr-2" />
               View All Prices
@@ -172,7 +172,7 @@ export default function MarketerDashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.label}
@@ -202,7 +202,7 @@ export default function MarketerDashboardPage() {
               )}
             </div>
             <p className="text-sm text-slate-500 mb-1">{stat.label}</p>
-            <p className="text-2xl font-bold text-slate-900">
+            <p className="stat-value text-slate-900">
               {stat.format === "currency" 
                 ? formatCurrency(stat.value) 
                 : `${formatNumber(stat.value)}${stat.suffix || ""}`}
@@ -225,7 +225,7 @@ export default function MarketerDashboardPage() {
               <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
               <h2 className="text-lg font-semibold text-slate-900">Live Depot Prices</h2>
             </div>
-            <Link href="/marketer/prices" className="text-sm font-medium text-secondary-600 hover:text-secondary-700 flex items-center gap-1">
+            <Link href="/intel/prices" className="text-sm font-medium text-secondary-600 hover:text-secondary-700 flex items-center gap-1">
               View All <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -436,7 +436,7 @@ export default function MarketerDashboardPage() {
             </div>
           </div>
 
-          <Link href="/marketer/calculator">
+          <Link href="/intel/calculator">
             <Button variant="white" size="md" className="w-full">
               Open Full Calculator
             </Button>

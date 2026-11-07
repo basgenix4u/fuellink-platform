@@ -130,7 +130,7 @@ export default function MarketerOrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">My Orders</h1>
+          <h1 className="t-h2 text-slate-900">My Orders</h1>
           <p className="text-slate-500">Track and manage your orders</p>
         </div>
         <div className="flex gap-3">

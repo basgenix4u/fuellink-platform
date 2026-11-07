@@ -174,7 +174,7 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
           <div className="flex items-end justify-between mb-2">
             <div>
               <p className="text-xs text-slate-400 mb-0.5">Predicted range today</p>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="stat-value text-slate-900">
                 {formatCurrency(pred.predictedMin)} – {formatCurrency(pred.predictedMax)}
                 <span className="text-sm font-normal text-slate-400 ml-1">/L</span>
               </p>
@@ -307,7 +307,7 @@ export default function PricePredictorPage() {
               AI-Powered
             </Badge>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Price Predictor</h1>
+          <h1 className="t-h2 text-slate-900">Price Predictor</h1>
           <p className="text-sm text-slate-500 flex items-center gap-1.5 mt-1">
             <Clock className="w-3.5 h-3.5" />
             Last updated: {lastUpdated.toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" })}

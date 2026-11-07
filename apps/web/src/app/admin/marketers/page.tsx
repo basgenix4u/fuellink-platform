@@ -20,7 +20,7 @@ export default function AdminMarketersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-slate-900">Marketer Compliance</h1>
+      <h1 className="t-h2 text-slate-900">Marketer Compliance</h1>
       
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm text-left">

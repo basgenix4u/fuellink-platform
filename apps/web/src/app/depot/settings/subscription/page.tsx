@@ -128,7 +128,7 @@ export default function SubscriptionPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Subscription</h1>
+        <h1 className="t-h2 text-slate-900">Subscription</h1>
         <p className="text-slate-500">
           Manage your subscription plan and billing
         </p>

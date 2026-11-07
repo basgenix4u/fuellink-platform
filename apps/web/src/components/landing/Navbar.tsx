@@ -73,9 +73,7 @@ export function Navbar() {
       >
         <div className="page-max page-x">
           <nav className="flex h-[60px] items-center gap-2 lg:h-[68px]" aria-label="Primary">
-            <Link href="/" className="press flex items-center rounded-lg" aria-label="FuelLink home">
-              <Logo size="sm" />
-            </Link>
+            <Logo size="sm" className="press rounded-lg" />
 
             <div className="mx-2 hidden items-center gap-0.5 lg:flex">
               <div className="group relative">

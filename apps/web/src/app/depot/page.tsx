@@ -143,14 +143,14 @@ const quickActions = [
   {
     label: "Update Prices",
     description: "Broadcast to all marketers",
-    href: "/depot/prices",
+    href: "/depot/private-prices",
     icon: DollarSign,
     color: "bg-primary-500",
   },
   {
     label: "Scan QR Code",
     description: "Verify truck for loading",
-    href: "/depot/verify",
+    href: "/depot/verification",
     icon: QrCode,
     color: "bg-secondary-500",
   },
@@ -176,13 +176,13 @@ export default function DepotDashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+          <h1 className="t-h2 text-slate-900">Dashboard</h1>
           <p className="text-slate-500">
             Welcome back! Here&apos;s what&apos;s happening at your depot.
           </p>
         </div>
         <div className="flex gap-3">
-          <Link href="/depot/prices">
+          <Link href="/depot/private-prices">
             <Button variant="primary" size="md" rightIcon={<ArrowRight className="w-4 h-4" />}>
               Update Prices
             </Button>
@@ -196,25 +196,25 @@ export default function DepotDashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4"
       >
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <Fuel className="w-6 h-6 text-amber-600" />
+        <div className="flex flex-wrap items-start gap-3 sm:flex-nowrap sm:items-center sm:gap-4">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-amber-100 sm:h-12 sm:w-12">
+            <Fuel className="h-5 w-5 text-amber-600 sm:h-6 sm:w-6" />
           </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-amber-900">Platform Fee: ₦0.25 per litre</h3>
-            <p className="text-sm text-amber-700">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-[13.5px] font-semibold text-amber-900 sm:text-[15px]">Platform fee: ₦0.25 per litre</h3>
+            <p className="text-[12.5px] leading-snug text-amber-700 sm:text-sm">
               This fee is automatically deducted from your settlement when orders complete. 
               Today&apos;s total fees: <strong>₦{formatNumber(9900)}</strong>
             </p>
           </div>
-          <Link href="/depot/wallet">
-            <Button variant="ghost" size="sm">View Details</Button>
+          <Link href="/depot/wallet" className="w-full sm:ml-auto sm:w-auto">
+            <Button variant="ghost" size="sm">View details</Button>
           </Link>
         </div>
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.label}
@@ -252,7 +252,7 @@ export default function DepotDashboardPage() {
               )}
             </div>
             <p className="text-sm text-slate-500 mb-1">{stat.label}</p>
-            <p className="text-2xl font-bold text-slate-900">
+            <p className="stat-value text-slate-900">
               {stat.label.includes("Revenue") && "₦"}
               {formatNumber(stat.value)}
               {stat.suffix || ""}
@@ -384,7 +384,7 @@ export default function DepotDashboardPage() {
         >
           <div className="flex items-center justify-between p-6 border-b border-slate-100">
             <h2 className="text-lg font-semibold text-slate-900">Prices & Stock</h2>
-            <Link href="/depot/prices" className="text-sm font-medium text-primary-600">
+            <Link href="/depot/private-prices" className="text-sm font-medium text-primary-600">
               Edit
             </Link>
           </div>
@@ -449,7 +449,7 @@ export default function DepotDashboardPage() {
           </div>
 
           <div className="p-6 pt-0">
-            <Link href="/depot/prices">
+            <Link href="/depot/private-prices">
               <Button variant="outline" size="md" fullWidth leftIcon={<DollarSign className="w-4 h-4" />}>
                 Update All Prices
               </Button>
@@ -477,7 +477,7 @@ export default function DepotDashboardPage() {
               </p>
             </div>
           </div>
-          <Link href="/depot/verify">
+          <Link href="/depot/verification">
             <Button variant="white" size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
               Open Scanner
             </Button>

@@ -135,7 +135,7 @@ export default function RefineriesPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Refinery Prices</h1>
+          <h1 className="t-h2 text-slate-900">Refinery Prices</h1>
           <p className="text-slate-500">Ex-works prices from Nigerian refineries</p>
         </div>
         <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -254,7 +254,7 @@ export default function RefineriesPage() {
                               {product.availability}
                             </Badge>
                           </div>
-                          <p className="text-2xl font-bold text-slate-900">
+                          <p className="stat-value text-slate-900">
                             ₦{formatNumber(product.price)}
                           </p>
                           <div className="flex items-center justify-between mt-2">

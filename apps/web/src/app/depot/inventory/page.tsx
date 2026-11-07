@@ -274,7 +274,7 @@ export default function InventoryPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="t-h2 text-slate-900">
             Inventory Management
           </h1>
           <p className="text-slate-500">
@@ -294,7 +294,7 @@ export default function InventoryPage() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -306,7 +306,7 @@ export default function InventoryPage() {
             </div>
             <div>
               <p className="text-sm text-slate-500">Total Stock</p>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="stat-value text-slate-900">
                 {formatNumber(totalCurrent)}L
               </p>
             </div>
@@ -325,7 +325,7 @@ export default function InventoryPage() {
             </div>
             <div>
               <p className="text-sm text-slate-500">Fill Rate</p>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="stat-value text-slate-900">
                 {overallPercentage.toFixed(1)}%
               </p>
             </div>
@@ -344,7 +344,7 @@ export default function InventoryPage() {
             </div>
             <div>
               <p className="text-sm text-slate-500">Low Stock Alerts</p>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="stat-value text-slate-900">
                 {warningTanks}
               </p>
             </div>
@@ -363,7 +363,7 @@ export default function InventoryPage() {
             </div>
             <div>
               <p className="text-sm text-slate-500">Critical</p>
-              <p className="text-2xl font-bold text-slate-900">
+              <p className="stat-value text-slate-900">
                 {criticalTanks}
               </p>
             </div>
