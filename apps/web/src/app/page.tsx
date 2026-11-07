@@ -14,7 +14,7 @@ import {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main id="main" className="min-h-screen">
       <Navbar />
       <HeroSection />
       <ProblemSection />

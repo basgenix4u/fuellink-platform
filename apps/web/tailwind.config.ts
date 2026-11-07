@@ -100,9 +100,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       fontSize: {
         "display-xl": ["4.5rem", { lineHeight: "1.1", fontWeight: "700" }],

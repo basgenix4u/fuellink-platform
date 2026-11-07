@@ -1,354 +1,228 @@
-// src/components/landing/HeroSection.tsx
-"use client";
-
-import { useEffect, useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   ArrowRight,
-  Bot,
-  TrendingUp,
-  Shield,
-  Zap,
-  CheckCircle2,
-  Fuel,
-  BarChart3,
-  Mic,
-  Newspaper,
+  ArrowUpRight,
+  ShieldCheck,
+  Landmark,
+  Radio,
+  Gauge,
+  Clock3,
 } from "lucide-react";
-import { Button } from "@/components/shared/Button";
-import { Badge } from "@/components/shared/Badge";
-import { formatCompactNumber } from "@/lib/utils";
-import Link from "next/link";
+import { gantry, latestMonth } from "@/lib/intel";
 
-// Animated counter
-function AnimatedCounter({
-  value,
-  prefix = "",
-  suffix = "",
-  decimals = 0,
-}: {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
-}) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const duration = 2000;
-    const steps = 60;
-    const increment = value / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= value) {
-        setCount(value);
-        clearInterval(timer);
-      } else {
-        setCount(current);
-      }
-    }, duration / steps);
-    return () => clearInterval(timer);
-  }, [value]);
-
-  return (
-    <span>
-      {prefix}
-      {decimals > 0 ? count.toFixed(decimals) : Math.floor(count).toLocaleString()}
-      {suffix}
-    </span>
-  );
+function latestPrice(issuer: string): { value: number | null; date: string } {
+  const rows = gantry.points.filter((p) => p.issuer === issuer && p.price != null);
+  if (rows.length === 0) return { value: null, date: "" };
+  const newest = rows.reduce((a, b) => (a.date > b.date ? a : b));
+  return { value: newest.price, date: newest.date };
 }
 
-// AI Chat preview widget
-function AIChatPreview() {
-  const messages = [
-    { role: "marketer", text: "Suna da PMS? Nawa ne farashi?" , lang: "ha" },
-    { role: "ai", text: "Yes! Dangote depot has PMS available. Current price range: ₦897–₦915/L. Want to place an order or speak to the depot?" },
-    { role: "marketer", text: "Yes, 33,000 litres please." },
-    { role: "ai", text: "Order initiated. Connecting you to depot manager for final confirmation. Payment via Providus transfer." },
-  ];
-
-  const [visibleCount, setVisibleCount] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setVisibleCount((c) => (c < messages.length ? c + 1 : 0));
-    }, 1800);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
-      {/* Header */}
-      <div className="bg-slate-800 px-4 py-3 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary-500 to-primary-600 flex items-center justify-center">
-          <Bot className="w-4 h-4 text-white" />
-        </div>
-        <div>
-          <p className="text-white text-sm font-semibold">FuelLink AI</p>
-          <p className="text-slate-400 text-xs">Depot Assistant • Online</p>
-        </div>
-        <div className="ml-auto flex gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="p-4 space-y-3 min-h-[200px]">
-        {messages.slice(0, visibleCount + 1).map((msg, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`flex ${msg.role === "ai" ? "justify-start" : "justify-end"}`}
-          >
-            <div
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-xs leading-relaxed ${
-                msg.role === "ai"
-                  ? "bg-slate-700 text-slate-100 rounded-tl-sm"
-                  : "bg-secondary-500 text-white rounded-tr-sm"
-              }`}
-            >
-              {msg.lang && (
-                <span className="text-[10px] opacity-60 block mb-0.5">
-                  🎙 Voice note ({msg.lang === "ha" ? "Hausa" : "EN"}) → transcribed
-                </span>
-              )}
-              {msg.text}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Input bar */}
-      <div className="bg-slate-800 px-4 py-3 flex items-center gap-2">
-        <div className="flex-1 bg-slate-700 rounded-full px-3 py-1.5 text-xs text-slate-400">
-          Type or record voice note...
-        </div>
-        <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-          <Mic className="w-3.5 h-3.5 text-red-400" />
-        </div>
-      </div>
-    </div>
-  );
+function naira(value: number | null): string {
+  if (value == null) return "—";
+  return value.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
-// Price predictor preview
-function PricePredictorPreview() {
-  return (
-    <div className="bg-white rounded-2xl p-4 shadow-xl border border-slate-100">
-      <div className="flex items-center gap-2 mb-3">
-        <TrendingUp className="w-4 h-4 text-primary-600" />
-        <span className="text-xs font-bold text-slate-700">AI Price Prediction — Today</span>
-        <span className="ml-auto text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Live</span>
-      </div>
-      {[
-        { product: "PMS", range: "₦893–₦910", trend: "up", confidence: 87 },
-        { product: "AGO", range: "₦1,140–₦1,165", trend: "stable", confidence: 91 },
-        { product: "LPG", range: "₦1,040–₦1,060", trend: "up", confidence: 79 },
-      ].map((item) => (
-        <div key={item.product} className="flex items-center gap-3 py-2 border-b border-slate-50 last:border-0">
-          <span className="text-xs font-bold text-slate-500 w-10">{item.product}</span>
-          <span className="text-xs font-semibold text-slate-900 flex-1">{item.range}</span>
-          <span className={`text-xs font-medium ${item.trend === "up" ? "text-red-500" : "text-green-500"}`}>
-            {item.trend === "up" ? "↑" : "→"}
-          </span>
-          <span className="text-[10px] text-slate-400">{item.confidence}% conf.</span>
-        </div>
-      ))}
-      <p className="text-[10px] text-slate-400 mt-2">Based on Dangote, NNPCL data + global oil news</p>
-    </div>
-  );
-}
-
-// Real, sourced sector figures — NMDPRA fact sheet, July 2026 (latest published).
-// No invented traction numbers: the "stats" are the data product itself.
-const stats = [
-  { value: 71.09, prefix: "", decimals: 2, suffix: "%", label: "Dangote refinery utilization" },
-  { value: 35.7, prefix: "", decimals: 1, suffix: " ML/d", label: "National PMS consumption" },
-  { value: 22.4, prefix: "", decimals: 1, suffix: " days", label: "PMS stock sufficiency" },
-  { value: 4.72, prefix: "", decimals: 2, suffix: " Bscf/d", label: "National gas supply" },
-];
-
-const features = [
-  "AI chatbot handles depot inquiries 24/7",
-  "Voice notes in Hausa, Yoruba, Igbo — auto-transcribed",
-  "Secure payments via Providus Bank",
-  "Live refinery price board (NNPCL, Dangote & more)",
-];
 
 export function HeroSection() {
+  const month = latestMonth();
+  const lagos = latestPrice("nmdpra_indicative_lagos");
+  const abuja = latestPrice("nmdpra_indicative_abuja");
+  const cover = month.sufficiencyDays;
+
+  const coverRows = [
+    { label: "PMS", value: cover.pms },
+    { label: "AGO", value: cover.agod },
+    { label: "ATK", value: cover.atk },
+    { label: "LPG", value: cover.lpg },
+  ].filter((row) => row.value != null) as { label: string; value: number }[];
+
+  const peak = coverRows.reduce((max, row) => Math.max(max, row.value), 1);
+
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 overflow-hidden flex items-center pt-20">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/10 rounded-full blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat opacity-5" />
-      </div>
+    <section className="relative overflow-hidden bg-white pt-[92px] lg:pt-[116px]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[560px] grid-lines" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 -top-40 h-[420px] w-[420px] rounded-full opacity-[0.16] blur-[90px]"
+        style={{ background: "radial-gradient(circle, #17a34a 0%, transparent 70%)" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 top-24 h-[380px] w-[380px] rounded-full opacity-[0.14] blur-[90px]"
+        style={{ background: "radial-gradient(circle, #ff8c00 0%, transparent 70%)" }}
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* Left: Copy */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+      <div className="page-max page-x relative pb-10 lg:pb-16">
+        <div className="bento items-start">
+          <div className="col-12 col-lg-7">
+            <div
+              className="blur-up inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-white/80 px-2.5 py-1 shadow-[var(--shadow-xs)] backdrop-blur"
+              style={{ animationDelay: "0ms" }}
             >
-              <Badge
-                variant="secondary"
-                className="mb-6 inline-flex items-center gap-1.5"
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-600" />
+              </span>
+              <span className="t-kicker text-slate-600">
+                NMDPRA fact sheet · {month.label}
+              </span>
+            </div>
+
+            <h1
+              className="t-display blur-up mt-5 text-slate-900"
+              style={{ animationDelay: "70ms" }}
+            >
+              Nigeria&rsquo;s fuel market,
+              <br />
+              <span className="text-gradient-brand">priced in the open.</span>
+            </h1>
+
+            <p className="t-lede blur-up mt-5 max-w-xl" style={{ animationDelay: "140ms" }}>
+              Verified depots, gantry prices straight from the regulator&rsquo;s own fact
+              sheets, and bank-held escrow so neither side of a{" "}
+              <span className="t-editorial font-medium text-slate-900">33,000&nbsp;litre</span>{" "}
+              trade carries counterparty risk.
+            </p>
+
+            <div
+              className="blur-up mt-7 flex flex-col gap-2.5 sm:flex-row sm:items-center"
+              style={{ animationDelay: "210ms" }}
+            >
+              <Link
+                href="/intel"
+                className="press group flex h-12 items-center justify-center gap-2 rounded-xl bg-[#04120b] px-5 text-[14px] font-medium text-white shadow-[var(--shadow-md)] hover:bg-[#0b2f1c]"
               >
-                <Zap className="w-3.5 h-3.5" />
-                Nigeria&apos;s AI-Powered Petroleum Exchange
-              </Badge>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6"
-            >
-              Buy & Sell Fuel{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-400 to-accent-300">
-                Smarter
-              </span>{" "}
-              with AI
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg text-white/75 mb-8 leading-relaxed max-w-lg"
-            >
-              FuelLink connects marketers and depots across Nigeria with AI-powered chat,
-              real-time refinery prices, and zero-cost Providus Bank payments.
-              No price manipulation. No hidden fees. Just deals.
-            </motion.p>
-
-            {/* Feature checklist */}
-            <motion.ul
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="space-y-2.5 mb-10"
-            >
-              {features.map((f, i) => (
-                <li key={i} className="flex items-center gap-3 text-white/80 text-sm">
-                  <CheckCircle2 className="w-4 h-4 text-secondary-400 flex-shrink-0" />
-                  {f}
-                </li>
-              ))}
-            </motion.ul>
-
-            {/* CTA buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-wrap gap-3 mb-12"
-            >
-              <Button
-                variant="secondary"
-                size="lg"
-                rightIcon={<ArrowRight className="w-5 h-5" />}
-                onClick={() => window.location.href = "/register/marketer"}
-              >
-                Join as Marketer
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-white border-white/30 hover:bg-white/10"
-                onClick={() => window.location.href = "/register/depot"}
-              >
-                List Your Depot
-              </Button>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-6"
-            >
-              {stats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-2xl font-bold text-white">
-                    <AnimatedCounter
-                      value={stat.value}
-                      prefix={stat.prefix ?? ""}
-                      suffix={stat.suffix ?? ""}
-                      decimals={stat.decimals ?? 0}
-                    />
-                  </p>
-                  <p className="text-xs text-white/50 mt-0.5">{stat.label}</p>
-                </div>
-              ))}
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="mt-3 text-xs text-white/60"
-            >
-              Live NMDPRA sector data (Jul 2026, latest published) —{" "}
-              <Link href="/intel" className="text-accent-400 hover:text-accent-300 font-semibold underline underline-offset-2">
-                explore the Intelligence layer →
+                Open the intelligence terminal
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
-            </motion.p>
+              <Link
+                href="/register/depot"
+                className="press flex h-12 items-center justify-center gap-2 rounded-xl border border-[var(--hairline-strong)] bg-white px-5 text-[14px] font-medium text-slate-800 hover:border-slate-300"
+              >
+                List your depot
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div
+              className="blur-up mt-7 flex flex-wrap items-center gap-x-5 gap-y-2"
+              style={{ animationDelay: "280ms" }}
+            >
+              <span className="flex items-center gap-1.5 t-meta">
+                <ShieldCheck className="h-3.5 w-3.5 text-primary-600" />
+                Escrow released on delivery
+              </span>
+              <span className="flex items-center gap-1.5 t-meta">
+                <Landmark className="h-3.5 w-3.5 text-primary-600" />
+                Bank-held, not platform-held
+              </span>
+              <span className="flex items-center gap-1.5 t-meta">
+                <Radio className="h-3.5 w-3.5 text-primary-600" />
+                Regulator-sourced data
+              </span>
+            </div>
           </div>
 
-          {/* Right: Interactive previews */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="space-y-4"
-          >
-            {/* AI Chat */}
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Bot className="w-4 h-4 text-secondary-400" />
-                <span className="text-xs text-white/60 font-medium uppercase tracking-wider">
-                  AI Depot Chat — Live Demo
-                </span>
-              </div>
-              <AIChatPreview />
-            </div>
-
-            {/* Price Predictor */}
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <BarChart3 className="w-4 h-4 text-secondary-400" />
-                <span className="text-xs text-white/60 font-medium uppercase tracking-wider">
-                  AI Price Intelligence
-                </span>
-              </div>
-              <PricePredictorPreview />
-            </div>
-
-            {/* Trust bar */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="flex items-center gap-4 bg-white/5 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/10"
+          <div className="col-12 col-lg-5">
+            <div
+              className="blur-up surface shadow-[var(--shadow-lg)]"
+              style={{ animationDelay: "120ms" }}
             >
-              <Shield className="w-5 h-5 text-secondary-400 flex-shrink-0" />
-              <p className="text-xs text-white/60">
-                All transactions secured via{" "}
-                <span className="text-white font-semibold">Providus Bank API</span> •
-                NMDPRA licensed depots only
-              </p>
-            </motion.div>
-          </motion.div>
+              <div className="flex items-center justify-between border-b border-[var(--hairline)] px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <Gauge className="h-4 w-4 text-primary-600" />
+                  <span className="text-[13px] font-medium text-slate-900">
+                    PMS ex-gantry indicative
+                  </span>
+                </div>
+                <span className="tnum rounded-md bg-slate-900/[0.05] px-1.5 py-0.5 text-[10.5px] text-slate-600">
+                  {lagos.date || month.month}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 divide-x divide-[var(--hairline)]">
+                <div className="px-4 py-4">
+                  <p className="t-kicker text-slate-400">Lagos</p>
+                  <p className="tnum mt-1.5 text-[26px] font-medium leading-none text-slate-900">
+                    <span className="mr-0.5 text-[15px] text-slate-400">₦</span>
+                    {naira(lagos.value)}
+                  </p>
+                  <p className="t-meta mt-1">per litre</p>
+                </div>
+                <div className="px-4 py-4">
+                  <p className="t-kicker text-slate-400">Abuja</p>
+                  <p className="tnum mt-1.5 text-[26px] font-medium leading-none text-slate-900">
+                    <span className="mr-0.5 text-[15px] text-slate-400">₦</span>
+                    {naira(abuja.value)}
+                  </p>
+                  <p className="t-meta mt-1">per litre</p>
+                </div>
+              </div>
+
+              <div className="border-t border-[var(--hairline)] px-4 py-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="t-kicker text-slate-400">Days of cover</span>
+                  <span className="flex items-center gap-1 t-meta">
+                    <Clock3 className="h-3 w-3" />
+                    {month.label}
+                  </span>
+                </div>
+                <div className="space-y-2.5">
+                  {coverRows.map((row) => (
+                    <div key={row.label} className="flex items-center gap-3">
+                      <span className="tnum w-8 shrink-0 text-[11px] text-slate-500">
+                        {row.label}
+                      </span>
+                      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-900/[0.07]">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-primary-600 to-primary-400"
+                          style={{ width: `${Math.round((row.value / peak) * 100)}%` }}
+                        />
+                      </div>
+                      <span className="tnum w-12 shrink-0 text-right text-[12px] font-medium text-slate-900">
+                        {row.value.toFixed(1)}d
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between rounded-b-[16px] bg-[#f7f8f7] px-4 py-2.5">
+                <span className="t-meta">Source: NMDPRA</span>
+                <Link
+                  href="/intel/gantry"
+                  className="press inline-flex items-center gap-1 text-[11.5px] font-medium text-primary-700"
+                >
+                  Full ladder
+                  <ArrowUpRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden border-y border-[var(--hairline)] bg-[#f7f8f7]">
+        <div className="marquee marquee-pause py-2.5">
+          {[0, 1].map((pass) => (
+            <div key={pass} className="flex shrink-0 items-center" aria-hidden={pass === 1}>
+              {[
+                ["PMS · Lagos", naira(lagos.value)],
+                ["PMS · Abuja", naira(abuja.value)],
+                ["PMS supply", `${month.supply.pmsTotalMld ?? "—"} ML/d`],
+                ["PMS consumption", `${month.consumption.pmsMld ?? "—"} ML/d`],
+                ["DPRP utilisation", `${month.dprp.utilizationPct ?? "—"}%`],
+                ["State of the sector", month.label],
+                ["AGO cover", `${cover.agod ?? "—"} days`],
+                ["ATK cover", `${cover.atk ?? "—"} days`],
+              ].map(([label, value]) => (
+                <span key={`${pass}-${label}`} className="flex items-center gap-2 px-5">
+                  <span className="t-kicker text-slate-400">{label}</span>
+                  <span className="tnum text-[12.5px] font-medium text-slate-800">{value}</span>
+                  <span className="ml-2 h-1 w-1 rounded-full bg-slate-300" />
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,20 +1,46 @@
-// src/app/layout.tsx
-
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({
+const sans = Geist({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-sans",
+  preload: true,
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+  adjustFontFallback: true,
 });
 
+const mono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  preload: false,
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
+  preload: false,
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fuellink.ng";
+
 export const metadata: Metadata = {
-  title: "FuelLink - Nigeria's Digital Petroleum Exchange",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "FuelLink — Nigeria's Digital Petroleum Exchange",
+    template: "%s · FuelLink",
+  },
   description:
-    "The digital nervous system for Nigeria's downstream petroleum sector. Real-time pricing, verified inventory, secure escrow payments.",
+    "Verified depots, transparent gantry pricing and bank-held escrow for Nigeria's downstream petroleum market. Real data from NMDPRA fact sheets.",
+  applicationName: "FuelLink",
   keywords: [
     "fuel",
     "petroleum",
@@ -24,49 +50,78 @@ export const metadata: Metadata = {
     "petrol",
     "AGO",
     "PMS",
-    "oil and gas",
+    "ATK",
+    "LPG",
+    "escrow",
+    "gantry price",
   ],
   authors: [{ name: "FuelLink" }],
+  creator: "FuelLink",
+  formatDetection: { telephone: false, address: false, email: false },
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "FuelLink - Nigeria's Digital Petroleum Exchange",
+    title: "FuelLink — Nigeria's Digital Petroleum Exchange",
     description:
-      "Transform petroleum trading with real-time prices, verified stock, and secure payments.",
+      "Verified depots, transparent gantry pricing and bank-held escrow for Nigeria's downstream petroleum market.",
     type: "website",
     locale: "en_NG",
+    siteName: "FuelLink",
+    url: siteUrl,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "FuelLink — Nigeria's Digital Petroleum Exchange",
+    description:
+      "Verified depots, transparent gantry pricing and bank-held escrow for Nigeria's downstream petroleum market.",
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#04120b" },
+  ],
+  colorScheme: "light",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased">
+    <html
+      lang="en-NG"
+      className={`${sans.variable} ${mono.variable} ${serif.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-dvh bg-white font-sans text-slate-900 antialiased [text-rendering:optimizeLegibility]">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
+        >
+          Skip to content
+        </a>
         {children}
         <Toaster
           position="top-right"
+          gutter={8}
           toastOptions={{
             duration: 4000,
             style: {
-              background: "#1E293B",
-              color: "#F8FAFC",
-              borderRadius: "12px",
-              padding: "16px",
+              background: "#0b1a12",
+              color: "#f4f7f5",
+              borderRadius: "14px",
+              padding: "14px 16px",
+              fontSize: "14px",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 20px 40px -12px rgba(0,0,0,0.35)",
             },
-            success: {
-              iconTheme: {
-                primary: "#22C55E",
-                secondary: "#F8FAFC",
-              },
-            },
-            error: {
-              iconTheme: {
-                primary: "#EF4444",
-                secondary: "#F8FAFC",
-              },
-            },
+            success: { iconTheme: { primary: "#16a34a", secondary: "#f4f7f5" } },
+            error: { iconTheme: { primary: "#dc2626", secondary: "#f4f7f5" } },
           }}
         />
       </body>
