@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowLeft, Activity } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, normalizePath } from "@/lib/utils";
 
 const LINKS: { label: string; href: string; exact?: boolean }[] = [
   { label: "Overview", href: "/intel", exact: true },
@@ -19,7 +19,7 @@ const LINKS: { label: string; href: string; exact?: boolean }[] = [
 ];
 
 export function IntelNav({ generatedAt }: { generatedAt: string }) {
-  const pathname = usePathname();
+  const pathname = normalizePath(usePathname());
   const railRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

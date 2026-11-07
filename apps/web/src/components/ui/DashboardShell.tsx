@@ -16,7 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
-import { cn } from "@/lib/utils";
+import { cn, normalizePath } from "@/lib/utils";
 
 export type ShellNavItem = {
   href: string;
@@ -63,7 +63,7 @@ export function DashboardShell({
   banner,
   settingsHref = "/",
 }: DashboardShellProps) {
-  const pathname = usePathname();
+  const pathname = normalizePath(usePathname());
   const [open, setOpen] = useState(false);
   const tone = accents[accent];
 

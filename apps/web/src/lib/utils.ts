@@ -194,3 +194,8 @@ export function generateTruckQRCode(orderId: string, truckNumber: number): strin
   const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `FUELLINK-${orderId}-T${truckNumber}-${timestamp}${random}`;
 }
+export function normalizePath(pathname: string): string {
+  if (!pathname) return "/";
+  const trimmed = pathname.replace(/\/+$/, "");
+  return trimmed === "" ? "/" : trimmed;
+}
