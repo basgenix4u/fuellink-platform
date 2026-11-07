@@ -92,3 +92,10 @@ export function fmtDelta(cur: number | null | undefined, prev: number | null | u
 
 export { STATE_LABELS };
 export type { StateKey, NmdpraMonth, NmdpraDataset, LomeDataset, GantryDataset, JetDataset };
+
+export function latestGantryPrice(issuer: string): { value: number | null; date: string } {
+  const rows = gantry.points.filter((point) => point.issuer === issuer && point.price != null);
+  if (rows.length === 0) return { value: null, date: "" };
+  const newest = rows.reduce((a, b) => (a.date > b.date ? a : b));
+  return { value: newest.price, date: newest.date };
+}

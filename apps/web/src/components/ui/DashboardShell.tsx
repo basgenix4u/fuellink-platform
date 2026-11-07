@@ -259,6 +259,10 @@ export function DashboardShell({
               <Menu className="h-4 w-4" />
             </button>
 
+            <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-slate-800 sm:hidden">
+              {workspace.name}
+            </span>
+
             <div className="relative hidden min-w-0 flex-1 sm:block">
               <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
               <input

@@ -8,14 +8,7 @@ import {
   Gauge,
   Clock3,
 } from "lucide-react";
-import { gantry, latestMonth } from "@/lib/intel";
-
-function latestPrice(issuer: string): { value: number | null; date: string } {
-  const rows = gantry.points.filter((p) => p.issuer === issuer && p.price != null);
-  if (rows.length === 0) return { value: null, date: "" };
-  const newest = rows.reduce((a, b) => (a.date > b.date ? a : b));
-  return { value: newest.price, date: newest.date };
-}
+import { latestGantryPrice, latestMonth } from "@/lib/intel";
 
 function naira(value: number | null): string {
   if (value == null) return "—";
@@ -24,8 +17,8 @@ function naira(value: number | null): string {
 
 export function HeroSection() {
   const month = latestMonth();
-  const lagos = latestPrice("nmdpra_indicative_lagos");
-  const abuja = latestPrice("nmdpra_indicative_abuja");
+  const lagos = latestGantryPrice("nmdpra_indicative_lagos");
+  const abuja = latestGantryPrice("nmdpra_indicative_abuja");
   const cover = month.sufficiencyDays;
 
   const coverRows = [
