@@ -261,7 +261,7 @@ export default function DisputesPage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <Link href={`/marketer/disputes/${dispute.id}`}>
+                    <Link href={`/marketer/disputes/${dispute.id}`} prefetch={false}>
                       <Button variant="outline" size="sm" leftIcon={<Eye className="w-4 h-4" />}>
                         View Details
                       </Button>

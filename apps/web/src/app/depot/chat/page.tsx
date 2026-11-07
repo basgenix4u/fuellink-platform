@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { ChatWindow } from "@/components/shared/ChatWindow";
 import { Badge } from "@/components/shared/Badge";
-import { cn, formatRelativeTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface MarketerConversation {
   id: string;
@@ -26,7 +26,7 @@ interface MarketerConversation {
   marketerName: string;
   marketerBusiness: string;
   lastMessage: string;
-  lastMessageTime: string;
+  lastMessageLabel: string;
   unreadCount: number;
   aiHandling: boolean; // true = AI is handling it solo, false = depot jumped in
   needsAttention: boolean; // AI flagged: marketer ready to order
@@ -42,7 +42,7 @@ const MOCK_MARKETER_CONVS: MarketerConversation[] = [
     marketerName: "Adamu Usman",
     marketerBusiness: "Adamu Petroleum",
     lastMessage: "I want 33,000 litres. Can the price be ₦900?",
-    lastMessageTime: new Date(Date.now() - 60000).toISOString(),
+    lastMessageLabel: "1 min ago",
     unreadCount: 1,
     aiHandling: false,
     needsAttention: true,
@@ -56,7 +56,7 @@ const MOCK_MARKETER_CONVS: MarketerConversation[] = [
     marketerName: "Chiamaka Obi",
     marketerBusiness: "ChiOil Distributors",
     lastMessage: "AI: Current AGO stock and pricing shared. Marketer reviewing.",
-    lastMessageTime: new Date(Date.now() - 900000).toISOString(),
+    lastMessageLabel: "15 mins ago",
     unreadCount: 0,
     aiHandling: true,
     needsAttention: false,
@@ -70,7 +70,7 @@ const MOCK_MARKETER_CONVS: MarketerConversation[] = [
     marketerName: "Emeka Nwosu",
     marketerBusiness: "Emeka Fuels Ltd",
     lastMessage: "Voice note received — transcribed from Hausa. Price inquiry.",
-    lastMessageTime: new Date(Date.now() - 1800000).toISOString(),
+    lastMessageLabel: "30 mins ago",
     unreadCount: 0,
     aiHandling: true,
     needsAttention: false,
@@ -83,7 +83,7 @@ const MOCK_MARKETER_CONVS: MarketerConversation[] = [
     marketerName: "Bola Adeyemi",
     marketerBusiness: "Bola Energy Consult",
     lastMessage: "Payment confirmed. QR code sent. Ready for loading.",
-    lastMessageTime: new Date(Date.now() - 3600000).toISOString(),
+    lastMessageLabel: "1 hour ago",
     unreadCount: 0,
     aiHandling: false,
     needsAttention: false,
@@ -135,7 +135,7 @@ function ConversationItem({
         <div className="flex items-center justify-between mb-0.5">
           <span className="font-semibold text-sm text-slate-900 truncate">{conv.marketerName}</span>
           <span className="text-[11px] text-slate-400 flex-shrink-0 ml-2">
-            {formatRelativeTime(conv.lastMessageTime)}
+            {conv.lastMessageLabel}
           </span>
         </div>
 

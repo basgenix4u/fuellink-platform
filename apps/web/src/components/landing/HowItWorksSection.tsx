@@ -1,7 +1,6 @@
-// src/components/landing/HowItWorksSection.tsx
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   Building2,
@@ -120,17 +119,16 @@ const depotSteps = [
 ];
 
 export function HowItWorksSection() {
-  const ref = useRef(null);
   const [activeTab, setActiveTab] = useState<UserType>("marketer");
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = activeTab === "marketer" ? marketerSteps : depotSteps;
 
   return (
-    <section id="how-it-works" ref={ref} className="py-24 bg-white">
+    <section id="how-it-works" className="section-padding bg-white">
       <Container>
         {/* Header */}
-        <Reveal className="text-center mb-16">
+        <Reveal className="text-center mb-10 sm:mb-14">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
             How FuelLink Works
           </h2>
@@ -274,7 +272,7 @@ export function HowItWorksSection() {
         </>
 
         {/* CTA */}
-        <Reveal className="mt-16 text-center" delay={400}>
+        <Reveal className="mt-10 text-center sm:mt-14" delay={400}>
           <Button
             variant="primary"
             size="lg"

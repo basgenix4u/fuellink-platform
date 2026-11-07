@@ -1,6 +1,3 @@
-// src/components/shared/DepotLogo.tsx
-// Unique depot logo component — fuel tank SVG silhouette with depot brand color
-// Each depot gets their own color + initials making them visually distinct
 "use client";
 
 import { cn } from "@/lib/utils";

@@ -230,13 +230,13 @@ export default function OrdersPage() {
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
         {/* Status Tabs */}
         <div className="border-b border-slate-100 px-4">
-          <div className="flex gap-1 overflow-x-auto">
+          <div className="scroll-thin fade-r flex gap-1 overflow-x-auto">
             {statusTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "px-4 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                  "shrink-0 whitespace-nowrap px-3.5 py-4 text-[13px] font-medium border-b-2 transition-colors sm:px-4 sm:text-sm",
                   activeTab === tab.id
                     ? "border-primary-500 text-primary-600"
                     : "border-transparent text-slate-500 hover:text-slate-700"

@@ -1,5 +1,3 @@
-// src/components/shared/Card.tsx
-
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 

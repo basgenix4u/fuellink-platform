@@ -1,8 +1,3 @@
-// src/components/landing/ProblemSection.tsx
-
-"use client";
-
-import { useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   Phone,
@@ -100,13 +95,11 @@ function ChatBubble({
 }
 
 export function ProblemSection() {
-  const ref = useRef(null);
-
   return (
-    <section ref={ref} className="py-24 bg-slate-50 overflow-hidden">
+    <section className="section-padding bg-slate-50 overflow-hidden">
       <Container size="wide">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <Reveal>
             <span className="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-wider mb-4">
               <XCircle className="w-4 h-4" />
@@ -124,7 +117,7 @@ export function ProblemSection() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-start">
           {/* Left - Problem Cards */}
           <div className="space-y-6">
             {problems.map((problem, index) => (
@@ -200,22 +193,22 @@ export function ProblemSection() {
             </div>
 
             {/* Floating Warning Labels */}
-            <Reveal className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={600}>
+            <Reveal className="absolute -top-3 right-0 bg-red-500 text-white px-3 py-1.5 rounded-full text-xs sm:-top-4 sm:-right-4 sm:px-4 sm:py-2 sm:text-sm font-semibold shadow-lg" delay={600}>
               ❌ No Verification
             </Reveal>
 
-            <Reveal className="absolute top-1/3 -left-8 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={700}>
+            <Reveal className="absolute top-1/3 left-0 bg-orange-500 text-white px-3 py-1.5 rounded-full text-xs sm:-left-8 sm:px-4 sm:py-2 sm:text-sm font-semibold shadow-lg" delay={700}>
               ⚠️ Outdated Info
             </Reveal>
 
-            <Reveal className="absolute bottom-20 -right-4 bg-yellow-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg" delay={800}>
+            <Reveal className="absolute bottom-16 right-0 bg-yellow-500 text-white px-3 py-1.5 rounded-full text-xs sm:bottom-20 sm:-right-4 sm:px-4 sm:py-2 sm:text-sm font-semibold shadow-lg" delay={800}>
               💸 Payment Risk
             </Reveal>
           </Reveal>
         </div>
 
         {/* Bottom CTA */}
-        <Reveal className="text-center mt-16" delay={500}>
+        <Reveal className="text-center mt-10 sm:mt-14" delay={500}>
           <p className="text-xl text-slate-700 font-medium">
             The industry loses over{" "}
             <span className="text-red-600 font-bold">₦100 Billion</span>{" "}

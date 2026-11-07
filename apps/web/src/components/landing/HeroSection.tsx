@@ -35,22 +35,19 @@ export function HeroSection() {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[560px] grid-lines" />
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-32 -top-40 h-[420px] w-[420px] rounded-full opacity-[0.16] blur-[90px]"
+        className="pointer-events-none absolute -left-32 -top-40 h-[420px] w-[420px] rounded-full opacity-[0.16]"
         style={{ background: "radial-gradient(circle, #17a34a 0%, transparent 70%)" }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-24 top-24 h-[380px] w-[380px] rounded-full opacity-[0.14] blur-[90px]"
+        className="pointer-events-none absolute -right-24 top-24 h-[380px] w-[380px] rounded-full opacity-[0.14]"
         style={{ background: "radial-gradient(circle, #ff8c00 0%, transparent 70%)" }}
       />
 
       <div className="page-max page-x relative pb-10 lg:pb-16">
         <div className="bento items-start">
           <div className="col-12 col-lg-7">
-            <div
-              className="blur-up inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-white/80 px-2.5 py-1 shadow-[var(--shadow-xs)] backdrop-blur"
-              style={{ animationDelay: "0ms" }}
-            >
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-white/80 px-2.5 py-1 shadow-[var(--shadow-xs)] backdrop-blur">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-600" />
@@ -60,26 +57,20 @@ export function HeroSection() {
               </span>
             </div>
 
-            <h1
-              className="t-display blur-up mt-5 text-slate-900"
-              style={{ animationDelay: "70ms" }}
-            >
+            <h1 className="t-display mt-5 text-slate-900">
               Nigeria&rsquo;s fuel market,
               <br />
               <span className="text-gradient-brand">priced in the open.</span>
             </h1>
 
-            <p className="t-lede blur-up mt-5 max-w-xl" style={{ animationDelay: "140ms" }}>
+            <p className="t-lede mt-5 max-w-xl">
               Verified depots, gantry prices straight from the regulator&rsquo;s own fact
               sheets, and bank-held escrow so neither side of a{" "}
               <span className="t-editorial font-medium text-slate-900">33,000&nbsp;litre</span>{" "}
               trade carries counterparty risk.
             </p>
 
-            <div
-              className="blur-up mt-7 flex flex-col gap-2.5 sm:flex-row sm:items-center"
-              style={{ animationDelay: "210ms" }}
-            >
+            <div className="blur-up mt-7 flex flex-col gap-2.5 sm:flex-row sm:items-center" style={{ animationDelay: "60ms" }}>
               <Link
                 href="/intel"
                 className="press group flex h-12 items-center justify-center gap-2 rounded-xl bg-[#04120b] px-5 text-[14px] font-medium text-white shadow-[var(--shadow-md)] hover:bg-[#0b2f1c]"
@@ -98,7 +89,7 @@ export function HeroSection() {
 
             <div
               className="blur-up mt-7 flex flex-wrap items-center gap-x-5 gap-y-2"
-              style={{ animationDelay: "280ms" }}
+              style={{ animationDelay: "110ms" }}
             >
               <span className="flex items-center gap-1.5 t-meta">
                 <ShieldCheck className="h-3.5 w-3.5 text-primary-600" />
@@ -118,7 +109,7 @@ export function HeroSection() {
           <div className="col-12 col-lg-5">
             <div
               className="blur-up surface shadow-[var(--shadow-lg)]"
-              style={{ animationDelay: "120ms" }}
+              style={{ animationDelay: "0ms" }}
             >
               <div className="flex items-center justify-between border-b border-[var(--hairline)] px-4 py-3">
                 <div className="flex items-center gap-2">

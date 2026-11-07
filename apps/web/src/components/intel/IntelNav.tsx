@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowLeft, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,14 @@ const LINKS: { label: string; href: string; exact?: boolean }[] = [
 
 export function IntelNav({ generatedAt }: { generatedAt: string }) {
   const pathname = usePathname();
+  const railRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    const active = rail?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!rail || !active) return;
+    rail.scrollLeft = active.offsetLeft - (rail.clientWidth - active.clientWidth) / 2;
+  }, [pathname]);
 
   return (
     <div className="relative border-b border-white/10 bg-[#04120b]">
@@ -80,7 +89,11 @@ export function IntelNav({ generatedAt }: { generatedAt: string }) {
           </Link>
         </div>
 
-        <nav className="edge-fade-x -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] lg:hidden">
+        <nav
+          ref={railRef}
+          aria-label="Intelligence sections"
+          className="edge-fade-x scroll-thin -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] lg:hidden"
+        >
           {LINKS.map((link) => {
             const active = link.exact ? pathname === link.href : pathname.startsWith(link.href);
             return (
@@ -98,6 +111,12 @@ export function IntelNav({ generatedAt }: { generatedAt: string }) {
                 {link.label}
               </Link>
             );
+            <Link
+              href="/reports"
+              className="flex-shrink-0 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 text-[12px] font-medium text-slate-300 transition-colors"
+            >
+              Reports
+            </Link>
           })}
         </nav>
       </div>

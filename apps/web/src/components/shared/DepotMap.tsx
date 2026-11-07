@@ -1,7 +1,3 @@
-// src/components/shared/DepotMap.tsx
-// Google Maps integration for depot location display
-// Uses iframe embed for the map + direct link to Google Maps for navigation
-// AI predicts travel time from marketer location to depot
 "use client";
 
 import { useState, useEffect } from "react";

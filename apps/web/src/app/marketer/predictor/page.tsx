@@ -42,7 +42,7 @@ interface NewsItem {
   headline: string;
   source: string;
   impact: "positive" | "negative" | "neutral";
-  timestamp: string;
+  time: string;
 }
 
 // ─── Mock data (real app calls Claude API with web search) ───────────────────
@@ -105,11 +105,11 @@ const MOCK_PREDICTIONS: PricePrediction[] = [
 ];
 
 const MOCK_NEWS: NewsItem[] = [
-  { headline: "Dangote refinery hits 450,000 bpd production milestone", source: "Nairametrics", impact: "positive", timestamp: new Date(Date.now() - 1800000).toISOString() },
-  { headline: "NNPCL issues no price update for April — market stable", source: "Punch", impact: "neutral", timestamp: new Date(Date.now() - 3600000).toISOString() },
-  { headline: "Brent crude rises 1.3% on Middle East supply concerns", source: "Reuters", impact: "negative", timestamp: new Date(Date.now() - 5400000).toISOString() },
-  { headline: "CBN FX intervention stabilizes naira at ₦1,620/$", source: "BusinessDay", impact: "positive", timestamp: new Date(Date.now() - 7200000).toISOString() },
-  { headline: "Crude oil demand projections revised upward by IEA for Q2", source: "Bloomberg", impact: "negative", timestamp: new Date(Date.now() - 9000000).toISOString() },
+  { headline: "Dangote refinery hits 450,000 bpd production milestone", source: "Nairametrics", impact: "positive", time: "09:12" },
+  { headline: "NNPCL issues no price update for April — market stable", source: "Punch", impact: "neutral", time: "09:42" },
+  { headline: "Brent crude rises 1.3% on Middle East supply concerns", source: "Reuters", impact: "negative", time: "10:12" },
+  { headline: "CBN FX intervention stabilizes naira at ₦1,620/$", source: "BusinessDay", impact: "positive", time: "10:42" },
+  { headline: "Crude oil demand projections revised upward by IEA for Q2", source: "Bloomberg", impact: "negative", time: "11:12" },
 ];
 
 // ─── Components ───────────────────────────────────────────────────────────────
@@ -250,7 +250,7 @@ function PredictionCard({ pred }: { pred: PricePrediction }) {
 
 export default function PricePredictorPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [aiQuery, setAiQuery] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isQuerying, setIsQuerying] = useState(false);
@@ -258,7 +258,7 @@ export default function PricePredictorPage() {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     await new Promise((r) => setTimeout(r, 1800));
-    setLastUpdated(new Date());
+    setLastUpdated(new Date().toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" }));
     setIsRefreshing(false);
   };
 
@@ -289,7 +289,7 @@ export default function PricePredictorPage() {
           <h1 className="t-h2 text-slate-900">Price Predictor</h1>
           <p className="text-sm text-slate-500 flex items-center gap-1.5 mt-1">
             <Clock className="w-3.5 h-3.5" />
-            Last updated: {lastUpdated.toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" })}
+            Last updated: {lastUpdated ?? "moments ago"}
             {" "}· Updates every 60 minutes
           </p>
         </div>
@@ -381,7 +381,7 @@ export default function PricePredictorPage() {
                   <div>
                     <p className="text-xs text-slate-800 leading-relaxed">{news.headline}</p>
                     <p className="text-[10px] text-slate-400 mt-0.5">
-                      {news.source} · {new Date(news.timestamp).toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" })}
+                      {news.source} · {news.time}
                     </p>
                   </div>
                 </div>

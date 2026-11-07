@@ -1,5 +1,7 @@
 "use client";
 
+import { ToastHost } from "@/components/ui/ToastHost";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -305,6 +307,7 @@ export function DashboardShell({
           </div>
         </main>
       </div>
+      <ToastHost />
     </div>
   );
 }

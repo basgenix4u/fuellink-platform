@@ -1,5 +1,3 @@
-// src/components/shared/Badge.tsx
-
 import { cn } from "@/lib/utils";
 
 interface BadgeProps {

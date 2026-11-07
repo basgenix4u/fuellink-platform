@@ -2,7 +2,8 @@
 
 import type { Metadata } from "next";
 import { IntelHeader, Metric, Note, TableShell, Th, Td, Derived, NR } from "@/components/intel/bits";
-import { GantryChart, type GantryChartRow } from "@/components/intel/GantryChart";
+import { GantryChart } from "@/components/intel/charts-lazy";
+import type { GantryChartRow } from "@/components/intel/GantryChart";
 import { gantry, monthLabel, fmtNaira } from "@/lib/intel";
 
 export const metadata: Metadata = {

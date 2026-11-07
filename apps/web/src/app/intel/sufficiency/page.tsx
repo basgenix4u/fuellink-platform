@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import { IntelHeader, Metric, Note, Derived } from "@/components/intel/bits";
-import { LineChartBox } from "@/components/intel/charts";
+import { LineChartBox } from "@/components/intel/charts-lazy";
 import { latestMonth, monthLabel, fmt, nmdpra } from "@/lib/intel";
 
 export const metadata: Metadata = {

@@ -1,5 +1,3 @@
-// FuelLink Intelligence — shared presentational bits (server-safe).
-
 import Link from "next/link";
 import { ArrowUpRight, Info, TriangleAlert } from "lucide-react";
 import { Badge } from "@/components/shared/Badge";

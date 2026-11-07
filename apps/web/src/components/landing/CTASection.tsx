@@ -1,17 +1,10 @@
-// src/components/landing/CTASection.tsx
-
-"use client";
-
-import { useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowRight, Zap, Shield, Clock } from "lucide-react";
 import { Button } from "@/components/shared/Button";
 
 export function CTASection() {
-  const ref = useRef(null);
-
   return (
-    <section ref={ref} className="py-24 bg-white overflow-hidden">
+    <section className="section-padding bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 rounded-3xl p-8 md:p-16 overflow-hidden">
           {/* Background Elements */}
@@ -20,7 +13,7 @@ export function CTASection() {
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary-400/20 rounded-full blur-3xl" />
 
           <div className="relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
               {/* Left Content */}
               <div>
                 <Reveal delay={200}>

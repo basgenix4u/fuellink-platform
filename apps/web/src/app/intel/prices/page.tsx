@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import { IntelHeader, Metric, Note, TableShell, Th, Td, Derived, NR } from "@/components/intel/bits";
-import { LineChartBox, RangeBandBox } from "@/components/intel/charts";
+import { LineChartBox, RangeBandBox } from "@/components/intel/charts-lazy";
 import { STATE_LABELS, monthLabel, fmt, fmtNaira, fmtDelta, pmsPrices, lpgPrices, nmdpra } from "@/lib/intel";
 import Link from "next/link";
 

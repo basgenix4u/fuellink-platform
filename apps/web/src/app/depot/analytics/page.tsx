@@ -1,5 +1,3 @@
-// src/app/depot/analytics/page.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -15,50 +13,35 @@ import {
   ArrowUpRight,
   ArrowDownRight,
 } from "lucide-react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
-} from "recharts";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/shared/Button";
 import { Badge } from "@/components/shared/Badge";
 import { cn, formatCurrency, formatNumber, formatCompactNumber } from "@/lib/utils";
 
-const revenueData = [
-  { date: "Mon", revenue: 45000000, orders: 18 },
-  { date: "Tue", revenue: 52000000, orders: 22 },
-  { date: "Wed", revenue: 48000000, orders: 20 },
-  { date: "Thu", revenue: 61000000, orders: 25 },
-  { date: "Fri", revenue: 55000000, orders: 23 },
-  { date: "Sat", revenue: 42000000, orders: 17 },
-  { date: "Sun", revenue: 38000000, orders: 15 },
-];
+const RevenueChart = dynamic(() => import("./charts").then((m) => m.RevenueChart), {
+  ssr: false,
+  loading: () => <ChartPlaceholder />,
+});
+
+const ProductPieChart = dynamic(() => import("./charts").then((m) => m.ProductPieChart), {
+  ssr: false,
+  loading: () => <ChartPlaceholder />,
+});
+
+const VolumeChart = dynamic(() => import("./charts").then((m) => m.VolumeChart), {
+  ssr: false,
+  loading: () => <ChartPlaceholder />,
+});
+
+function ChartPlaceholder() {
+  return <div className="h-full w-full rounded-lg bg-slate-900/[0.035]" aria-hidden />;
+}
 
 const productData = [
   { name: "AGO", value: 65, color: "#0D5C2F" },
   { name: "PMS", value: 25, color: "#FF8C00" },
   { name: "DPK", value: 8, color: "#FFD700" },
   { name: "LPG", value: 2, color: "#94A3B8" },
-];
-
-const volumeData = [
-  { month: "Jan", volume: 12500000 },
-  { month: "Feb", volume: 14200000 },
-  { month: "Mar", volume: 13800000 },
-  { month: "Apr", volume: 15600000 },
-  { month: "May", volume: 16200000 },
-  { month: "Jun", volume: 18500000 },
 ];
 
 const topCustomers = [
@@ -120,15 +103,14 @@ export default function AnalyticsPage() {
             Track your depot performance and insights
           </p>
         </div>
-        <div className="flex gap-3">
-          {/* Time Range Selector */}
-          <div className="flex bg-slate-100 rounded-xl p-1">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="scroll-thin -mx-1 flex max-w-full overflow-x-auto bg-slate-100 rounded-xl p-1">
             {timeRanges.map((range) => (
               <button
                 key={range}
                 onClick={() => setSelectedRange(range)}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "shrink-0 whitespace-nowrap px-3 py-2 rounded-lg text-[13px] font-medium transition-colors sm:px-4 sm:text-sm",
                   selectedRange === range
                     ? "bg-white text-slate-900 shadow-sm"
                     : "text-slate-600 hover:text-slate-900"
@@ -139,8 +121,8 @@ export default function AnalyticsPage() {
             ))}
           </div>
           <Button variant="outline" size="md">
-            <Download className="w-4 h-4 mr-2" />
-            Export
+            <Download className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Export</span>
           </Button>
         </div>
       </div>
@@ -199,42 +181,7 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={revenueData}>
-                <defs>
-                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0D5C2F" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#0D5C2F" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-                <XAxis dataKey="date" stroke="#94A3B8" fontSize={12} />
-                <YAxis
-                  stroke="#94A3B8"
-                  fontSize={12}
-                  tickFormatter={(value) => `₦${formatCompactNumber(value)}`}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1E293B",
-                    border: "none",
-                    borderRadius: "12px",
-                    color: "#F8FAFC",
-                  }}
-                  formatter={(value: number | undefined) => [
-                    value === undefined ? "—" : formatCurrency(value),
-                    "Revenue",
-                  ]}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#0D5C2F"
-                  strokeWidth={3}
-                  fill="url(#colorRevenue)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <RevenueChart />
           </div>
         </div>
 
@@ -245,35 +192,7 @@ export default function AnalyticsPage() {
           </h2>
 
           <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={productData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {productData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1E293B",
-                    border: "none",
-                    borderRadius: "12px",
-                    color: "#F8FAFC",
-                  }}
-                  formatter={(value: number | undefined) => [
-                    value === undefined ? "—" : `${value}%`,
-                    "Share",
-                  ]}
-                />
-              </PieChart>
-            </ResponsiveContainer>
+            <ProductPieChart data={productData} />
           </div>
 
           <div className="grid grid-cols-2 gap-3 mt-4">
@@ -307,34 +226,7 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={volumeData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-                <XAxis dataKey="month" stroke="#94A3B8" fontSize={12} />
-                <YAxis
-                  stroke="#94A3B8"
-                  fontSize={12}
-                  tickFormatter={(value) => `${formatCompactNumber(value)}`}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1E293B",
-                    border: "none",
-                    borderRadius: "12px",
-                    color: "#F8FAFC",
-                  }}
-                  formatter={(value: number | undefined) => [
-                    value === undefined ? "—" : `${formatNumber(value)}L`,
-                    "Volume",
-                  ]}
-                />
-                <Bar
-                  dataKey="volume"
-                  fill="#FF8C00"
-                  radius={[8, 8, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+            <VolumeChart />
           </div>
         </div>
 
@@ -356,16 +248,16 @@ export default function AnalyticsPage() {
                 <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold">
                   {index + 1}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-slate-900 truncate">
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 sm:text-sm">
                     {customer.name}
                   </p>
-                  <p className="text-sm text-slate-500">
-                    {customer.orders} orders • {formatCompactNumber(customer.volume)}L
+                  <p className="text-xs text-slate-500 sm:text-sm">
+                    {customer.orders} orders · {formatCompactNumber(customer.volume)}L
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold text-slate-900">
+                <div className="shrink-0 text-right">
+                  <p className="text-[13px] font-semibold text-slate-900 sm:text-sm">
                     {formatCurrency(customer.revenue)}
                   </p>
                 </div>

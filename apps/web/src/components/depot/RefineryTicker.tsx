@@ -1,5 +1,3 @@
-// src/components/depot/RefineryTicker.tsx
-
 "use client";
 
 import { Factory } from "lucide-react";

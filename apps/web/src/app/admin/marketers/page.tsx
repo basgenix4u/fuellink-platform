@@ -23,6 +23,7 @@ export default function AdminMarketersPage() {
       <h1 className="t-h2 text-slate-900">Marketer Compliance</h1>
       
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead className="bg-slate-50 border-b border-slate-200 text-xs uppercase text-slate-500">
             <tr>
@@ -52,6 +53,7 @@ export default function AdminMarketersPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

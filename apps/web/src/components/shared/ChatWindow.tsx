@@ -1,10 +1,3 @@
-// src/components/shared/ChatWindow.tsx
-// UPDATED:
-// - Language: user selects preferred language manually — AI uses that for replies
-// - No mention of "automatic transcription" to users — it just works silently
-// - AI acts as a professional depot representative, not a bot
-// - Depot staff can jump in and continue same chat thread
-// - Voice note send flow is simple: record → send → AI/rep replies
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
@@ -82,7 +75,7 @@ const MOCK_MESSAGES: ChatMessage[] = [
     senderName: "Pinnacle Support",
     type: "text",
     content: "Good day! Welcome to Pinnacle Oil & Gas Terminal. How can I assist you today? You can ask about our products, stock availability, loading hours, or to start an order.",
-    timestamp: new Date(Date.now() - 300000).toISOString(),
+    timestamp: "2026-08-01T09:41:00.000Z",
     status: "read",
   },
 ];
@@ -187,7 +180,7 @@ function Bubble({ msg, isOwn }: { msg: ChatMessage; isOwn: boolean }) {
           {/* Time + read status */}
           <div className={cn("flex items-center gap-1 mt-1 justify-end", isOwn ? "text-white/50" : "text-slate-400")}>
             <span className="text-[10px]">
-              {new Date(msg.timestamp).toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" })}
+              {new Date(msg.timestamp).toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Lagos" })}
             </span>
             {isOwn && (
               msg.status === "read"

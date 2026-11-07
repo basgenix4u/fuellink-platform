@@ -1,5 +1,3 @@
-// src/components/shared/Container.tsx
-
 import { cn } from "@/lib/utils";
 
 interface ContainerProps {

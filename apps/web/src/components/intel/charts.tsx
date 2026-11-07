@@ -69,7 +69,7 @@ export function LineChartBox({
         />
         <Legend wrapperStyle={{ fontSize: 12 }} iconType="plainline" />
         {series.map((s) => (
-          <Line
+          <Line isAnimationActive={false}
             key={s.key}
             type="monotone"
             dataKey={s.key}
@@ -125,10 +125,10 @@ export function BarLineBox({
         />
         <Legend wrapperStyle={{ fontSize: 12 }} />
         {bars.map((s) => (
-          <Bar key={s.key} dataKey={s.key} name={s.name} fill={s.color} radius={[4, 4, 0, 0]} maxBarSize={34} />
+          <Bar isAnimationActive={false} key={s.key} dataKey={s.key} name={s.name} fill={s.color} radius={[4, 4, 0, 0]} maxBarSize={34} />
         ))}
         {lines.map((s) => (
-          <Line
+          <Line isAnimationActive={false}
             key={s.key}
             type="monotone"
             dataKey={s.key}
@@ -179,7 +179,7 @@ export function RangeBandBox({
           ]}
         />
         <Legend wrapperStyle={{ fontSize: 12 }} />
-        <Area
+        <Area isAnimationActive={false}
           dataKey={highKey}
           name={`${unit}/kg max`}
           stroke={color}
@@ -189,7 +189,7 @@ export function RangeBandBox({
           fillOpacity={0.12}
           connectNulls
         />
-        <Area
+        <Area isAnimationActive={false}
           dataKey={lowKey}
           name={`${unit}/kg min`}
           stroke={color}
@@ -200,7 +200,7 @@ export function RangeBandBox({
           connectNulls
         />
         {midKey && (
-          <Line
+          <Line isAnimationActive={false}
             type="monotone"
             dataKey={midKey}
             name="mid"
@@ -251,7 +251,7 @@ export function ReferenceLineBox({
           label={{ value: reference.label, position: "insideTopRight", fontSize: 11, fill: "#0D5C2F" }}
         />
         {series.map((s) => (
-          <Line
+          <Line isAnimationActive={false}
             key={s.key}
             type="monotone"
             dataKey={s.key}

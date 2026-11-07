@@ -1,7 +1,3 @@
-// src/components/landing/SolutionSection.tsx
-"use client";
-
-import { useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   Bot,
@@ -134,13 +130,11 @@ const comparisonData = [
 ];
 
 export function SolutionSection() {
-  const ref = useRef(null);
-
   return (
-    <section id="solutions" ref={ref} className="py-24 bg-slate-50">
+    <section id="solutions" className="section-padding bg-slate-50">
       <Container>
         {/* Header */}
-        <Reveal className="text-center mb-16">
+        <Reveal className="text-center mb-10 sm:mb-14">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
             Every Problem. One Platform.
           </h2>

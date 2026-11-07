@@ -2,7 +2,7 @@
 
 import type { Metadata } from "next";
 import { IntelHeader, Metric, Note, TableShell, Th, Td, SourceChip, NR } from "@/components/intel/bits";
-import { BarLineBox } from "@/components/intel/charts";
+import { BarLineBox } from "@/components/intel/charts-lazy";
 import { lome, monthLabel, fmt } from "@/lib/intel";
 
 export const metadata: Metadata = {

@@ -32,6 +32,7 @@ export default function AdminDepotsList() {
           </div>
         </div>
 
+        <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
             <tr>
@@ -86,6 +87,7 @@ export default function AdminDepotsList() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ export function GantryChart({ data, bandLow, bandHigh }: {
         />
         <ReferenceLine y={bandLow} stroke="#FF8C00" strokeDasharray="4 4" strokeOpacity={0.5} />
         <ReferenceLine y={bandHigh} stroke="#FF8C00" strokeDasharray="4 4" strokeOpacity={0.5} />
-        <Line
+        <Line isAnimationActive={false}
           type="monotone"
           dataKey="lagos"
           name="Indicative — Lagos (₦/L)"
@@ -71,7 +71,7 @@ export function GantryChart({ data, bandLow, bandHigh }: {
           connectNulls
           activeDot={{ r: 6 }}
         />
-        <Line
+        <Line isAnimationActive={false}
           type="monotone"
           dataKey="abuja"
           name="Indicative — Abuja (₦/L)"
@@ -81,7 +81,7 @@ export function GantryChart({ data, bandLow, bandHigh }: {
           connectNulls
           activeDot={{ r: 6 }}
         />
-        <Line
+        <Line isAnimationActive={false}
           type="monotone"
           dataKey="nnpc"
           name="NNPC revision (₦/L)"

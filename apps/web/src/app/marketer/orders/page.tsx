@@ -148,13 +148,13 @@ export default function MarketerOrdersPage() {
       {/* Filters */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
         <div className="border-b border-slate-100 px-4">
-          <div className="flex gap-1">
+          <div className="scroll-thin fade-r flex gap-1 overflow-x-auto">
             {statusTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  "px-4 py-4 text-sm font-medium border-b-2 transition-colors capitalize",
+                  "shrink-0 whitespace-nowrap px-3.5 py-4 text-[13px] font-medium capitalize border-b-2 transition-colors sm:px-4 sm:text-sm",
                   activeTab === tab
                     ? "border-secondary-500 text-secondary-600"
                     : "border-transparent text-slate-500 hover:text-slate-700"

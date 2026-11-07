@@ -18,7 +18,7 @@ import {
 import { ChatWindow } from "@/components/shared/ChatWindow";
 import { Badge } from "@/components/shared/Badge";
 import { Button } from "@/components/shared/Button";
-import { cn, formatRelativeTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -28,7 +28,7 @@ interface Conversation {
   depotName: string;
   depotState: string;
   lastMessage: string;
-  lastMessageTime: string;
+  lastMessageLabel: string;
   unreadCount: number;
   lastSenderRole: "marketer" | "depot" | "ai";
   orderId?: string;
@@ -45,7 +45,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
     depotName: "Pinnacle Oil & Gas Terminal",
     depotState: "Lagos",
     lastMessage: "Loading can be arranged for tomorrow morning from 7am. Do we have a deal?",
-    lastMessageTime: new Date(Date.now() - 60000).toISOString(),
+    lastMessageLabel: "1 min ago",
     unreadCount: 1,
     lastSenderRole: "depot",
     orderId: "ORD-2025-001",
@@ -58,7 +58,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
     depotName: "Matrix Energy Depot",
     depotState: "Lagos",
     lastMessage: "Current AGO stock: 2.2M litres available. Minimum 33,000L.",
-    lastMessageTime: new Date(Date.now() - 3600000).toISOString(),
+    lastMessageLabel: "1 hour ago",
     unreadCount: 0,
     lastSenderRole: "ai",
     hasActiveOrder: false,
@@ -70,7 +70,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
     depotName: "Forte Oil Terminal, PH",
     depotState: "Rivers",
     lastMessage: "Your inquiry has been received. The depot manager will respond shortly.",
-    lastMessageTime: new Date(Date.now() - 7200000).toISOString(),
+    lastMessageLabel: "2 hours ago",
     unreadCount: 2,
     lastSenderRole: "ai",
     hasActiveOrder: false,
@@ -82,7 +82,7 @@ const MOCK_CONVERSATIONS: Conversation[] = [
     depotName: "Obat Oil Terminal",
     depotState: "Delta",
     lastMessage: "We can do ₦1,148/L for AGO on 66,000L. Call back time?",
-    lastMessageTime: new Date(Date.now() - 86400000).toISOString(),
+    lastMessageLabel: "1 day ago",
     unreadCount: 0,
     lastSenderRole: "depot",
     hasActiveOrder: false,
@@ -127,7 +127,7 @@ function ConversationItem({
         <div className="flex items-center justify-between mb-0.5">
           <span className="font-semibold text-sm text-slate-900 truncate">{conv.depotName}</span>
           <span className="text-[11px] text-slate-400 flex-shrink-0 ml-2">
-            {formatRelativeTime(conv.lastMessageTime)}
+            {conv.lastMessageLabel}
           </span>
         </div>
 

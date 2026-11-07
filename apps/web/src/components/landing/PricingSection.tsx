@@ -1,7 +1,6 @@
-// src/components/landing/PricingSection.tsx
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   Check,
@@ -24,7 +23,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 
 // Transaction fee calculator
 function TransactionFeeCalculator() {
-  const [orderValue, setOrderValue] = useState(5_000_000); // ₦5M default
+  const [orderValue, setOrderValue] = useState(5_000_000);
   const FEE_RATE = 0.005; // 0.5%
 
   const fee = Math.round(orderValue * FEE_RATE);
@@ -132,14 +131,13 @@ const marketerPlans = [
 ];
 
 export function PricingSection() {
-  const ref = useRef(null);
   const [activeTab, setActiveTab] = useState<"marketer" | "depot">("marketer");
 
   return (
-    <section id="pricing" ref={ref} className="py-24 bg-slate-50">
+    <section id="pricing" className="section-padding bg-slate-50">
       <Container>
         {/* Header */}
-        <Reveal className="text-center mb-16">
+        <Reveal className="text-center mb-10 sm:mb-14">
           <Badge variant="primary" className="mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             Simple, Fair Pricing

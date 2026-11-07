@@ -232,7 +232,7 @@ function NewOrderContent() {
 
       {/* Progress Steps */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-1">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isCompleted = currentStep > step.id;
@@ -243,7 +243,7 @@ function NewOrderContent() {
                 <div className="flex flex-col items-center">
                   <div
                     className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center transition-all",
+                      "flex h-9 w-9 items-center justify-center rounded-full transition-all sm:h-12 sm:w-12",
                       isCompleted
                         ? "bg-emerald-500 text-white"
                         : isCurrent
@@ -252,14 +252,14 @@ function NewOrderContent() {
                     )}
                   >
                     {isCompleted ? (
-                      <CheckCircle2 className="w-6 h-6" />
+                      <CheckCircle2 className="h-4 w-4 sm:h-6 sm:w-6" />
                     ) : (
-                      <Icon className="w-6 h-6" />
+                      <Icon className="h-4 w-4 sm:h-6 sm:w-6" />
                     )}
                   </div>
                   <p
                     className={cn(
-                      "text-sm mt-2 font-medium",
+                      "mt-1.5 text-center text-[11px] font-medium sm:mt-2 sm:text-sm",
                       isCurrent ? "text-secondary-600" : "text-slate-500"
                     )}
                   >
@@ -269,7 +269,7 @@ function NewOrderContent() {
                 {index < steps.length - 1 && (
                   <div
                     className={cn(
-                      "flex-1 h-1 mx-4 rounded-full",
+                      "mx-2 h-1 flex-1 rounded-full sm:mx-4",
                       currentStep > step.id ? "bg-emerald-500" : "bg-slate-200"
                     )}
                   />

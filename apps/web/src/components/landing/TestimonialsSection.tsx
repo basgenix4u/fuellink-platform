@@ -1,8 +1,3 @@
-// src/components/landing/TestimonialsSection.tsx
-
-"use client";
-
-import { useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { Star, Quote } from "lucide-react";
 import { Container } from "@/components/shared/Container";
@@ -110,13 +105,11 @@ function TestimonialCard({
 }
 
 export function TestimonialsSection() {
-  const ref = useRef(null);
-
   return (
-    <section ref={ref} className="py-24 bg-slate-50 overflow-hidden">
+    <section className="section-padding bg-slate-50 overflow-hidden">
       <Container size="wide">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <Reveal>
             <span className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm uppercase tracking-wider mb-4">
               <Star className="w-4 h-4 fill-primary-600" />
@@ -147,7 +140,7 @@ export function TestimonialsSection() {
         </div>
 
         {/* Stats Bar */}
-        <Reveal className="mt-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-8 text-white" delay={500}>
+        <Reveal className="mt-10 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-8 text-white" delay={500}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <p className="text-4xl font-bold mb-2">4.9/5</p>

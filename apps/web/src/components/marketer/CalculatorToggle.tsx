@@ -1,5 +1,3 @@
-// src/components/marketer/CalculatorToggle.tsx
-
 "use client";
 
 import { Calculator } from "lucide-react";

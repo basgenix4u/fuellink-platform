@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
 
 const sans = Geist({
   subsets: ["latin"],
@@ -23,7 +22,7 @@ const mono = Geist_Mono({
 const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
+  style: ["italic"],
   display: "swap",
   variable: "--font-serif",
   preload: false,
@@ -106,24 +105,6 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
-        <Toaster
-          position="top-right"
-          gutter={8}
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: "#0b1a12",
-              color: "#f4f7f5",
-              borderRadius: "14px",
-              padding: "14px 16px",
-              fontSize: "14px",
-              border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 20px 40px -12px rgba(0,0,0,0.35)",
-            },
-            success: { iconTheme: { primary: "#16a34a", secondary: "#f4f7f5" } },
-            error: { iconTheme: { primary: "#dc2626", secondary: "#f4f7f5" } },
-          }}
-        />
       </body>
     </html>
   );
