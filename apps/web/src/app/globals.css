@@ -362,14 +362,14 @@
   }
 
   .t-display {
-    font-size: clamp(2.5rem, 1.1rem + 5.6vw, 5.25rem);
-    line-height: 0.96;
-    letter-spacing: -0.038em;
+    font-size: clamp(2.375rem, 1.2rem + 4.3vw, 4.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.036em;
     font-weight: 600;
   }
 
   .t-h1 {
-    font-size: clamp(2rem, 1.15rem + 3.1vw, 3.5rem);
+    font-size: clamp(1.875rem, 1.15rem + 2.6vw, 3.125rem);
     line-height: 1.04;
     letter-spacing: -0.032em;
     font-weight: 600;
@@ -417,9 +417,15 @@
   }
 
   .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    letter-spacing: -0.012em;
+  }
+
+  .mono-num {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
   .page-x {
@@ -723,4 +729,24 @@
     min-height: 44px;
     min-width: 44px;
   }
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+@media (max-width: 640px) {
+  .py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+  .py-16 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .pt-24 { padding-top: 3.5rem; }
+  .pb-24 { padding-bottom: 3.5rem; }
+  .mt-16 { margin-top: 2.25rem; }
+  .mb-16 { margin-bottom: 2.25rem; }
+  .gap-16 { gap: 2.25rem; }
+  .gap-12 { gap: 1.75rem; }
+  .space-y-16 > * + * { margin-top: 2.25rem; }
 }

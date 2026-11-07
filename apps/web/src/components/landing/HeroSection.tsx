@@ -143,7 +143,7 @@ export function HeroSection() {
                 <div className="px-4 py-4">
                   <p className="t-kicker text-slate-400">Lagos</p>
                   <p className="tnum mt-1.5 text-[26px] font-medium leading-none text-slate-900">
-                    <span className="mr-0.5 text-[15px] text-slate-400">₦</span>
+                    <span className="mr-0.5 inline-block -translate-y-[0.18em] text-[13px] font-normal text-slate-400">₦</span>
                     {naira(lagos.value)}
                   </p>
                   <p className="t-meta mt-1">per litre</p>
@@ -151,7 +151,7 @@ export function HeroSection() {
                 <div className="px-4 py-4">
                   <p className="t-kicker text-slate-400">Abuja</p>
                   <p className="tnum mt-1.5 text-[26px] font-medium leading-none text-slate-900">
-                    <span className="mr-0.5 text-[15px] text-slate-400">₦</span>
+                    <span className="mr-0.5 inline-block -translate-y-[0.18em] text-[13px] font-normal text-slate-400">₦</span>
                     {naira(abuja.value)}
                   </p>
                   <p className="t-meta mt-1">per litre</p>

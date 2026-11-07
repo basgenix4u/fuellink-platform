@@ -1,7 +1,3 @@
-// src/components/landing/Footer.tsx
-
-"use client";
-
 import Link from "next/link";
 import {
   Facebook,
@@ -10,55 +6,55 @@ import {
   Linkedin,
   Youtube,
   Mail,
-  Phone,
-  MapPin,
   ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
-import { Button } from "@/components/shared/Button";
+import { monthLabel, latestMonth } from "@/lib/intel";
 
-const footerLinks = {
-  product: {
-    title: "Product",
+const columns = [
+  {
+    title: "Intelligence",
     links: [
-      { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "For Depots", href: "/solutions/depot" },
-      { label: "For Marketers", href: "/solutions/marketer" },
-      { label: "For Drivers", href: "/solutions/driver" },
-      { label: "Mobile App", href: "/mobile" },
+      { label: "Terminal", href: "/intel" },
+      { label: "Gantry prices", href: "/intel/gantry" },
+      { label: "Lomé index", href: "/intel/lome" },
+      { label: "Days of cover", href: "/intel/sufficiency" },
+      { label: "Landed cost", href: "/intel/calculator" },
+      { label: "Monthly reports", href: "/reports" },
     ],
   },
-  company: {
-    title: "Company",
+  {
+    title: "Depots",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Press", href: "/press" },
-      { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/contact" },
+      { label: "Console", href: "/depot" },
+      { label: "Inventory", href: "/depot/inventory" },
+      { label: "Orders", href: "/depot/orders" },
+      { label: "Verification", href: "/depot/verification" },
+      { label: "List a depot", href: "/register/depot" },
     ],
   },
-  resources: {
-    title: "Resources",
+  {
+    title: "Marketers",
     links: [
-      { label: "Help Center", href: "/help" },
-      { label: "API Documentation", href: "/docs/api" },
-      { label: "Partners", href: "/partners" },
-      { label: "Market Data", href: "/market-data" },
-      { label: "Case Studies", href: "/case-studies" },
+      { label: "Workspace", href: "/marketer" },
+      { label: "Find depots", href: "/marketer/depots" },
+      { label: "Cost & spread", href: "/marketer/predictor" },
+      { label: "My orders", href: "/marketer/orders" },
+      { label: "Create account", href: "/register/marketer" },
     ],
   },
-  legal: {
-    title: "Legal",
+  {
+    title: "Account",
     links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
-      { label: "Compliance", href: "/compliance" },
+      { label: "Sign in", href: "/login" },
+      { label: "Register as depot", href: "/register/depot" },
+      { label: "Register as marketer", href: "/register/marketer" },
+      { label: "Subscriptions", href: "/marketer/subscribe" },
+      { label: "Price alerts", href: "/marketer/alerts" },
     ],
   },
-};
+];
 
 const socialLinks = [
   { icon: Facebook, href: "https://facebook.com/fuellink", label: "Facebook" },
@@ -69,120 +65,107 @@ const socialLinks = [
 ];
 
 export function Footer() {
-  return (
-    <footer className="bg-slate-900 text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-2">
-                Stay Updated on Market Trends
-              </h3>
-              <p className="text-slate-400">
-                Get weekly insights on petroleum prices and industry news.
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
-              />
-              <Button
-                variant="secondary"
-                rightIcon={<ArrowRight className="w-4 h-4" />}
-              >
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+  const month = latestMonth();
 
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {/* Logo & Info Column */}
-          <div className="col-span-2">
-            <Logo variant="white" size="lg" className="mb-6" />
-            <p className="text-slate-400 mb-6 max-w-sm">
-              Nigeria&apos;s leading digital platform for petroleum trading.
-              Connecting depots, marketers, and transporters for seamless
-              transactions.
+  return (
+    <footer className="relative overflow-hidden bg-[#04120b] text-[#f4f7f5]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[320px] grid-lines-dark" />
+
+      <div className="page-max page-x relative">
+        <div className="grid gap-6 border-b border-white/10 py-10 lg:grid-cols-12 lg:gap-8 lg:py-14">
+          <div className="min-w-0 lg:col-span-5">
+            <Logo variant="white" size="md" />
+            <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-slate-400">
+              Nigeria&apos;s digital petroleum exchange. Verified depots, regulator-sourced
+              pricing and bank-held escrow from gantry to pump.
             </p>
 
-            {/* Contact Info */}
-            <div className="space-y-3">
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
               <a
                 href="mailto:hello@fuellink.ng"
-                className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors"
+                className="press inline-flex min-h-11 items-center gap-2 text-[13px] text-slate-300 hover:text-white"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="h-4 w-4" />
                 hello@fuellink.ng
               </a>
-              <a
-                href="tel:+2348001234567"
-                className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors"
-              >
-                <Phone className="w-5 h-5" />
-                +234 xxxxxxxx
-              </a>
-              <div className="flex items-start gap-3 text-slate-400">
-                <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span>
-                  Company Address....
-                </span>
-              </div>
             </div>
-          </div>
 
-          {/* Link Columns */}
-          {Object.values(footerLinks).map((section) => (
-            <div key={section.title}>
-              <h4 className="font-semibold text-white mb-4">{section.title}</h4>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-slate-400 hover:text-white transition-colors text-sm"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* Copyright */}
-            <p className="text-slate-500 text-sm">
-              © {new Date().getFullYear()} FuelLink Digital Exchange. All rights
-              reserved.
-            </p>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-4">
+            <div className="mt-5 flex items-center gap-1.5">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-secondary-500 hover:text-white transition-all duration-300"
+                  className="press flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/20 hover:text-white"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
+          </div>
+
+          <div className="min-w-0 lg:col-span-7">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-4">
+              {columns.map((column) => (
+                <div key={column.title} className="min-w-0">
+                  <p className="t-kicker mb-3 text-slate-500">{column.title}</p>
+                  <ul className="space-y-0.5">
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="press flex min-h-9 items-center text-[13px] text-slate-400 hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-3 border-b border-white/10 py-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="min-w-0">
+            <p className="text-[13px] font-medium text-white">
+              The monthly fact sheet, parsed and published
+            </p>
+            <p className="t-meta mt-0.5 text-slate-500">
+              Every figure traced to an NMDPRA source document. Latest edition {month.label}.
+            </p>
+          </div>
+          <Link
+            href="/reports"
+            className="press inline-flex h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.06] px-4 text-[13px] font-medium text-white hover:bg-white/[0.1] sm:w-auto"
+          >
+            Read the {monthLabel(month.month)}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="t-meta text-slate-500">
+            © {new Date().getFullYear()} FuelLink Digital Exchange. All rights reserved.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span className="flex items-center gap-1.5 t-meta text-slate-500">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </span>
+              Data current to {month.label}
+            </span>
+            <Link
+              href="/intel/gantry"
+              className="press inline-flex items-center gap-0.5 text-[12px] text-slate-400 hover:text-white"
+            >
+              Source ledger
+              <ArrowUpRight className="h-3 w-3" />
+            </Link>
           </div>
         </div>
       </div>
