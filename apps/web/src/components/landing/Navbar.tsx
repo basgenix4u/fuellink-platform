@@ -203,11 +203,19 @@ export function Navbar() {
       </div>
 
       <div
+        aria-hidden
+        onClick={() => setOpen(false)}
+        className={`fixed inset-0 top-[60px] z-30 bg-[#04120b]/30 backdrop-blur-[2px] transition-opacity duration-300 lg:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
+
+      <div
         id="mobile-nav"
-        className={`fixed inset-x-0 top-[60px] z-40 origin-top overflow-y-auto border-t border-[var(--hairline)] bg-white transition-all duration-300 lg:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-[60px] z-40 origin-top overflow-y-auto overscroll-contain border-t border-[var(--hairline)] bg-white transition-all duration-300 lg:hidden ${
           open
-            ? "visible max-h-[calc(100dvh-60px)] opacity-100"
-            : "invisible max-h-0 opacity-0"
+            ? "visible translate-y-0 opacity-100"
+            : "invisible -translate-y-2 opacity-0"
         }`}
       >
         <div className="page-x safe-b space-y-6 py-6">
