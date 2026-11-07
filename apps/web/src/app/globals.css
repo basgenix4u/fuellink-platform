@@ -1070,3 +1070,24 @@
     padding-right: 1.25rem;
   }
 }
+
+@media (max-width: 640px) {
+  .page-enter .overflow-x-auto > table,
+  .page-enter .overflow-x-auto table {
+    min-width: 680px;
+  }
+
+  .page-enter tbody td {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .page-enter td:first-child,
+  .page-enter th:first-child {
+    padding-left: 0.875rem;
+  }
+
+  .page-enter td:last-child,
+  .page-enter th:last-child {
+    padding-right: 0.875rem;
+  }
+}
